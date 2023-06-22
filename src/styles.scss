@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+
+$primary: #FF5733;
+
+.btn {
+  border-radius: 0 !important;
+}
+
+.btn-primary {
+  color: white !important;
+}
+
+@import "bootstrap/scss/bootstrap";
+
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.main-vertical-card, .sidebar-vertical-card {
+  border-color: #b0ff8e;
+  border-style: solid;
+  border-radius: 0.5rem;
+  padding: 20px;
+  margin: 10px;
+}
+
+.main-vertical-card {
+  min-width: 65vw;
+}
+
+.sidebar-vertical-card {
+  min-width: 30vw;
+}

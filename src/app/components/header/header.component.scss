@@ -1,0 +1,11 @@
+@import "src/styles";
+
+#app-header {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.btn {
+  margin-right: 10px;
+}

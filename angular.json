@@ -5,10 +5,14 @@
   "projects": {
     "message-board-ui": {
       "projectType": "application",
-      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -25,7 +29,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -45,7 +49,7 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "local": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -62,11 +66,11 @@
             "production": {
               "browserTarget": "message-board-ui:build:production"
             },
-            "development": {
-              "browserTarget": "message-board-ui:build:development"
+            "local": {
+              "browserTarget": "message-board-ui:build:local"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "local"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -87,7 +91,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": []
           }

@@ -1,0 +1,10 @@
+<div class="main-layout">
+
+  <app-post-feed></app-post-feed>
+
+  <div class="sidebar-vertical-card">
+    <p *ngIf="!communityName">community doesn't work :(</p>
+    <p *ngIf="communityName">Now viewing community {{ communityName }}</p>
+  </div>
+
+</div>
