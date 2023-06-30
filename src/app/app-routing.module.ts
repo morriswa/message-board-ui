@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {CommunityComponent} from "./components/community/community.component";
 import {LandingPageComponent} from "./components/landing-page/landing-page.component";
+import {UserMenuComponent} from "./components/user-menu/user-menu.component";
+import {RegisterUserComponent} from "./components/register-user/register-user.component";
 
 
 const routes: Routes = [
@@ -10,6 +12,8 @@ const routes: Routes = [
       { path: '**', component: CommunityComponent,}
     ]
   },
+  { path: 'user', component: UserMenuComponent },
+  { path: 'registerUser', component: RegisterUserComponent },
   { path: '', component: LandingPageComponent },
 ];
 @NgModule({

@@ -1,0 +1,22 @@
+
+<div *ngIf="!loading" class="register-user-box">
+
+  <h1>Welcome to FOSS Message Board!</h1>
+  <h2>Please fill out the following information so you can get started!</h2>
+
+  <input
+    type="text"
+    class="form-control"
+    [formControl]="displayNameForm"
+    placeholder="Enter Display Name"
+    >
+
+  <button
+    class="btn btn-primary"
+    [disabled]="this.displayNameForm.invalid"
+    (click)="registerUser()"
+    >
+    Get Started!
+  </button>
+
+</div>
