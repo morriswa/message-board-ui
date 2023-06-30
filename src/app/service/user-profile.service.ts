@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
+import {map} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class UserProfileService {
   }
 
   getUserProfile() {
-    return this.http.get(this.USER_PROFILE_SERVICE_ENDPOINT+'user');
+    return this.http.get(this.USER_PROFILE_SERVICE_ENDPOINT+'user')
+      .pipe(map((response:any)=>response.payload));
   }
 }

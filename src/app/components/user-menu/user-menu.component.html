@@ -1,6 +1,15 @@
 
 <div *ngIf="!loading">
 
-<p>user-menu works!</p>
+  <p>user-menu works!</p>
+
+  <div *ngIf="userProfile$|async as user">
+    <img
+      *ngIf="user.userProfileImage"
+      [src]="user.userProfileImage"
+      >
+    <p>{{ user.displayName }}</p>
+    <p>{{ user.email }}</p>
+  </div>
 
 </div>

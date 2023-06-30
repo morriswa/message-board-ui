@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {UserProfileService} from "../../service/user-profile.service";
 import {Router} from "@angular/router";
+import {Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-user-menu',
@@ -11,13 +12,16 @@ import {Router} from "@angular/router";
 export class UserMenuComponent implements OnInit {
   loading = true
 
+  userProfile$:Observable<any>=of();
+
   constructor(private auth: AuthService,
               private users: UserProfileService,
               private router: Router) {
   }
 
   ngOnInit(): void {
-    this.users.getUserProfile()
+    this.userProfile$ = this.users.getUserProfile();
+    this.userProfile$
       .subscribe({
         next: user=>{
           console.log(user);
