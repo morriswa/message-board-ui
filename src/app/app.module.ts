@@ -15,6 +15,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import {UserProfileService} from "./service/user-profile.service";
 import { RegisterUserComponent } from './components/register-user/register-user.component';
+import {APP_BASE_HREF} from "@angular/common";
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -49,6 +50,7 @@ const AUTH0_CONFIG = {
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+    // {provide: APP_BASE_HREF, useValue: '/messageboard'},
     AuthService,
     UserProfileService
   ],

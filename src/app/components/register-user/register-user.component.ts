@@ -15,6 +15,7 @@ export class RegisterUserComponent implements OnInit{
 
   email?:string;
 
+
   displayNameForm = new FormControl('',[
     Validators.required,
     Validators.maxLength(30),
@@ -40,6 +41,8 @@ export class RegisterUserComponent implements OnInit{
     })
   }
 
+
+
   registerUser() {
     this.users.registerUser(this.email!, this.displayNameForm.getRawValue()!)
       .subscribe({
@@ -47,4 +50,6 @@ export class RegisterUserComponent implements OnInit{
         error: er=>console.error(er)
       })
   }
+
+
 }

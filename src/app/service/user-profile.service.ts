@@ -24,4 +24,9 @@ export class UserProfileService {
     return this.http.get(this.USER_PROFILE_SERVICE_ENDPOINT+'user')
       .pipe(map((response:any)=>response.payload));
   }
+
+  updateProfileImage(newProfileObject:{baseEncodedImage:string, imageFormat:string}) {
+    return this.http.post(this.USER_PROFILE_SERVICE_ENDPOINT+'user/profileImage',newProfileObject)
+      .pipe(map((response:any)=>response.payload));
+  }
 }
