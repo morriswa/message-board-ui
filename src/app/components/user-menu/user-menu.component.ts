@@ -3,7 +3,7 @@ import {AuthService} from "@auth0/auth0-angular";
 import {UserProfileService} from "../../service/user-profile.service";
 import {Router} from "@angular/router";
 import {Observable, of} from "rxjs";
-import {FormControl} from "@angular/forms";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-user-menu',
@@ -13,10 +13,20 @@ import {FormControl} from "@angular/forms";
 export class UserMenuComponent implements OnInit {
   loading = true
 
+  showChangeDisplayNameForm = false;
+
   userProfile$:Observable<any>=of();
   public fileUpload?: File;
 
   public fileInput = new FormControl();
+
+  displayNameForm = new FormControl('',
+  [
+    Validators.required,
+    Validators.maxLength(30),
+    Validators.minLength(3),
+    Validators.pattern('^[a-zA-Z0-9._-]*$')
+  ])
 
   constructor(private auth: AuthService,
               private users: UserProfileService,
@@ -24,6 +34,10 @@ export class UserMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   this.refreshUserProfile();
+  }
+
+  refreshUserProfile() {
     this.userProfile$ = this.users.getUserProfile();
     this.userProfile$
       .subscribe({
@@ -33,9 +47,9 @@ export class UserMenuComponent implements OnInit {
         },
         error: err=>{
           console.error(err)
-          this.router.navigate(['/'])
+          this.router.navigate(['/registerUser'])
         }
-      })
+      });
   }
 
   public onChange($event: any) {
@@ -51,8 +65,14 @@ export class UserMenuComponent implements OnInit {
 
         this.users.updateProfileImage({baseEncodedImage: concatb64Repr,imageFormat: imageFormat})
         .subscribe({
-          next: ()=>this.fileInput.reset(),
-          error: err=>console.error(err)
+          next: ()=>{
+            this.fileInput.reset();
+            this.refreshUserProfile();
+          },
+          error: err=>{
+            console.error(err);
+            this.fileInput.reset();
+          }
         })
       });
     }
@@ -68,4 +88,23 @@ export class UserMenuComponent implements OnInit {
       });
   }
 
+  toggleChangeDisplayNameForm() {
+    this.showChangeDisplayNameForm = !this.showChangeDisplayNameForm;
+  }
+
+  changeDisplayName() {
+    this.users.updateDisplayName(this.displayNameForm.getRawValue()!)
+      .subscribe({
+        next: ()=>{
+          this.showChangeDisplayNameForm = false;
+          this.displayNameForm.reset();
+          this.refreshUserProfile();
+        },
+        error: err => {
+          this.showChangeDisplayNameForm = false;
+          this.displayNameForm.reset();
+          console.error(err);
+        }
+      });
+  }
 }

@@ -47,6 +47,7 @@ const AUTH0_CONFIG = {
     HttpClientModule,
     AuthModule.forRoot(AUTH0_CONFIG),
     AppRoutingModule,
+
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },

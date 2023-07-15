@@ -29,4 +29,12 @@ export class UserProfileService {
     return this.http.post(this.USER_PROFILE_SERVICE_ENDPOINT+'user/profileImage',newProfileObject)
       .pipe(map((response:any)=>response.payload));
   }
+
+  updateDisplayName(newDisplayName:string) {
+    return this.http.patch(this.USER_PROFILE_SERVICE_ENDPOINT+'user/displayName', {},{
+      params: {
+        requestedDisplayName: newDisplayName
+      }
+    });
+  }
 }

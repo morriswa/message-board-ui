@@ -7,7 +7,35 @@
       *ngIf="user.userProfileImage"
       [src]="user.userProfileImage"
       >
-    <h1>{{ user.displayName }}</h1>
+
+    <div *ngIf="showChangeDisplayNameForm; else showDisplayName">
+
+      <input
+        class="form-control"
+        [formControl]="this.displayNameForm"
+        type="text"
+        required="false"
+        [placeholder]="user.displayName"
+      >
+
+      <button
+        class="btn btn-secondary"
+        (click)="toggleChangeDisplayNameForm()"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="changeDisplayName()"
+        [disabled]="this.displayNameForm.invalid"
+      >
+        Change!
+      </button>
+    </div>
+    <ng-template  #showDisplayName>
+      <h1>{{ user.displayName }}<i class="bi bi-pencil" (click)="toggleChangeDisplayNameForm()"></i></h1>
+    </ng-template>
+
     <h3>{{ user.email }}</h3>
   </div>
 
