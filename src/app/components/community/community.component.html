@@ -2,9 +2,15 @@
 
   <app-post-feed></app-post-feed>
 
-  <div class="sidebar-vertical-card">
+  <div class="sidebar-vertical-card" *ngIf="!loading">
     <p *ngIf="!communityName">community doesn't work :(</p>
     <p *ngIf="communityName">Now viewing community {{ communityName }}</p>
+
+
+    <h1>{{ communityInfo.displayName }}</h1>
+    <img [src]="communityInfo.resourceUrls.icon">
+    <img [src]="communityInfo.resourceUrls.banner">
+
   </div>
 
 </div>

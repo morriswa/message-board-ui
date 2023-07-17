@@ -27,7 +27,11 @@ const AUTH0_CONFIG = {
   },
   // Specify configuration for the interceptor
   httpInterceptor: {
-    allowedList: [{ uri: environment.api + environment.securepath + '*' },]
+    allowedList: [
+      { uri: environment.userProfileService + '*' },
+      { uri: environment.communityService + '*' },
+      { uri: environment.contentService + '*' },
+    ]
   }
 };
 
