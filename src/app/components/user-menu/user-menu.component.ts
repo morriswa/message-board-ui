@@ -4,6 +4,7 @@ import {UserProfileService} from "../../service/user-profile.service";
 import {Router} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
+import {ImageCroppedEvent} from "ngx-image-cropper";
 
 @Component({
   selector: 'app-user-menu',
@@ -12,13 +13,16 @@ import {FormControl, Validators} from "@angular/forms";
 })
 export class UserMenuComponent implements OnInit {
   loading = true
+  croppingInProgress= false;
 
   showChangeDisplayNameForm = false;
 
   userProfile$:Observable<any>=of();
-  public fileUpload?: File;
 
-  public fileInput = new FormControl();
+  fileUpload?: File;
+  stagedProfilePhotoForUpload?:Blob;
+
+  fileInput = new FormControl();
 
   displayNameForm = new FormControl('',
   [
@@ -27,6 +31,7 @@ export class UserMenuComponent implements OnInit {
     Validators.minLength(3),
     Validators.pattern('^[a-zA-Z0-9._-]*$')
   ])
+  imageChangedEvent: any;
 
   constructor(private auth: AuthService,
               private users: UserProfileService,
@@ -52,14 +57,23 @@ export class UserMenuComponent implements OnInit {
       });
   }
 
-  public onChange($event: any) {
+  public newImageUploaded($event: any) {
     this.fileUpload = $event.target.files[0];
+    this.imageChangedEvent = $event;
+    this.croppingInProgress = true;
   }
-  public createNewPost() {
+
+  public imageCropped($event: ImageCroppedEvent) {
+    this.stagedProfilePhotoForUpload = $event.blob!;
+  }
+
+  public updateUserProfileImage() {
     // this.PROCESSING_REQUEST = true;
 
-    if (this.fileUpload != undefined) {
-      UserMenuComponent.file2Base64(this.fileUpload).then(b64Repr => {
+    if (this.stagedProfilePhotoForUpload) {
+
+      this.croppingInProgress = false;
+      UserMenuComponent.file2Base64(this.stagedProfilePhotoForUpload).then(b64Repr => {
         let concatb64Repr = b64Repr.slice(b64Repr.indexOf(",") + 1)
         let imageFormat = b64Repr.slice(b64Repr.indexOf("/") + 1, b64Repr.indexOf(";"))
 
@@ -78,7 +92,7 @@ export class UserMenuComponent implements OnInit {
     }
   }
 
-  public static file2Base64(file:File):Promise<string> {
+  public static file2Base64(file:any):Promise<string> {
     return new Promise<string>(
       (resolve,reject)=> {
         const reader = new FileReader();
@@ -107,4 +121,5 @@ export class UserMenuComponent implements OnInit {
         }
       });
   }
+
 }
