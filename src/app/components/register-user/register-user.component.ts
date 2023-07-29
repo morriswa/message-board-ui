@@ -3,7 +3,7 @@ import {FormControl, Validators} from "@angular/forms";
 import {map, max, switchMap} from "rxjs";
 import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
-import {UserProfileService} from "../../service/user-profile.service";
+import {MessageBoardClientService} from "../../service/message-board-client.service";
 
 @Component({
   selector: 'app-register-user',
@@ -25,7 +25,7 @@ export class RegisterUserComponent implements OnInit{
 
   constructor(private auth: AuthService,
               private router: Router,
-              private users: UserProfileService) { }
+              private messageBoardService: MessageBoardClientService) { }
 
   ngOnInit(): void {
     this.auth.user$.pipe(
@@ -43,7 +43,7 @@ export class RegisterUserComponent implements OnInit{
         // this.loading = false;
       }),
       switchMap(()=>{
-        return this.users.getUserProfile()
+        return this.messageBoardService.getUserProfile()
       })
     ).subscribe({
       next: ()=>this.router.navigate(['/user']),
@@ -55,7 +55,7 @@ export class RegisterUserComponent implements OnInit{
 
 
   registerUser() {
-    this.users.registerUser(this.email!, this.displayNameForm.getRawValue()!)
+    this.messageBoardService.registerUser(this.email!, this.displayNameForm.getRawValue()!)
       .subscribe({
         next: ()=>this.router.navigate(['/user']),
         error: er=>console.error(er)

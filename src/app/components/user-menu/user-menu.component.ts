@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
-import {UserProfileService} from "../../service/user-profile.service";
 import {Router} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
 import {ImageCroppedEvent} from "ngx-image-cropper";
+import {MessageBoardClientService} from "../../service/message-board-client.service";
 
 @Component({
   selector: 'app-user-menu',
@@ -34,7 +34,7 @@ export class UserMenuComponent implements OnInit {
   imageChangedEvent: any;
 
   constructor(private auth: AuthService,
-              private users: UserProfileService,
+              private messageBoardService: MessageBoardClientService,
               private router: Router) {
   }
 
@@ -43,7 +43,7 @@ export class UserMenuComponent implements OnInit {
   }
 
   refreshUserProfile() {
-    this.userProfile$ = this.users.getUserProfile();
+    this.userProfile$ = this.messageBoardService.getUserProfile();
     this.userProfile$
       .subscribe({
         next: user=>{
@@ -77,7 +77,7 @@ export class UserMenuComponent implements OnInit {
         let concatb64Repr = b64Repr.slice(b64Repr.indexOf(",") + 1)
         let imageFormat = b64Repr.slice(b64Repr.indexOf("/") + 1, b64Repr.indexOf(";"))
 
-        this.users.updateProfileImage({baseEncodedImage: concatb64Repr,imageFormat: imageFormat})
+        this.messageBoardService.updateProfileImage({baseEncodedImage: concatb64Repr,imageFormat: imageFormat})
         .subscribe({
           next: ()=>{
             this.fileInput.reset();
@@ -107,7 +107,7 @@ export class UserMenuComponent implements OnInit {
   }
 
   changeDisplayName() {
-    this.users.updateDisplayName(this.displayNameForm.getRawValue()!)
+    this.messageBoardService.updateDisplayName(this.displayNameForm.getRawValue()!)
       .subscribe({
         next: ()=>{
           this.showChangeDisplayNameForm = false;

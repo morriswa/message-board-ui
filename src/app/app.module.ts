@@ -13,7 +13,6 @@ import { PostFeedComponent } from './components/post-feed/post-feed.component';
 import { CommunityComponent } from './components/community/community.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
-import {UserProfileService} from "./service/user-profile.service";
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import {APP_BASE_HREF} from "@angular/common";
 import {ImageCropperModule} from "ngx-image-cropper";
@@ -30,8 +29,6 @@ const AUTH0_CONFIG = {
   httpInterceptor: {
     allowedList: [
       { uri: environment.userProfileService + '*' },
-      { uri: environment.communityService + '*' },
-      { uri: environment.contentService + '*' },
     ]
   }
 };
@@ -59,7 +56,6 @@ const AUTH0_CONFIG = {
     {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
     // {provide: APP_BASE_HREF, useValue: '/messageboard'},
     AuthService,
-    UserProfileService
   ],
   bootstrap: [AppComponent]
 })

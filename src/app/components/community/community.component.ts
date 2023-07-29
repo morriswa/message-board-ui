@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {CommunityService} from "../../service/community.service";
-import {ContentService} from "../../service/content.service";
+import {MessageBoardClientService} from "../../service/message-board-client.service";
 
 @Component({
   selector: 'app-community',
@@ -16,12 +15,11 @@ export class CommunityComponent {
   communityInfo:any;
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
-              private community: CommunityService,
-              private content: ContentService) {
+              private messageBoardService: MessageBoardClientService) {
     try {
       this.communityName=activeRoute.snapshot.url[0].path;
 
-      this.community.getCommunityInfo(this.communityName)
+      this.messageBoardService.getCommunityInfo(this.communityName)
         .subscribe({
           next: payload=>{
             console.log(payload)
