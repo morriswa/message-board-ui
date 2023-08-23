@@ -16,13 +16,15 @@ import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import {APP_BASE_HREF} from "@angular/common";
 import {ImageCropperModule} from "ngx-image-cropper";
+import { CreateCommunityComponent } from './components/create-community/create-community.component';
+import { EditCommunityComponent } from './components/edit-community/edit-community.component';
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
   clientId: environment.auth.clientId,
   authorizationParams: {
     audience: environment.auth.audience,
-    scope: 'openid email profile develop:demo',
+    scope: environment.auth.scopes,
     redirect_uri: window.location.origin
   },
   // Specify configuration for the interceptor
@@ -41,7 +43,9 @@ const AUTH0_CONFIG = {
     CommunityComponent,
     LandingPageComponent,
     UserMenuComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    CreateCommunityComponent,
+    EditCommunityComponent
   ],
     imports: [
         BrowserModule,

@@ -94,4 +94,12 @@ export class MessageBoardClientService {
     return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,newProfileObject)
       .pipe(map((response:any)=>response.payload));
   }
+
+  createCommunity(communityRef:string, communityDisplayName:string) {
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+'community',{
+      communityRef:communityRef,
+      communityName:communityDisplayName
+    })
+      .pipe(map((response:any)=>response.payload));
+  }
 }

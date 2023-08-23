@@ -1,0 +1,74 @@
+<h1>Community Ref: {{ communityInfo.communityLocator }}</h1>
+<h1>Community Name: {{ communityInfo.displayName }}</h1>
+<h1>Community Owner: {{ communityInfo.ownerId }}</h1>
+
+
+
+<input
+  type="text"
+  class="form-control"
+  [formControl]="communityRefForm"
+  placeholder="Enter Community Ref"
+>
+
+<input
+  type="text"
+  class="form-control"
+  [formControl]="communityDisplayNameForm"
+  placeholder="Enter Community Display Name"
+>
+
+<button
+  class="btn btn-primary"
+  [disabled]="this.communityRefForm.invalid||this.communityDisplayNameForm.invalid"
+  (click)="updateCommunity()"
+>
+  Update!
+</button>
+
+
+<div class="form-control-container">
+  <input
+    class="form-control"
+    (change)="newImageUploaded($event)"
+    [formControl]="this.fileInput"
+    type="file"
+    required="false"
+  >
+
+  <button
+    class="btn btn-primary"
+    (click)="updateUserProfileImage()"
+  >
+    Upload!
+  </button>
+</div>
+
+<div class="form-control-container">
+  <input
+    class="form-control"
+    (change)="newImageUploaded($event)"
+    [formControl]="this.fileInput"
+    type="file"
+    required="false"
+  >
+
+  <button
+    class="btn btn-primary"
+    (click)="updateUserProfileImage()"
+  >
+    Upload!
+  </button>
+</div>
+
+<image-cropper
+  *ngIf="croppingInProgress"
+  [imageChangedEvent]="imageChangedEvent"
+  [maintainAspectRatio]="true"
+  [aspectRatio]="1"
+  format="png"
+  (imageCropped)="imageCropped($event)"
+>
+</image-cropper>
+
+

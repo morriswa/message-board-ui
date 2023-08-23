@@ -1,0 +1,21 @@
+<input
+  type="text"
+  class="form-control"
+  [formControl]="communityRefForm"
+  placeholder="Enter Community Ref"
+  >
+
+<input
+  type="text"
+  class="form-control"
+  [formControl]="communityDisplayNameForm"
+  placeholder="Enter Community Display Name"
+  >
+
+<button
+  class="btn btn-primary"
+  [disabled]="this.communityRefForm.invalid||this.communityDisplayNameForm.invalid"
+  (click)="createCommunity()"
+>
+  Get Started!
+</button>
