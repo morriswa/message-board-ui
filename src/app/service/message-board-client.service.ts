@@ -72,7 +72,7 @@ export class MessageBoardClientService {
   joinCommunity(communityId:string) {
     const PATH_PARAMS = 'community/' + communityId + '/membership';
 
-    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS,{}).pipe();
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS,{});
   }
 
   leaveCommunity(communityId:string) {

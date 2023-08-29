@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
+import {UserMenuComponent} from "../user-menu/user-menu.component";
 
 @Component({
   selector: 'app-community',
@@ -13,18 +14,24 @@ export class CommunityComponent {
 
   communityName?:string;
   communityInfo:any;
+  communityFeed:any[]=[];
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
               private messageBoardService: MessageBoardClientService) {
     try {
-      this.communityName=activeRoute.snapshot.url[0].path;
+      this.communityName=activeRoute.snapshot.params['communityId'];
 
-      this.messageBoardService.getCommunityInfo(this.communityName)
+      this.messageBoardService.getCommunityInfo(this.communityName!)
         .subscribe({
           next: payload=>{
             console.log(payload)
             this.communityInfo = payload;
-            this.loading = false;
+            this.messageBoardService.getFeedForCommunity(this.communityInfo.communityId!)
+              .subscribe((result:any)=>{
+                this.communityFeed = result.payload
+                this.loading = false
+              }
+          )
           },
           error: ()=>router.navigate(['/'])
         })

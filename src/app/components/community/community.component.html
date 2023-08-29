@@ -1,10 +1,13 @@
-<div class="main-layout">
+<div class="main-layout" *ngIf="!loading" >
 
-  <app-post-feed></app-post-feed>
+  <app-post-feed [posts]="communityFeed"></app-post-feed>
 
-  <div class="sidebar-vertical-card" *ngIf="!loading">
+
+
+  <div class="sidebar-vertical-card">
     <p *ngIf="!communityName">community doesn't work :(</p>
     <p *ngIf="communityName">Now viewing community {{ communityName }}</p>
+    <p>{{ communityInfo.communityMemberCount }} Members!</p>
 
 
     <h1>{{ communityInfo.displayName }}</h1>

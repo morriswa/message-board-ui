@@ -18,6 +18,7 @@ import {APP_BASE_HREF} from "@angular/common";
 import {ImageCropperModule} from "ngx-image-cropper";
 import { CreateCommunityComponent } from './components/create-community/create-community.component';
 import { EditCommunityComponent } from './components/edit-community/edit-community.component';
+import { CreatePostComponent } from './components/create-post/create-post.component';
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -45,7 +46,8 @@ const AUTH0_CONFIG = {
     UserMenuComponent,
     RegisterUserComponent,
     CreateCommunityComponent,
-    EditCommunityComponent
+    EditCommunityComponent,
+    CreatePostComponent
   ],
     imports: [
         BrowserModule,

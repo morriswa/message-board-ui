@@ -1,4 +1,8 @@
 
 <div class="main-vertical-card">
-  <p>post-feed works!</p>
+  <div *ngFor="let post of posts" style="max-width: 400px">
+    <h1>{{ post.userInfo.displayName }}</h1>
+    <h2>{{ post.caption }}</h2>
+    <img [src]="post.resources[0]">
+  </div>
 </div>

@@ -41,7 +41,9 @@ export class EditCommunityComponent {
               private router: Router,
               private messageBoardService: MessageBoardClientService) {
     try {
-      this.communityLocator=activeRoute.snapshot.url[0].path;
+      this.communityLocator = activeRoute.snapshot.params['communityId'];
+
+      // console.log(this.communityLocator)
 
       this.messageBoardService.getCommunityInfo(this.communityLocator)
         .subscribe({
