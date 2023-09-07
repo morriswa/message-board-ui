@@ -3,5 +3,5 @@
   <button class="btn btn-primary" *ngIf="!(authenticated$|async)" (click)="register()">Register</button>
   <button class="btn btn-primary" *ngIf="authenticated$|async" routerLink="/user">Menu</button>
   <button class="btn btn-outline-primary" *ngIf="authenticated$|async" (click)="logout()">Logout</button>
-  <button class="btn btn-primary" *ngIf="authenticated$|async" href="/search">Search Communities</button>
+<!--  <button class="btn btn-primary" *ngIf="authenticated$|async" href="/search">Search Communities</button>-->
 </div>

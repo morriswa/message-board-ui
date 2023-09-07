@@ -31,7 +31,7 @@ const AUTH0_CONFIG = {
   // Specify configuration for the interceptor
   httpInterceptor: {
     allowedList: [
-      { uri: environment.userProfileService + '*' },
+      { uri: environment.api + '*' },
     ]
   }
 };

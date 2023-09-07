@@ -7,7 +7,7 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 export class MessageBoardClientService {
-  MESSAGE_BOARD_SERVICE_ENDPOINT= environment.userProfileService;
+  MESSAGE_BOARD_SERVICE_ENDPOINT= environment.api+'v0/';
 
   constructor(private http: HttpClient) { }
 
