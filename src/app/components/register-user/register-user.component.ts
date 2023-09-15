@@ -55,7 +55,7 @@ export class RegisterUserComponent implements OnInit{
 
 
   registerUser() {
-    this.messageBoardService.registerUser(this.email!, this.displayNameForm.getRawValue()!)
+    this.messageBoardService.registerUser(this.displayNameForm.getRawValue()!)
       .subscribe({
         next: ()=>this.router.navigate(['/user']),
         error: er=>console.error(er)

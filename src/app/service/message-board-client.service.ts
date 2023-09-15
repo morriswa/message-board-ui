@@ -11,10 +11,9 @@ export class MessageBoardClientService {
 
   constructor(private http: HttpClient) { }
 
-  registerUser(email: string, displayName: string) {
+  registerUser(displayName: string) {
     return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+'user',{},{
       params: {
-        email: email,
         displayName: displayName
       }
     });
@@ -33,7 +32,7 @@ export class MessageBoardClientService {
   updateDisplayName(newDisplayName:string) {
     return this.http.patch(this.MESSAGE_BOARD_SERVICE_ENDPOINT+'user/displayName', {},{
       params: {
-        requestedDisplayName: newDisplayName
+        displayName: newDisplayName
       }
     });
   }
