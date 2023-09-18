@@ -4,7 +4,7 @@ import {MessageBoardClientService} from "../../service/message-board-client.serv
 import {FormControl, Validators} from "@angular/forms";
 import {ImageCroppedEvent} from "ngx-image-cropper";
 import {UserMenuComponent} from "../user-menu/user-menu.component";
-import {Utils} from "../Utils";
+import {Utils} from "../../Utils";
 
 @Component({
   selector: 'app-edit-community',

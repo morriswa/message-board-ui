@@ -3,9 +3,7 @@ import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
-import {ImageCroppedEvent} from "ngx-image-cropper";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
-import {Utils} from "../Utils";
 
 @Component({
   selector: 'app-user-menu',

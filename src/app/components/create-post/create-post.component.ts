@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {FormControl} from "@angular/forms";
 import {UserMenuComponent} from "../user-menu/user-menu.component";
-import {Utils} from "../Utils";
+import {Utils} from "../../Utils";
 
 @Component({
   selector: 'app-create-post',
@@ -14,8 +14,6 @@ export class CreatePostComponent{
   public communityLocator: any;
   public communityInfo: any;
   public loading: boolean = true;
-  fileInput = new FormControl();
-  fileUpload?: File;
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
@@ -42,35 +40,25 @@ export class CreatePostComponent{
 
   }
 
-
-  public newImageUploaded($event: any) {
-    this.fileUpload = $event.target.files[0];
-  }
-
-  public uploadPostImage() {
+  public uploadPostImage($event:any) {
     // this.PROCESSING_REQUEST = true;
 
-    if (this.fileUpload) {
 
-      Utils.file2Base64(this.fileUpload).then(b64Repr => {
-        let concatb64Repr = b64Repr.slice(b64Repr.indexOf(",") + 1)
-        let imageFormat = b64Repr.slice(b64Repr.indexOf("/") + 1, b64Repr.indexOf(";"))
-
-        this.messageBoardService.createImagePostToCommunity(
-          this.communityInfo.communityId,
-          "aaaaa", "bbbbb",
-          {baseEncodedImage: concatb64Repr,imageFormat: imageFormat})
-          .subscribe({
-            next: ()=>{
-              this.fileInput.reset();
-            },
-            error: err=>{
-              console.error(err);
-              this.fileInput.reset();
-            }
-          })
+    this.messageBoardService.createImagePostToCommunity(
+      this.communityInfo.communityId,
+      "aaaaa", "bbbbb",
+      $event)
+      .subscribe({
+        next: ()=>{
+          this.router.navigate(['community/'+this.communityLocator])
+        },
+        error: err=>{
+          console.error(err);
+          // this.fileInput.reset();
+        }
       });
-    }
+
+
   }
 
 

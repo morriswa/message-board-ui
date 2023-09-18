@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {ImageCroppedEvent} from "ngx-image-cropper";
-import {Utils} from "../Utils";
+import {Utils} from "../../Utils";
 import {Observable, of} from "rxjs";
 import {FormControl} from "@angular/forms";
 
