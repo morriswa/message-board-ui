@@ -1,0 +1,14 @@
+@import "src/styles";
+
+
+.form-control-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: baseline;
+}
+
+.form-control {
+  max-width: 500px;
+  display: inline;
+}

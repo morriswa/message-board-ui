@@ -19,6 +19,7 @@ import {ImageCropperModule} from "ngx-image-cropper";
 import { CreateCommunityComponent } from './components/create-community/create-community.component';
 import { EditCommunityComponent } from './components/edit-community/edit-community.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
+import { ImageUploadAndCropComponent } from './components/image-upload-and-crop/image-upload-and-crop.component';
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -47,7 +48,8 @@ const AUTH0_CONFIG = {
     RegisterUserComponent,
     CreateCommunityComponent,
     EditCommunityComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    ImageUploadAndCropComponent
   ],
     imports: [
         BrowserModule,

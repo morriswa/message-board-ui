@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {FormControl} from "@angular/forms";
 import {UserMenuComponent} from "../user-menu/user-menu.component";
+import {Utils} from "../Utils";
 
 @Component({
   selector: 'app-create-post',
@@ -51,7 +52,7 @@ export class CreatePostComponent{
 
     if (this.fileUpload) {
 
-      UserMenuComponent.file2Base64(this.fileUpload).then(b64Repr => {
+      Utils.file2Base64(this.fileUpload).then(b64Repr => {
         let concatb64Repr = b64Repr.slice(b64Repr.indexOf(",") + 1)
         let imageFormat = b64Repr.slice(b64Repr.indexOf("/") + 1, b64Repr.indexOf(";"))
 

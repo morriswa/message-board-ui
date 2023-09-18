@@ -4,6 +4,7 @@ import {MessageBoardClientService} from "../../service/message-board-client.serv
 import {FormControl, Validators} from "@angular/forms";
 import {ImageCroppedEvent} from "ngx-image-cropper";
 import {UserMenuComponent} from "../user-menu/user-menu.component";
+import {Utils} from "../Utils";
 
 @Component({
   selector: 'app-edit-community',
@@ -76,7 +77,7 @@ export class EditCommunityComponent {
     if (this.stagedProfilePhotoForUpload) {
 
       this.croppingInProgress = false;
-      UserMenuComponent.file2Base64(this.stagedProfilePhotoForUpload).then(b64Repr => {
+      Utils.file2Base64(this.stagedProfilePhotoForUpload).then(b64Repr => {
         let concatb64Repr = b64Repr.slice(b64Repr.indexOf(",") + 1)
         let imageFormat = b64Repr.slice(b64Repr.indexOf("/") + 1, b64Repr.indexOf(";"))
 
