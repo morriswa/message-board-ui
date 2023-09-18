@@ -3,6 +3,7 @@
   <div *ngFor="let post of posts" style="max-width: 400px">
     <h1>{{ post.userInfo.displayName }}</h1>
     <h2>{{ post.caption }}</h2>
+    <p>{{ post.description }}</p>
     <img [src]="post.resources[0]">
   </div>
 </div>

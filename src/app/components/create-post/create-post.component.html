@@ -1,6 +1,32 @@
 <div *ngIf="!loading">
+
   <app-image-upload-and-crop
    (imageCroppedAndReadyEvent)="uploadPostImage($event)">
   </app-image-upload-and-crop>
+
+  <input
+    type="text"
+    class="form-control"
+    [formControl]="postCaptionForm"
+    placeholder="Enter a Caption..."
+  >
+
+  <input
+    type="text"
+    class="form-control"
+    [formControl]="postDescriptionForm"
+    placeholder="...and description for your Post!"
+  >
+
+  <button
+    class="btn btn-primary"
+    [disabled]="this.postCaptionForm.invalid
+    ||this.postDescriptionForm.invalid
+    ||!this.pendingImageUpload"
+    (click)="savePostAndUpload()"
+  >
+    Save and Post!
+  </button>
+
 
 </div>
