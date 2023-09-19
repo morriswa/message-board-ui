@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {FormControl, Validators} from "@angular/forms";
 import {UserMenuComponent} from "../user-menu/user-menu.component";
 import {Utils} from "../../Utils";
+import {UploadImageRequest} from "../../interface/upload-image-request";
 
 @Component({
   selector: 'app-create-post',
@@ -11,9 +12,14 @@ import {Utils} from "../../Utils";
   styleUrls: ['./create-post.component.scss']
 })
 export class CreatePostComponent{
-  public communityLocator: any;
-  public communityInfo: any;
-  public loading: boolean = true;
+  communityLocator: any;
+  communityInfo: any;
+  loading: boolean = true;
+
+  pendingImageUpload?: UploadImageRequest;
+
+  resetEventEmitter: EventEmitter<any> = new EventEmitter<any>();
+
 
   postCaptionForm = new FormControl('',
     [
@@ -26,16 +32,12 @@ export class CreatePostComponent{
     [
       Validators.maxLength(1000),
     ])
-  pendingImageUpload: any;
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
               private messageBoardService: MessageBoardClientService) {
     try {
       this.communityLocator = activeRoute.snapshot.params['communityId'];
-
-      // console.log(this.communityLocator)
-
       this.messageBoardService.getCommunityInfo(this.communityLocator)
         .subscribe({
           next: payload=>{
@@ -49,28 +51,28 @@ export class CreatePostComponent{
 
 
     } catch {}
-
-
   }
 
-  public uploadPostImage($event:any) {
+  public uploadPostImage($event:UploadImageRequest) {
     this.pendingImageUpload=$event
   }
 
-
   savePostAndUpload() {
+    if (!this.pendingImageUpload) return
+
     this.messageBoardService.createImagePostToCommunity(
       this.communityInfo.communityId,
           this.postCaptionForm.getRawValue()!,
           this.postDescriptionForm.getRawValue()!,
           this.pendingImageUpload)
       .subscribe({
-            next: ()=>{
+            next: ()=> {
+              this.resetEventEmitter.emit();
               this.router.navigate(['community/'+this.communityLocator])
             },
             error: err=>{
+              this.resetEventEmitter.emit();
               console.error(err);
-              // this.fileInput.reset();
             }
     });
   }

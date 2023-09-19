@@ -1,26 +1,41 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ImageCroppedEvent} from "ngx-image-cropper";
 import {Utils} from "../../Utils";
-import {Observable, of} from "rxjs";
 import {FormControl} from "@angular/forms";
+import {UploadImageRequest} from "../../interface/upload-image-request";
+
 
 @Component({
   selector: 'app-image-upload-and-crop',
   templateUrl: './image-upload-and-crop.component.html',
   styleUrls: ['./image-upload-and-crop.component.scss']
 })
-export class ImageUploadAndCropComponent {
+export class ImageUploadAndCropComponent implements OnInit{
   loading = true
   croppingInProgress= false;
+
+  fileInput = new FormControl();
 
   fileUpload?: File;
   stagedProfilePhotoForUpload?:Blob;
 
-  fileInput = new FormControl();
   imageChangedEvent: any;
 
-  @Output() imageCroppedAndReadyEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Input() resetImageComponent: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() imageCroppedAndReadyEvent: EventEmitter<UploadImageRequest> = new EventEmitter<UploadImageRequest>();
+
+  ngOnInit(): void {
+    this.resetImageComponent.subscribe(()=>this.reset())
+  }
+
+  public reset() {
+    this.fileInput.reset();
+    this.fileUpload = undefined;
+    this.stagedProfilePhotoForUpload = undefined;
+    this.croppingInProgress = false;
+    this.imageChangedEvent = undefined;
+  }
 
   public newImageUploaded($event: any) {
     this.fileUpload = $event.target.files[0];
@@ -46,4 +61,6 @@ export class ImageUploadAndCropComponent {
       });
     }
   }
+
+
 }

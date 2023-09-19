@@ -1,6 +1,7 @@
 <div *ngIf="!loading">
 
   <app-image-upload-and-crop
+    [resetImageComponent]="resetEventEmitter"
    (imageCroppedAndReadyEvent)="uploadPostImage($event)">
   </app-image-upload-and-crop>
 

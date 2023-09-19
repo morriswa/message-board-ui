@@ -1,77 +1,38 @@
 <div *ngIf="!this.loading">
 
-<h1>Community Ref: {{ communityInfo.communityLocator }}</h1>
-<h1>Community Name: {{ communityInfo.displayName }}</h1>
-<h1>Community Owner: {{ communityInfo.ownerId }}</h1>
+  <h1>Community Ref: {{ communityInfo.communityLocator }}</h1>
+  <h1>Community Name: {{ communityInfo.displayName }}</h1>
+  <h1>Community Owner: {{ communityInfo.ownerId }}</h1>
 
-
-
-<input
-  type="text"
-  class="form-control"
-  [formControl]="communityRefForm"
-  placeholder="Enter Community Ref"
->
-
-<input
-  type="text"
-  class="form-control"
-  [formControl]="communityDisplayNameForm"
-  placeholder="Enter Community Display Name"
->
-
-<button
-  class="btn btn-primary"
-  [disabled]="this.communityRefForm.invalid||this.communityDisplayNameForm.invalid"
-  (click)="updateCommunity()"
->
-  Update!
-</button>
-
-
-<div class="form-control-container">
   <input
+    type="text"
     class="form-control"
-    (change)="newImageUploaded($event)"
-    [formControl]="this.fileInput"
-    type="file"
-    required="false"
+    [formControl]="communityRefForm"
+    placeholder="Enter new Community Ref (used in URLs and to search your community)"
   >
+
+  <input
+    type="text"
+    class="form-control"
+    [formControl]="communityDisplayNameForm"
+    placeholder="Enter new Community Display Name"
+  >
+
+  <app-image-upload-and-crop
+    [resetImageComponent]="this.resetEventEmitter"
+    (imageCroppedAndReadyEvent)="uploadCommunityResource('icon',$event)">
+  </app-image-upload-and-crop>
+
+  <app-image-upload-and-crop
+    [resetImageComponent]="this.resetEventEmitter"
+    (imageCroppedAndReadyEvent)="uploadCommunityResource('banner',$event)">
+  </app-image-upload-and-crop>
 
   <button
     class="btn btn-primary"
-    (click)="updateUserProfileImage()"
+    [disabled]="this.communityRefForm.invalid||this.communityDisplayNameForm.invalid"
+    (click)="updateCommunity()"
   >
-    Upload!
+    Update!
   </button>
-</div>
-
-<div class="form-control-container">
-  <input
-    class="form-control"
-    (change)="newImageUploaded($event)"
-    [formControl]="this.fileInput"
-    type="file"
-    required="false"
-  >
-
-  <button
-    class="btn btn-primary"
-    (click)="updateUserProfileImage()"
-  >
-    Upload!
-  </button>
-</div>
-
-<image-cropper
-  *ngIf="croppingInProgress"
-  [imageChangedEvent]="imageChangedEvent"
-  [maintainAspectRatio]="true"
-  [aspectRatio]="1"
-  format="png"
-  (imageCropped)="imageCropped($event)"
->
-</image-cropper>
-
-
 </div>

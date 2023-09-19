@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {Observable, of} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
+import {UploadImageRequest} from "../../interface/upload-image-request";
 
 @Component({
   selector: 'app-user-menu',
@@ -48,7 +49,7 @@ export class UserMenuComponent implements OnInit {
       });
   }
 
-  updateUserProfileImage($event:any) {
+  updateUserProfileImage($event:UploadImageRequest) {
     this.PROCESSING_REQUEST = true;
     this.messageBoardService.updateProfileImage($event)
     .subscribe({

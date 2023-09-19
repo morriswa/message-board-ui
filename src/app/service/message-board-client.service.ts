@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs";
 import {environment} from "../../environments/environment";
+import {UploadImageRequest} from "../interface/upload-image-request";
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
-  updateProfileImage(newProfileObject:{baseEncodedImage:string, imageFormat:string}) {
-    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+'user/profileImage',newProfileObject)
+  updateProfileImage(newProfileImage:UploadImageRequest) {
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+'user/profileImage',newProfileImage)
       .pipe(map((response:any)=>response.payload));
   }
 
@@ -80,17 +81,17 @@ export class MessageBoardClientService {
     return this.http.delete(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS,{}).pipe();
   }
 
-  updateCommunityIcon(communityId: number, newProfileObject:{baseEncodedImage:string, imageFormat:string}) {
+  updateCommunityIcon(communityId: number, newCommunityIcon:UploadImageRequest) {
     const PATH_PARAMS = 'community/'+communityId+'/icon';
 
-    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,newProfileObject)
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,newCommunityIcon)
       .pipe(map((response:any)=>response.payload));
   }
 
-  updateCommunityBanner(communityId:number, newProfileObject:{baseEncodedImage:string, imageFormat:string}) {
+  updateCommunityBanner(communityId:number, newCommunityBanner:UploadImageRequest) {
     const PATH_PARAMS = 'community/'+communityId+'/banner';
 
-    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,newProfileObject)
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,newCommunityBanner)
       .pipe(map((response:any)=>response.payload));
   }
 
