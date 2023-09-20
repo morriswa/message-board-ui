@@ -19,6 +19,8 @@
   >
 
   <app-image-upload-and-crop
+    [MAINTAIN_ASPECT_RATIO]="true"
+    [ASPECT_RATIO]="1"
     [resetImageComponent]="this.resetEventEmitter"
     (imageCroppedAndReadyEvent)="uploadCommunityResource('icon',$event)">
   </app-image-upload-and-crop>

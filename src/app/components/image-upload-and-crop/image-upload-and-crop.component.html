@@ -11,15 +11,15 @@
     class="btn btn-primary"
     (click)="confirmCropAndReturnImageObj()"
   >
-    Upload!
+    Save and Crop!
   </button>
 </div>
 
 <image-cropper
   *ngIf="croppingInProgress"
   [imageChangedEvent]="imageChangedEvent"
-  [maintainAspectRatio]="true"
-  [aspectRatio]="1"
+  [maintainAspectRatio]="MAINTAIN_ASPECT_RATIO"
+  [aspectRatio]="ASPECT_RATIO"
   format="png"
   (imageCropped)="imageCropped($event)"
 >

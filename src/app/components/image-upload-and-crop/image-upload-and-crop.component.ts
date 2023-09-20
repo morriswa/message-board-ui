@@ -22,7 +22,8 @@ export class ImageUploadAndCropComponent implements OnInit{
   imageChangedEvent: any;
 
   @Input() resetImageComponent: EventEmitter<any> = new EventEmitter<any>();
-
+  @Input() ASPECT_RATIO: number = 1;
+  @Input() MAINTAIN_ASPECT_RATIO: boolean = false;
   @Output() imageCroppedAndReadyEvent: EventEmitter<UploadImageRequest> = new EventEmitter<UploadImageRequest>();
 
   ngOnInit(): void {

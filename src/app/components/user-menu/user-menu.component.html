@@ -40,20 +40,12 @@
   </div>
 
   <div class="form-control-container">
-<!--    <input-->
-<!--      class="form-control"-->
-<!--      (change)="newImageUploaded($event)"-->
-<!--      [formControl]="this.fileInput"-->
-<!--      type="file"-->
-<!--      required="false"-->
-<!--    >-->
     <app-image-upload-and-crop
+      [MAINTAIN_ASPECT_RATIO]="true"
+      [ASPECT_RATIO]="1"
       (imageCroppedAndReadyEvent)="updateUserProfileImage($event)"
       *ngIf="!PROCESSING_REQUEST"
     ></app-image-upload-and-crop>
-
   </div>
-
-
 
 </div>
