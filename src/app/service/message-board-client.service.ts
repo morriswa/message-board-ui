@@ -102,4 +102,23 @@ export class MessageBoardClientService {
     })
       .pipe(map((response:any)=>response.payload));
   }
+
+  editCommunityAttributes(communityId: number, communityRef:string, communityDisplayName:string) {
+
+    let params: any = {
+      communityId:communityId
+    }
+
+    if (communityRef.length>0)
+      params.communityRef = communityRef
+
+    if (communityDisplayName.length>0)
+      params.communityDisplayName = communityDisplayName
+
+    return this.http.patch(this.MESSAGE_BOARD_SERVICE_ENDPOINT+ 'community', {}, {
+      params: params
+    })
+      .pipe();
+  }
+
 }
