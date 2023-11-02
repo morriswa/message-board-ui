@@ -7,12 +7,14 @@ import {RegisterUserComponent} from "./components/register-user/register-user.co
 import {CreateCommunityComponent} from "./components/create-community/create-community.component";
 import {EditCommunityComponent} from "./components/edit-community/edit-community.component";
 import {CreatePostComponent} from "./components/create-post/create-post.component";
+import {CommunityNavigationComponent} from "./components/community-navigation/community-navigation.component";
 
 
 const routes: Routes = [
   { path: 'communityTools',
     children: [
       { path: 'create', component: CreateCommunityComponent,},
+      { path: 'list', component: CommunityNavigationComponent,},
     ]
   },
   { path: 'community/:communityId',

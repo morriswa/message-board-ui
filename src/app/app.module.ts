@@ -20,6 +20,7 @@ import { CreateCommunityComponent } from './components/create-community/create-c
 import { EditCommunityComponent } from './components/edit-community/edit-community.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { ImageUploadAndCropComponent } from './components/image-upload-and-crop/image-upload-and-crop.component';
+import { CommunityNavigationComponent } from './components/community-navigation/community-navigation.component';
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -49,7 +50,8 @@ const AUTH0_CONFIG = {
     CreateCommunityComponent,
     EditCommunityComponent,
     CreatePostComponent,
-    ImageUploadAndCropComponent
+    ImageUploadAndCropComponent,
+    CommunityNavigationComponent
   ],
     imports: [
         BrowserModule,

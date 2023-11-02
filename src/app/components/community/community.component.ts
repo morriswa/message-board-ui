@@ -28,6 +28,7 @@ export class CommunityComponent {
             this.communityInfo = payload;
             this.messageBoardService.getFeedForCommunity(this.communityInfo.communityId!)
               .subscribe((result:any)=>{
+                console.log(result)
                 this.communityFeed = result.payload
                 this.loading = false
               }

@@ -121,4 +121,8 @@ export class MessageBoardClientService {
       .pipe();
   }
 
+  getUsersCommunities() {
+    return this.http.get(this.MESSAGE_BOARD_SERVICE_ENDPOINT+ 'communities')
+      .pipe();
+  }
 }
