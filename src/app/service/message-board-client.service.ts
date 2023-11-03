@@ -58,10 +58,10 @@ export class MessageBoardClientService {
       .pipe();
   }
 
-  getCommunityInfo(displayName: string) {
+  getCommunityInfo(communityLocator: string) {
     return this.http.get(this.MESSAGE_BOARD_SERVICE_ENDPOINT + 'community',{
       params: {
-        displayName:displayName
+        communityLocator:communityLocator
       }
     }).pipe(map((response:any)=>{
       console.log(response.message);

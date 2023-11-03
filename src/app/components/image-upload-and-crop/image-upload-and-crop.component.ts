@@ -3,6 +3,8 @@ import {ImageCroppedEvent} from "ngx-image-cropper";
 import {Utils} from "../../Utils";
 import {FormControl} from "@angular/forms";
 import {UploadImageRequest} from "../../interface/upload-image-request";
+import heic2any from "heic2any";
+
 
 
 @Component({
@@ -16,7 +18,6 @@ export class ImageUploadAndCropComponent implements OnInit{
 
   fileInput = new FormControl();
 
-  fileUpload?: File;
   stagedProfilePhotoForUpload?:Blob;
 
   imageChangedEvent: any;
@@ -32,15 +33,52 @@ export class ImageUploadAndCropComponent implements OnInit{
 
   public reset() {
     this.fileInput.reset();
-    this.fileUpload = undefined;
     this.stagedProfilePhotoForUpload = undefined;
     this.croppingInProgress = false;
     this.imageChangedEvent = undefined;
   }
 
   public newImageUploaded($event: any) {
-    this.fileUpload = $event.target.files[0];
-    this.imageChangedEvent = $event;
+    // extract file object from event
+    let file:File = $event.target.files[0];
+
+    switch (file.type) {
+      case "image/heic":
+        file.arrayBuffer()
+          // retrieve array buffer of file
+          .then((arrayBuffer:ArrayBuffer) =>
+            // and convert to Blob of correct type
+            new Blob([new Uint8Array(arrayBuffer)], {type: file.type })
+          ).then((blob:Blob) =>
+            // convert retrieved HEIC blob to JPEG blob
+            heic2any({
+              blob,
+              toType: "image/jpeg",
+            }))
+          .then((conversionResult) =>
+            // grab array buffer of converted object
+            (conversionResult as Blob).arrayBuffer()
+          )
+          .then((conversionResult:any) => {
+            // use array buffer to construct new image uploaded event, and assign to image changed event
+            this.imageChangedEvent = {
+              target: {
+                files: [
+                  new File([conversionResult], 'dont-use-this-value', {type:"image/jpeg"})
+                ]
+              }
+            };
+          })
+          .catch((e:any) => {
+            // catch any errors
+            console.error(e)
+          });
+        break;
+      default:
+        this.imageChangedEvent = $event;
+        break;
+    }
+
     this.croppingInProgress = true;
   }
 
