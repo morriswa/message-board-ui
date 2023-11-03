@@ -1,6 +1,6 @@
 
 <div class="main-vertical-card">
-  <div *ngFor="let post of posts" style="max-width: 400px">
+  <div id="posts-wrapper" *ngFor="let post of posts">
     <h1>{{ post.userInfo.displayName }}</h1>
     <h2>{{ post.caption }}</h2>
     <p>{{ post.description }}</p>

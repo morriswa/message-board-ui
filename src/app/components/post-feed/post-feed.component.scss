@@ -1,7 +1,10 @@
 @import "src/styles";
 
+#posts-wrapper {
+  max-width: 70vw;
+}
 
 img {
-  max-width: 500px;
-  max-height: 500px;
+  max-width: 85%;
+  //max-height: 500px;
 }
