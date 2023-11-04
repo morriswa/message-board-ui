@@ -1,0 +1,26 @@
+@import "src/styles";
+
+$banner-height: 75px;
+
+img {
+  max-height: 200px;
+}
+
+#community-header {
+  width: 100vw;
+  max-height: $banner-height;
+  align-items: flex-end;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-grow: 1;
+  background-color: #b0ff8e;
+}
+
+#community-icon {
+  max-height: $banner-height;
+}
+
+#community-banner {
+  max-height: $banner-height;
+}

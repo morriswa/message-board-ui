@@ -14,13 +14,14 @@ import { CommunityComponent } from './components/community/community.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
-import {APP_BASE_HREF} from "@angular/common";
+import {APP_BASE_HREF, NgOptimizedImage} from "@angular/common";
 import {ImageCropperModule} from "ngx-image-cropper";
 import { CreateCommunityComponent } from './components/create-community/create-community.component';
 import { EditCommunityComponent } from './components/edit-community/edit-community.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { ImageUploadAndCropComponent } from './components/image-upload-and-crop/image-upload-and-crop.component';
 import { CommunityNavigationComponent } from './components/community-navigation/community-navigation.component';
+import { CommunityHeaderComponent } from './components/community-header/community-header.component';
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -51,7 +52,8 @@ const AUTH0_CONFIG = {
     EditCommunityComponent,
     CreatePostComponent,
     ImageUploadAndCropComponent,
-    CommunityNavigationComponent
+    CommunityNavigationComponent,
+    CommunityHeaderComponent
   ],
     imports: [
         BrowserModule,
@@ -60,6 +62,7 @@ const AUTH0_CONFIG = {
         AuthModule.forRoot(AUTH0_CONFIG),
         AppRoutingModule,
         ImageCropperModule,
+        NgOptimizedImage,
 
     ],
   providers: [

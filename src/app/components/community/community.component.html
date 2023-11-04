@@ -1,19 +1,9 @@
-<div class="main-layout" *ngIf="!loading" >
+<div *ngIf="!loading" >
+
+  <app-community-header [communityInfo]="communityInfo"></app-community-header>
+
+  <br>
 
   <app-post-feed [posts]="communityFeed"></app-post-feed>
-
-
-
-  <div class="sidebar-vertical-card">
-    <p *ngIf="!communityName">community doesn't work :(</p>
-    <p *ngIf="communityName">Now viewing community {{ communityName }}</p>
-    <p>{{ communityInfo.communityMemberCount }} Members!</p>
-
-
-    <h1>{{ communityInfo.displayName }}</h1>
-    <img [src]="communityInfo.resourceUrls.icon">
-    <img [src]="communityInfo.resourceUrls.banner">
-
-  </div>
 
 </div>
