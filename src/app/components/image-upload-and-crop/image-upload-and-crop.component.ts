@@ -43,6 +43,9 @@ export class ImageUploadAndCropComponent implements OnInit{
     let file:File = $event.target.files[0];
 
     switch (file.type) {
+      case "image/gif":
+        this.stagedProfilePhotoForUpload = file;
+        break;
       case "image/heic":
         file.arrayBuffer()
           // retrieve array buffer of file
@@ -95,6 +98,8 @@ export class ImageUploadAndCropComponent implements OnInit{
       Utils.file2Base64(this.stagedProfilePhotoForUpload).then(b64Repr => {
         let concatb64Repr = b64Repr.slice(b64Repr.indexOf(",") + 1)
         let imageFormat = b64Repr.slice(b64Repr.indexOf("/") + 1, b64Repr.indexOf(";"))
+
+        if (imageFormat === "heic") imageFormat = "jpeg";
 
         this.imageCroppedAndReadyEvent.emit({baseEncodedImage: concatb64Repr,imageFormat: imageFormat});
       });
