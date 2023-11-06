@@ -1,8 +1,9 @@
 import {Component, EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {MessageBoardClientService} from "../../service/message-board-client.service";
+import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {FormControl, Validators} from "@angular/forms";
-import {UploadImageRequest} from "../../interface/upload-image-request";
+import {UploadImageRequest} from "../../../interface/upload-image-request";
+import {CommunityComponent} from "../community.component";
 
 @Component({
   selector: 'app-edit-community',
@@ -11,18 +12,9 @@ import {UploadImageRequest} from "../../interface/upload-image-request";
 })
 export class EditCommunityComponent {
 
-  communityRefForm = new FormControl('',
-    [
-      Validators.maxLength(30),
-      Validators.minLength(3),
-      Validators.pattern('^[a-zA-Z0-9-]*$')
-    ])
+  communityRefForm = CommunityComponent.communityRefForm;
+  communityDisplayNameForm = CommunityComponent.communityDisplayNameForm
 
-  communityDisplayNameForm = new FormControl('',
-    [
-      Validators.maxLength(30),
-      Validators.minLength(3),
-    ])
 
   loading=true;
 

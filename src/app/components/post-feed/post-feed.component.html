@@ -1,9 +1,9 @@
 
-<!--<div  .="main-vertical-card">-->
-  <div id="posts-wrapper" *ngFor="let post of posts">
-    <h1>{{ post.userInfo.displayName }}</h1>
-    <h2>{{ post.caption }}</h2>
+<div id="posts-wrapper" *ngFor="let post of posts">
+  <div class="post-card">
+    <h2>{{ post.caption }} :{{ post.userInfo.displayName }}</h2>
     <p>{{ post.description }}</p>
     <img [src]="post.resources[0]">
   </div>
+</div>
 

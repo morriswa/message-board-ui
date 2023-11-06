@@ -1,11 +1,21 @@
 @import "src/styles";
 
-#posts-wrapper {
 
+$post-size-max: 400px;
+
+#posts-wrapper {
   max-width: 70vw;
 }
 
+.post-card {
+  background-color: $gray-200;
+  padding: 20px;
+  margin: 30px;
+  border-radius: 20px;
+}
+
 img {
-  max-width: 85%;
-  //max-height: 500px;
+  width:$post-size-max;
+  max-height: $post-size-max;
+  object-fit: cover;
 }

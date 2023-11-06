@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {MessageBoardClientService} from "../../service/message-board-client.service";
-import {FormControl, Validators} from "@angular/forms";
+import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {Router} from "@angular/router";
+import {CommunityComponent} from "../community.component";
 
 @Component({
   selector: 'app-create-community',
@@ -10,20 +10,9 @@ import {Router} from "@angular/router";
 })
 export class CreateCommunityComponent {
 
-  communityRefForm = new FormControl('',
-    [
-      Validators.required,
-      Validators.maxLength(30),
-      Validators.minLength(3),
-      Validators.pattern('^[a-zA-Z0-9-]*$')
-    ])
+  communityRefForm = CommunityComponent.communityRefForm;
+  communityDisplayNameForm = CommunityComponent.communityDisplayNameForm
 
-  communityDisplayNameForm = new FormControl('',
-    [
-      Validators.required,
-      Validators.maxLength(30),
-      Validators.minLength(3),
-    ])
   constructor(private router: Router, private service: MessageBoardClientService) {
   }
 
