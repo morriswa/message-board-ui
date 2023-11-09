@@ -9,7 +9,7 @@ export const environment = {
     "domain" : "dev-9deub659.us.auth0.com",
     "clientId" : "FiugLBKKkUvCHYDSaJkztCMxkldOEMpv",
     "audience" : "api://message-board-service",
-    "scopes": "openid email profile org.morriswa.messageboard:develop"
+    "scopes": "openid email profile"
   },
   app_version: package_settings.version,
 };
