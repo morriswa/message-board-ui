@@ -13,13 +13,12 @@ import {switchMap} from "rxjs";
   styleUrls: ['./create-post.component.scss']
 })
 export class CreatePostComponent{
-  communityLocator: any;
   communityInfo: any;
   loading: boolean = true;
 
   pendingImageUpload?: UploadImageRequest;
 
-  resetEventEmitter: EventEmitter<any> = new EventEmitter<any>();
+  clearImageUploadEmitter: EventEmitter<any> = new EventEmitter<any>();
 
 
   postCaptionForm = new FormControl('',
@@ -39,10 +38,9 @@ export class CreatePostComponent{
               private messageBoardService: MessageBoardClientService) {
     try {
 
-      this.communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
+      const communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
 
-      this.messageBoardService.getCommunityInfo(this.communityLocator)
-
+      this.messageBoardService.getCommunityInfo(communityLocator)
         .subscribe({
           next: (result: any)=>{
             this.communityInfo = result;
@@ -67,11 +65,11 @@ export class CreatePostComponent{
           this.pendingImageUpload)
       .subscribe({
             next: ()=> {
-              this.resetEventEmitter.emit();
-              this.router.navigate(['community/'+this.communityLocator])
+              this.clearImageUploadEmitter.emit();
+              this.router.navigate(['/community',this.communityInfo.communityLocator])
             },
             error: err=>{
-              this.resetEventEmitter.emit();
+              this.clearImageUploadEmitter.emit();
               console.error(err);
             }
     });

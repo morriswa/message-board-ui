@@ -1,7 +1,7 @@
 
-<div *ngIf="!loading" class="user-menu-card">
+<div class="user-menu-card" *ngIf="userProfile$|async as user">
 
-  <div *ngIf="userProfile$|async as user">
+  <div>
     <img
       height="200"
       *ngIf="user.userProfileImage"

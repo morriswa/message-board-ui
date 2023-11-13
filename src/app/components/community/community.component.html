@@ -1,20 +1,20 @@
-<div *ngIf="!loading" >
+<div *ngIf="community$|async as community">
 
-  <app-community-header [userId]="userInfo.userId" [communityInfo]="communityInfo"></app-community-header>
+  <app-community-header [userId]="userInfo.userId" [communityInfo]="community"></app-community-header>
 
   <br>
 
   <div id="community-content-wrapper">
 
     <div id="community-info-slide">
-      <p>now viewing community/{{ communityInfo.communityLocator }}</p>
-      <h1>{{ communityInfo.displayName }}</h1>
-      <p>{{ communityInfo.communityMemberCount }} Members!</p>
+      <p>now viewing community/{{ community.communityLocator }}</p>
+      <h1>{{ community.displayName }}</h1>
+      <p>{{ community.communityMemberCount }} Members!</p>
 
       <button
-        *ngIf="communityInfo.ownerId===userInfo.userId"
+        *ngIf="community.ownerId===userInfo.userId"
         class="btn btn-outline-secondary"
-        [routerLink]="['/community',communityInfo.communityLocator,'edit']"
+        [routerLink]="['/community',community.communityLocator,'edit']"
       >Edit</button>
 
       <button

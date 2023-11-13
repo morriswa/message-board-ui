@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {ActivatedRoute} from "@angular/router";
-import {switchMap} from "rxjs";
+import {Observable, of, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-community-feed',
@@ -9,20 +9,15 @@ import {switchMap} from "rxjs";
   styleUrls: ['./community-feed.component.scss']
 })
 export class CommunityFeedComponent {
-  posts:any
+  posts$:Observable<any> = of ({});
   constructor(activeRoute: ActivatedRoute, private service: MessageBoardClientService) {
-    let communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
+    const communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
 
-    this.service.getCommunityInfo(communityLocator)
+    this.posts$ = this.service.getCommunityInfo(communityLocator)
     .pipe(
       switchMap((result:any)=> {
         return this.service.getFeedForCommunity(result.communityId);
       })
-    )
-      .subscribe({
-        next: result => {
-          this.posts = result;
-        }, error: err => console.error(err)
-      })
+    );
   }
 }

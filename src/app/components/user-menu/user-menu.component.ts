@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
 import {Observable, of} from "rxjs";
@@ -11,11 +11,11 @@ import {UploadImageRequest} from "../../interface/upload-image-request";
   templateUrl: './user-menu.component.html',
   styleUrls: ['./user-menu.component.scss']
 })
-export class UserMenuComponent implements OnInit {
+export class UserMenuComponent {
+
   PROCESSING_REQUEST = false
-  loading = true
   showChangeDisplayNameForm = false;
-  userProfile$:Observable<any>=of();
+  userProfile$: Observable<any> = of ( {});
   fileInput = new FormControl();
   displayNameForm = new FormControl('',
   [
@@ -28,22 +28,19 @@ export class UserMenuComponent implements OnInit {
   constructor(private auth: AuthService,
               private messageBoardService: MessageBoardClientService,
               private router: Router) {
-  }
-
-  ngOnInit(): void {
-   this.refreshUserProfile();
-  }
-
-  refreshUserProfile() {
-    this.userProfile$ = this.messageBoardService.getUserProfile();
     this.userProfile$
       .subscribe({
-        next: user=>this.loading = false,
+        // next: user=>this.loading = false,
         error: err=>{
           console.error(err)
           this.router.navigate(['/registerUser'])
         }
       });
+    this.refreshUserProfile();
+  }
+
+  refreshUserProfile() {
+    this.userProfile$ = this.messageBoardService.getUserProfile();
   }
 
   updateUserProfileImage($event:UploadImageRequest) {
