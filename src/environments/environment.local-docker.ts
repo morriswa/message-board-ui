@@ -3,7 +3,7 @@ import package_settings from 'package.json';
 
 export const environment = {
   production: false,
-  api : "https://host.docker.internal:8081/",
+  api : "https://host.docker.internal:8080/",
   securepath : 'v0/',
   auth : {
     "domain" : "dev-9deub659.us.auth0.com",
