@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "build:local-docker": "ng build -c local-docker",
     "build:qa": "ng build -c qa"
   },
   "private": true,
