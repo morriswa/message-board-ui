@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input} from '@angular/core';
+import {Component, EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
-import {FormControl, Validators} from "@angular/forms";
 import {UploadImageRequest} from "../../../interface/upload-image-request";
 import {CommunityComponent} from "../community.component";
+import {map, of, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-edit-community',
@@ -43,20 +43,26 @@ export class EditCommunityComponent {
   }
 
   updateCommunity() {
-    this.updateCommunityBanner();
-    this.updateCommunityIcon();
+
 
     const newRef = this.communityRefForm.getRawValue()!
 
     this.messageBoardService.editCommunityAttributes(
       this.communityInfo.communityId,
       newRef!,
-      this.communityDisplayNameForm.getRawValue()!).subscribe({
+      this.communityDisplayNameForm.getRawValue()!)
+      .pipe(
+        switchMap(()=>this.updateCommunityBanner()),
+        switchMap(()=>this.updateCommunityIcon())
+        // mergeAll()
+      )
+      .subscribe({
       next: ()=>{
         let nav = newRef? newRef : this.communityInfo.communityLocator
         this.communityRefForm.reset()
         this.communityDisplayNameForm.reset()
-        this.router.navigate(['/community/'+nav])
+        this.router.navigateByUrl('/',{ skipLocationChange: true})
+          .then(()=>this.router.navigate(['/community',nav]));
       }, error: () =>{
 
       }
@@ -70,40 +76,33 @@ export class EditCommunityComponent {
 
     if (this.stagedContentForUpload.banner) {
 
-      this.messageBoardService.updateCommunityBanner(
+      return this.messageBoardService.updateCommunityBanner(
           this.communityInfo.communityId!,
           this.stagedContentForUpload.banner!)
-        .subscribe({
-          next: ()=> {
+        .pipe(map(()=> {
             this.resetEventEmitter.emit();
-          },
-          error: err=>{
-            this.resetEventEmitter.emit();
-            console.error(err);
-          }
-        })
-
+            return 'updated community banner'
+          }));
     }
+
+    return of('did not update banner')
   }
   public updateCommunityIcon() {
     // this.PROCESSING_REQUEST = true;
 
     if (this.stagedContentForUpload.icon) {
 
-      this.messageBoardService.updateCommunityIcon(
+      return this.messageBoardService.updateCommunityIcon(
           this.communityInfo.communityId!,
           this.stagedContentForUpload.icon!)
-        .subscribe({
-          next: ()=>{
-            this.resetEventEmitter.emit();
-          },
-          error: err=>{
-            this.resetEventEmitter.emit();
-            console.error(err);
-          }
-        })
+        .pipe(map(()=> {
+          this.resetEventEmitter.emit();
+          return 'updated community icon'
+        }));
 
     }
+
+    return of('did not update icon')
   }
 
   uploadCommunityResource(banner: string, $event: UploadImageRequest) {
