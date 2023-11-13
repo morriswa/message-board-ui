@@ -42,12 +42,12 @@ export class CreatePostComponent{
       this.communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
 
       this.messageBoardService.getCommunityInfo(this.communityLocator)
-        .pipe(switchMap((result: any)=>{
-          this.communityInfo = result;
-          return this.messageBoardService.joinCommunity(this.communityInfo.communityId!);
-        }))
+
         .subscribe({
-          next: ()=>this.loading = false,
+          next: (result: any)=>{
+            this.communityInfo = result;
+            this.loading = false;
+          },
           error: ()=>router.navigate(['/'])
         });
     } catch {}

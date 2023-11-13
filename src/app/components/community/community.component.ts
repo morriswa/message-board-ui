@@ -42,22 +42,15 @@ export class CommunityComponent{
         .pipe(
           switchMap((result:any) => {
             this.communityInfo = result;
-            return this.messageBoardService.getUserProfile();
-          }),
-          switchMap( (result:any)=> {
-            this.userInfo = result
-            // router.routerState.
-
-            this.isCommunityOwner = this.userInfo.userId === this.communityInfo.ownerId;
             return this.messageBoardService.getMembership(this.communityInfo.communityId);
           }))
         .subscribe({
           next:result=>{
+            this.userInfo = result;
             this.loading = false
+            this.isCommunityOwner = this.userInfo.userId === this.communityInfo.ownerId;
             this.userIsCommunityMember = result.exists
           },
-
-
           error: ()=>router.navigate(['/'])
         })
 
@@ -79,6 +72,8 @@ export class CommunityComponent{
     this.messageBoardService.getMembership(this.communityInfo.communityId).subscribe({
       next:result=>{
         this.userIsCommunityMember = result.exists
+        this.userInfo = result;
+        this.isCommunityOwner = this.userInfo.userId === this.communityInfo.ownerId;
       }
     })
   }

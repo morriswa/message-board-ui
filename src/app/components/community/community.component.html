@@ -12,6 +12,12 @@
       <p>{{ communityInfo.communityMemberCount }} Members!</p>
 
       <button
+        *ngIf="communityInfo.ownerId===userInfo.userId"
+        class="btn btn-outline-secondary"
+        [routerLink]="['/community',communityInfo.communityLocator,'edit']"
+      >Edit</button>
+
+      <button
         *ngIf="!userIsCommunityMember && !isCommunityOwner"
         class="btn btn-outline-secondary"
         (click)="joinCommunity()"
