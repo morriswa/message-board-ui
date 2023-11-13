@@ -1,17 +1,15 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
-import {UserMenuComponent} from "../user-menu/user-menu.component";
 import {FormControl, Validators} from "@angular/forms";
 import {switchMap} from "rxjs";
-import {PostFeedComponent} from "../post-feed/post-feed.component";
 
 @Component({
   selector: 'app-community',
   templateUrl: './community.component.html',
   styleUrls: ['./community.component.scss']
 })
-export class CommunityComponent {
+export class CommunityComponent{
 
   loading = true;
 
@@ -31,9 +29,11 @@ export class CommunityComponent {
       Validators.maxLength(100),
       Validators.minLength(3),
     ])
+  userIsCommunityMember = false;
+  isCommunityOwner = false;
 
-  constructor(activeRoute: ActivatedRoute,
-              router: Router,
+  constructor(private activeRoute: ActivatedRoute,
+              private router: Router,
               private messageBoardService: MessageBoardClientService) {
     try {
       this.communityName=activeRoute.snapshot.params['communityId'];
@@ -43,22 +43,44 @@ export class CommunityComponent {
           switchMap((result:any) => {
             this.communityInfo = result;
             return this.messageBoardService.getUserProfile();
+          }),
+          switchMap( (result:any)=> {
+            this.userInfo = result
+            // router.routerState.
+
+            this.isCommunityOwner = this.userInfo.userId === this.communityInfo.ownerId;
+            return this.messageBoardService.getMembership(this.communityInfo.communityId);
           }))
         .subscribe({
-          next: (result:any)=> {
-              this.userInfo = result
-              // router.routerState.
-              this.loading = false
-            // router.
-              // @ts-ignore
-            // router.navigateByUrl(['/community',this.communityName],{ state: {posts: this.communityFeed}})
-            // router.routerState.
-            //   PostFeedComponent.arguments.communityInfo = this.communityInfo
-            },
+          next:result=>{
+            this.loading = false
+            this.userIsCommunityMember = result.exists
+          },
+
+
           error: ()=>router.navigate(['/'])
         })
 
     } catch {}
+  }
+
+  joinCommunity() {
+    this.messageBoardService.joinCommunity(this.communityInfo.communityId)
+      .subscribe(()=>this.reloadCommunityStatus());
+
+  }
+
+  leaveCommunity() {
+    this.messageBoardService.leaveCommunity(this.communityInfo.communityId)
+      .subscribe(()=>this.reloadCommunityStatus());
+  }
+
+  reloadCommunityStatus() {
+    this.messageBoardService.getMembership(this.communityInfo.communityId).subscribe({
+      next:result=>{
+        this.userIsCommunityMember = result.exists
+      }
+    })
   }
 
 }

@@ -12,10 +12,12 @@
       class="btn btn-outline-secondary"
       [routerLink]="'/community/'+communityInfo.communityLocator"
       >Feed</button>
+
     <button
       class="btn btn-outline-secondary"
       [routerLink]="['/community',communityInfo.communityLocator,'post']"
       >Post</button>
+
     <button
       *ngIf="communityInfo.ownerId===userId"
       class="btn btn-outline-secondary"

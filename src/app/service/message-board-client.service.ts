@@ -70,6 +70,13 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
+  getMembership(communityId:string) {
+    const PATH_PARAMS = 'community/' + communityId + '/membership';
+
+    return this.http.get(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS,{})
+      .pipe(map((response:any)=>response.payload));
+  }
+
   joinCommunity(communityId:string) {
     const PATH_PARAMS = 'community/' + communityId + '/membership';
 
