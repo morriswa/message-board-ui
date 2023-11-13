@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {MessageBoardClientService} from "../../service/message-board-client.service";
+import {Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-community-navigation',
@@ -7,12 +8,9 @@ import {MessageBoardClientService} from "../../service/message-board-client.serv
   styleUrls: ['./community-navigation.component.scss']
 })
 export class CommunityNavigationComponent {
-  communities: any[] = []
+  communities$: Observable<any[]> = of([])
 
   constructor(service: MessageBoardClientService) {
-    service.getUsersCommunities().subscribe({
-      next: val => this.communities = val,
-      error: err => console.error(err)
-    });
+    this.communities$ = service.getUsersCommunities();
   }
 }

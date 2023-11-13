@@ -5,6 +5,11 @@
 //  //overflow: auto;
 //}
 
+:host {
+  display: block;
+  background-color: var(--wma-background-color) !important;
+}
+
 #community-content-wrapper {
   max-height: 100vh;
 
@@ -17,7 +22,7 @@
   width: 25vw;
   max-height: 50vh;
   position: static;
-  background-color: $gray-200;
+  background-color: var(--wma-card-color);
   padding: 20px;
   margin: 10px;
   border-radius: 20px;

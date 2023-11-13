@@ -1,11 +1,11 @@
 @import "src/styles";
 
-
 .user-menu-card {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px;
   max-width: 85%;
-  background-color: #eeeeee;
+  background-color: $wma-card-color;
   padding: 50px;
   border-radius: 2rem;
 }

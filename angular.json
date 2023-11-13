@@ -29,7 +29,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "src/default.scss",
+                "bundleName": "default",
+                "inject": true
+              },
+              {
+                "input": "src/dark-styles.scss",
+                "bundleName": "dark-mode",
+                "inject": false
+              }
             ],
             "allowedCommonJsDependencies": [
               "heic2any"

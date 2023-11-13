@@ -1,5 +1,5 @@
 
-<div *ngFor="let community of communities">
+<div *ngFor="let community of communities$|async">
   <a [routerLink]="['/community', community.communityLocator]">{{ community.displayName }}</a><br>
 
 </div>

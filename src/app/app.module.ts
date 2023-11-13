@@ -14,7 +14,7 @@ import { CommunityComponent } from './components/community/community.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
-import {APP_BASE_HREF, NgOptimizedImage} from "@angular/common";
+import {NgOptimizedImage} from "@angular/common";
 import {ImageCropperModule} from "ngx-image-cropper";
 import { CreateCommunityComponent } from './components/create-community/create-community.component';
 import { EditCommunityComponent } from './components/community/edit-community/edit-community.component';
@@ -23,6 +23,7 @@ import { ImageUploadAndCropComponent } from './components/image-upload-and-crop/
 import { CommunityNavigationComponent } from './components/community-navigation/community-navigation.component';
 import { CommunityHeaderComponent } from './components/community/community-header/community-header.component';
 import { CommunityFeedComponent } from './components/community/community-feed/community-feed.component';
+import {ThemeService} from "./service/theme.service";
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -71,6 +72,7 @@ const AUTH0_CONFIG = {
     {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
     // {provide: APP_BASE_HREF, useValue: '/messageboard'},
     AuthService,
+    ThemeService
   ],
   bootstrap: [AppComponent]
 })
