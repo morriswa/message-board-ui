@@ -1,7 +1,5 @@
 <div *ngIf="!loading">
 
-  <app-community-header [communityInfo]="communityInfo"></app-community-header>
-
   <app-image-upload-and-crop
     [resetImageComponent]="resetEventEmitter"
    (imageCroppedAndReadyEvent)="uploadPostImage($event)">

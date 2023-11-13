@@ -1,10 +1,11 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {MessageBoardClientService} from "../../service/message-board-client.service";
+import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {FormControl, Validators} from "@angular/forms";
-import {UserMenuComponent} from "../user-menu/user-menu.component";
-import {Utils} from "../../Utils";
-import {UploadImageRequest} from "../../interface/upload-image-request";
+import {UserMenuComponent} from "../../user-menu/user-menu.component";
+import {Utils} from "../../../Utils";
+import {UploadImageRequest} from "../../../interface/upload-image-request";
+import {switchMap} from "rxjs";
 
 @Component({
   selector: 'app-create-post',
@@ -37,19 +38,18 @@ export class CreatePostComponent{
               private router: Router,
               private messageBoardService: MessageBoardClientService) {
     try {
-      this.communityLocator = activeRoute.snapshot.params['communityId'];
+
+      this.communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
+
       this.messageBoardService.getCommunityInfo(this.communityLocator)
+        .pipe(switchMap((result: any)=>{
+          this.communityInfo = result;
+          return this.messageBoardService.joinCommunity(this.communityInfo.communityId!);
+        }))
         .subscribe({
-          next: payload=>{
-            console.log(payload)
-            this.communityInfo = payload;
-            this.loading = false;
-            this.messageBoardService.joinCommunity(this.communityInfo.communityId!).subscribe();
-          },
+          next: ()=>this.loading = false,
           error: ()=>router.navigate(['/'])
-        })
-
-
+        });
     } catch {}
   }
 

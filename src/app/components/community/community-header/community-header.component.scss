@@ -9,12 +9,18 @@ img {
 #community-header {
   width: 100vw;
   max-height: $banner-height;
-  align-items: flex-end;
+  align-items: center;
   display: inline-flex;
   flex-direction: row;
   justify-content: center;
   flex-grow: 1;
   background-color: #b0ff8e;
+}
+
+#community-buttons {
+  > button {
+    margin-left: 15px;
+  }
 }
 
 #community-icon {

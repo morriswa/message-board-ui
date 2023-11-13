@@ -9,13 +9,10 @@ import {MessageBoardClientService} from "../../service/message-board-client.serv
 export class CommunityNavigationComponent {
   communities: any[] = []
 
-  constructor(private service: MessageBoardClientService) {
+  constructor(service: MessageBoardClientService) {
     service.getUsersCommunities().subscribe({
-      next: (value:any) => {
-        this.communities = value.payload
-      },
+      next: val => this.communities = val,
       error: err => console.error(err)
-    })
-
+    });
   }
 }

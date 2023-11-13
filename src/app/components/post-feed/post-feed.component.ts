@@ -1,4 +1,6 @@
 import {Component, Input} from '@angular/core';
+import {Router} from "@angular/router";
+import {CommunityComponent} from "../community/community.component";
 
 @Component({
   selector: 'app-post-feed',
@@ -7,4 +9,6 @@ import {Component, Input} from '@angular/core';
 })
 export class PostFeedComponent {
   @Input() posts!:any[];
+
+
 }

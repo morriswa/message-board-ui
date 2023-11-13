@@ -1,4 +1,6 @@
 import {Component, Input} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {MessageBoardClientService} from "../../../service/message-board-client.service";
 
 @Component({
   selector: 'app-community-header',
@@ -7,4 +9,5 @@ import {Component, Input} from '@angular/core';
 })
 export class CommunityHeaderComponent {
   @Input() communityInfo: any;
+  @Input() userId!: string;
 }

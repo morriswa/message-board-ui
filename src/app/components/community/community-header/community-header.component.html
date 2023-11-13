@@ -7,8 +7,22 @@
 
   <h3>community/{{ communityInfo.communityLocator }}</h3>
 
-  <h1>{{ communityInfo.displayName }}</h1>
-  <p>{{ communityInfo.communityMemberCount }} Members!</p>
+  <div id="community-buttons">
+    <button
+      class="btn btn-outline-secondary"
+      [routerLink]="'/community/'+communityInfo.communityLocator"
+      >Feed</button>
+    <button
+      class="btn btn-outline-secondary"
+      [routerLink]="['/community',communityInfo.communityLocator,'post']"
+      >Post</button>
+    <button
+      *ngIf="communityInfo.ownerId===userId"
+      class="btn btn-outline-secondary"
+      [routerLink]="'/community/'+communityInfo.communityLocator+'/edit'"
+      >Edit</button>
+  </div>
 
+  <!--  <h1>{{ communityInfo.displayName }}</h1>-->
 
 </div>

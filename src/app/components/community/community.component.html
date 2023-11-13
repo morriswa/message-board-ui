@@ -1,9 +1,18 @@
 <div *ngIf="!loading" >
 
-  <app-community-header [communityInfo]="communityInfo"></app-community-header>
+  <app-community-header [userId]="userInfo.userId" [communityInfo]="communityInfo"></app-community-header>
 
   <br>
 
-  <app-post-feed [posts]="communityFeed"></app-post-feed>
+  <div id="community-content-wrapper">
 
+    <div id="community-info-slide">
+      <p>now viewing community/{{ communityInfo.communityLocator }}</p>
+      <h1>{{ communityInfo.displayName }}</h1>
+      <p>{{ communityInfo.communityMemberCount }} Members!</p>
+    </div>
+
+    <router-outlet></router-outlet>
+
+  </div>
 </div>

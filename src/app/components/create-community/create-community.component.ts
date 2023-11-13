@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {MessageBoardClientService} from "../../../service/message-board-client.service";
+import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {Router} from "@angular/router";
-import {CommunityComponent} from "../community.component";
+import {CommunityComponent} from "../community/community.component";
 
 @Component({
   selector: 'app-create-community',

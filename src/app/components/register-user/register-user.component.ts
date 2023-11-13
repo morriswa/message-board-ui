@@ -45,14 +45,12 @@ export class RegisterUserComponent implements OnInit{
       switchMap(()=>{
         return this.messageBoardService.getUserProfile()
       })
-    ).subscribe({
+    )
+    .subscribe({
       next: ()=>this.router.navigate(['/user']),
       error: ()=>this.loading=false
     });
-
   }
-
-
 
   registerUser() {
     this.messageBoardService.registerUser(this.displayNameForm.getRawValue()!)
@@ -61,6 +59,5 @@ export class RegisterUserComponent implements OnInit{
         error: er=>console.error(er)
       })
   }
-
 
 }

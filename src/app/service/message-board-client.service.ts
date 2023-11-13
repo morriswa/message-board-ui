@@ -17,17 +17,18 @@ export class MessageBoardClientService {
       params: {
         displayName: displayName
       }
-    });
+    })
+    .pipe(map((response:any)=>response.payload));
   }
 
   getUserProfile() {
     return this.http.get(this.MESSAGE_BOARD_SERVICE_ENDPOINT+'user')
-      .pipe(map((response:any)=>response.payload));
+    .pipe(map((response:any)=>response.payload));
   }
 
   updateProfileImage(newProfileImage:UploadImageRequest) {
     return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+'user/profileImage',newProfileImage)
-      .pipe(map((response:any)=>response.payload));
+    .pipe(map((response:any)=>response.payload));
   }
 
   updateDisplayName(newDisplayName:string) {
@@ -35,7 +36,8 @@ export class MessageBoardClientService {
       params: {
         displayName: newDisplayName
       }
-    });
+    })
+    .pipe(map((response:any)=>response.payload));
   }
 
   createImagePostToCommunity(communityId:number, caption:string, description:string, content:any) {
@@ -47,7 +49,8 @@ export class MessageBoardClientService {
       description:description,
       contentType:"PHOTO",
       content:content
-    }).pipe();
+    })
+    .pipe(map((response:any)=>response.payload));
   }
 
   getFeedForCommunity(communityId:number) {
@@ -55,7 +58,7 @@ export class MessageBoardClientService {
     const PATH_PARAMS = 'community/' + communityId + '/feed';
 
     return this.http.get(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS)
-      .pipe();
+    .pipe(map((response:any)=>response.payload));
   }
 
   getCommunityInfo(communityLocator: string) {
@@ -63,36 +66,36 @@ export class MessageBoardClientService {
       params: {
         communityLocator:communityLocator
       }
-    }).pipe(map((response:any)=>{
-      console.log(response.message);
-      return response.payload;
-    }))
+    })
+    .pipe(map((response:any)=>response.payload));
   }
 
   joinCommunity(communityId:string) {
     const PATH_PARAMS = 'community/' + communityId + '/membership';
 
-    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS,{});
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS,{})
+    .pipe(map((response:any)=>response.payload));
   }
 
   leaveCommunity(communityId:string) {
     const PATH_PARAMS = 'community/' + communityId + '/membership';
 
-    return this.http.delete(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS,{}).pipe();
+    return this.http.delete(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS,{})
+    .pipe(map((response:any)=>response.payload));
   }
 
   updateCommunityIcon(communityId: number, newCommunityIcon:UploadImageRequest) {
     const PATH_PARAMS = 'community/'+communityId+'/icon';
 
     return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,newCommunityIcon)
-      .pipe(map((response:any)=>response.payload));
+    .pipe(map((response:any)=>response.payload));
   }
 
   updateCommunityBanner(communityId:number, newCommunityBanner:UploadImageRequest) {
     const PATH_PARAMS = 'community/'+communityId+'/banner';
 
     return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,newCommunityBanner)
-      .pipe(map((response:any)=>response.payload));
+    .pipe(map((response:any)=>response.payload));
   }
 
   createCommunity(communityRef:string, communityDisplayName:string) {
@@ -100,7 +103,7 @@ export class MessageBoardClientService {
       communityRef:communityRef,
       communityName:communityDisplayName
     })
-      .pipe(map((response:any)=>response.payload));
+    .pipe(map((response:any)=>response.payload));
   }
 
   editCommunityAttributes(communityId: number, communityRef:string, communityDisplayName:string) {
@@ -118,11 +121,11 @@ export class MessageBoardClientService {
     return this.http.patch(this.MESSAGE_BOARD_SERVICE_ENDPOINT+ 'community', {}, {
       params: params
     })
-      .pipe();
+    .pipe(map((response:any)=>response.payload));
   }
 
   getUsersCommunities() {
     return this.http.get(this.MESSAGE_BOARD_SERVICE_ENDPOINT+ 'communities')
-      .pipe();
+    .pipe(map((response:any)=>response.payload));
   }
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {FormControl, Validators} from "@angular/forms";
@@ -18,7 +18,7 @@ export class EditCommunityComponent {
 
   loading=true;
 
-  communityLocator;
+  // communityLocator;
   communityInfo:any;
 
   stagedContentForUpload: {
@@ -31,22 +31,15 @@ export class EditCommunityComponent {
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
               private messageBoardService: MessageBoardClientService) {
-    try {
-      this.communityLocator = activeRoute.snapshot.params['communityId'];
+    let communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
 
-      // console.log(this.communityLocator)
-
-      this.messageBoardService.getCommunityInfo(this.communityLocator)
-        .subscribe({
-          next: payload=>{
-            console.log(payload)
-            this.communityInfo = payload;
-            this.loading = false;
-          },
-          error: ()=>router.navigate(['/'])
-        })
-
-    } catch {}
+    this.messageBoardService.getCommunityInfo(communityLocator)
+      .subscribe({
+        next: result => {
+          this.communityInfo = result;
+          this.loading = false;
+        }, error: err => console.error(err)
+      })
   }
 
   updateCommunity() {
@@ -60,7 +53,7 @@ export class EditCommunityComponent {
       newRef!,
       this.communityDisplayNameForm.getRawValue()!).subscribe({
       next: ()=>{
-        let nav = newRef? newRef : this.communityLocator
+        let nav = newRef? newRef : this.communityInfo.communityLocator
         this.communityRefForm.reset()
         this.communityDisplayNameForm.reset()
         this.router.navigate(['/community/'+nav])

@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {UserMenuComponent} from "../user-menu/user-menu.component";
 import {FormControl, Validators} from "@angular/forms";
+import {switchMap} from "rxjs";
+import {PostFeedComponent} from "../post-feed/post-feed.component";
 
 @Component({
   selector: 'app-community',
@@ -15,7 +17,7 @@ export class CommunityComponent {
 
   communityName?:string;
   communityInfo:any;
-  communityFeed:any[]=[];
+  userInfo:any;
 
   static communityRefForm = new FormControl('',
     [
@@ -30,33 +32,33 @@ export class CommunityComponent {
       Validators.minLength(3),
     ])
 
-  constructor(private activeRoute: ActivatedRoute,
-              private router: Router,
+  constructor(activeRoute: ActivatedRoute,
+              router: Router,
               private messageBoardService: MessageBoardClientService) {
     try {
       this.communityName=activeRoute.snapshot.params['communityId'];
 
       this.messageBoardService.getCommunityInfo(this.communityName!)
+        .pipe(
+          switchMap((result:any) => {
+            this.communityInfo = result;
+            return this.messageBoardService.getUserProfile();
+          }))
         .subscribe({
-          next: payload=>{
-            console.log(payload)
-            this.communityInfo = payload;
-            this.messageBoardService.getFeedForCommunity(this.communityInfo.communityId!)
-              .subscribe((result:any)=>{
-                console.log(result)
-                this.communityFeed = result.payload
-                this.loading = false
-              }
-          )
-          },
+          next: (result:any)=> {
+              this.userInfo = result
+              // router.routerState.
+              this.loading = false
+            // router.
+              // @ts-ignore
+            // router.navigateByUrl(['/community',this.communityName],{ state: {posts: this.communityFeed}})
+            // router.routerState.
+            //   PostFeedComponent.arguments.communityInfo = this.communityInfo
+            },
           error: ()=>router.navigate(['/'])
         })
 
     } catch {}
   }
-
-
-
-
 
 }

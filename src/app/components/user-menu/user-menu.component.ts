@@ -38,10 +38,7 @@ export class UserMenuComponent implements OnInit {
     this.userProfile$ = this.messageBoardService.getUserProfile();
     this.userProfile$
       .subscribe({
-        next: user=>{
-          console.log(user);
-          this.loading = false;
-        },
+        next: user=>this.loading = false,
         error: err=>{
           console.error(err)
           this.router.navigate(['/registerUser'])
