@@ -4,5 +4,4 @@
   <button class="btn btn-primary" *ngIf="authenticated$|async" routerLink="/user">Menu</button>
   <button class="btn btn-primary" *ngIf="authenticated$|async" routerLink="/communityTools/list">Communities</button>
   <button class="btn btn-outline-primary" *ngIf="authenticated$|async" (click)="logout()">Logout</button>
-  <button class="btn btn-outline-primary" *ngIf="authenticated$|async" (click)="switchMode()">DarkLight</button>
 </div>

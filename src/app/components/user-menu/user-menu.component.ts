@@ -5,6 +5,7 @@ import {Observable, of} from "rxjs";
 import {FormControl, Validators} from "@angular/forms";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {UploadImageRequest} from "../../interface/upload-image-request";
+import {ThemeService} from "../../service/theme.service";
 
 @Component({
   selector: 'app-user-menu',
@@ -23,11 +24,13 @@ export class UserMenuComponent {
     Validators.maxLength(30),
     Validators.minLength(3),
     Validators.pattern('^[a-zA-Z0-9._-]*$')
-  ])
+  ]);
+  newThemeBuffer = false;
 
   constructor(private auth: AuthService,
               private messageBoardService: MessageBoardClientService,
-              private router: Router) {
+              private router: Router,
+              private themeService: ThemeService) {
     this.userProfile$
       .subscribe({
         // next: user=>this.loading = false,
@@ -37,6 +40,7 @@ export class UserMenuComponent {
         }
       });
     this.refreshUserProfile();
+    this.newThemeBuffer = !(themeService.current === "default")
   }
 
   refreshUserProfile() {
@@ -78,6 +82,19 @@ export class UserMenuComponent {
           console.error(err);
         }
       });
+  }
+
+  darkModeUpdated($event: any) {
+    this.newThemeBuffer = $event.target.checked
+
+    let newTheme: string
+    if (this.newThemeBuffer) newTheme = "dark-mode";
+    else newTheme = "default"
+
+    this.themeService.current = newTheme;
+    this.messageBoardService.updateUIProfile(newTheme).subscribe({
+      error:err=>console.error(err)
+    });
   }
 
 }

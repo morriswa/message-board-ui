@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LandingAgeComponent } from './landing-page.component';
+import { LandingPageComponent } from './landing-page.component';
 
-describe('LandingAgeComponent', () => {
-  let component: LandingAgeComponent;
-  let fixture: ComponentFixture<LandingAgeComponent>;
+describe('LandingPageComponent', () => {
+  let component: LandingPageComponent;
+  let fixture: ComponentFixture<LandingPageComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LandingAgeComponent]
+      declarations: [LandingPageComponent]
     });
-    fixture = TestBed.createComponent(LandingAgeComponent);
+    fixture = TestBed.createComponent(LandingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {Observable} from "rxjs";
-import {ThemeService} from "../../service/theme.service";
 
 @Component({
   selector: 'app-header',
@@ -12,7 +11,7 @@ export class HeaderComponent {
 
   authenticated$:Observable<boolean>;
 
-  constructor(private authService: AuthService, private themeservice: ThemeService) {
+  constructor(private authService: AuthService) {
     this.authenticated$ = authService.isAuthenticated$;
   }
 
@@ -32,9 +31,5 @@ export class HeaderComponent {
 
   logout() {
     this.authService.logout()
-  }
-
-  switchMode() {
-    this.themeservice.current = this.themeservice.current==='dark-mode'?'default':'dark-mode'
   }
 }

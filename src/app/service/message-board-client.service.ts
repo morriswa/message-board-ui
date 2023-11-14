@@ -135,4 +135,17 @@ export class MessageBoardClientService {
     return this.http.get(this.MESSAGE_BOARD_SERVICE_ENDPOINT+ 'communities')
     .pipe(map((response:any)=>response.payload));
   }
+
+  getUIProfile() {
+    return this.http.get(this.MESSAGE_BOARD_SERVICE_ENDPOINT+ 'user/ui')
+      .pipe(map((response:any)=>response.payload));
+  }
+
+  updateUIProfile(theme: string) {
+
+    return this.http.patch(this.MESSAGE_BOARD_SERVICE_ENDPOINT+ 'user/ui',{
+      "theme":theme
+    })
+      .pipe();
+  }
 }
