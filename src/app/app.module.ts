@@ -38,7 +38,8 @@ const AUTH0_CONFIG = {
     allowedList: [
       { uri: environment.api + '*' },
     ]
-  }
+  },
+  cacheLocation: "localstorage" as const
 };
 
 @NgModule({
@@ -56,7 +57,7 @@ const AUTH0_CONFIG = {
     ImageUploadAndCropComponent,
     CommunityNavigationComponent,
     CommunityHeaderComponent,
-    CommunityFeedComponent
+    CommunityFeedComponent,
   ],
     imports: [
         BrowserModule,

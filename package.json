@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:qa": "ng build -c qa"
+    "build:qa": "ng build -c qa",
+    "php:local": "npm run build && php -S 127.0.0.1:4200 -t ./dist/message-board-ui/"
   },
   "private": true,
   "dependencies": {
