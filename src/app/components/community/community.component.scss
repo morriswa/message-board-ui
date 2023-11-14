@@ -1,18 +1,7 @@
-@import "src/styles";
-
-//#community-wrapper {
-//  max-height: 90vh;
-//  //overflow: auto;
-//}
-
-:host {
-  display: block;
-  background-color: var(--wma-background-color) !important;
-}
+//@import "src/styles";
 
 #community-content-wrapper {
   max-height: 100vh;
-
   width: 100vw;
   display: flex;
   flex-direction: row;

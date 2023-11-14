@@ -1,11 +1,11 @@
-@import "src/styles";
+//@import "src/styles";
 
 .user-menu-card {
   margin-left: auto;
   margin-right: auto;
   margin-top: 10px;
   max-width: 85%;
-  background-color: $post-card-bg;
+  background-color: var(--wma-card-color);
   padding: 50px;
   border-radius: 2rem;
 }
