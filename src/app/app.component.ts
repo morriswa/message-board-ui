@@ -24,7 +24,6 @@ export class AppComponent {
         })
       )
       .subscribe(result=>{
-        console.log(result)
         themeservice.current = result.theme;
       })
   }

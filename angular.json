@@ -33,7 +33,7 @@
               {
                 "input": "src/default.scss",
                 "bundleName": "default",
-                "inject": true
+                "inject": false
               },
               {
                 "input": "src/dark-styles.scss",
