@@ -1,29 +1,36 @@
 
-// Override Bootstrap Global Classes
 // Override Bootstrap Global Variables
 $theme: "default" !default;
 
 $primary: #FF5733;
+$secondary: #838383;
 
-$body-color: black;
-$body-bg: white;
+$black: black;
+$white: white;
 
-$input-bg:                              white;
-$input-disabled-bg:                     gray;
+$body-color: $black;
+$body-bg: $white;
+
+$input-bg:                              $white;
+$input-disabled-bg:                     $secondary;
 
 $input-color:                           $body-color;
-$input-border-color:                    gray;
+$input-border-color:                    $secondary;
 
-$form-text-color:                       gray;
-$form-file-button-color:          white;
-$form-file-button-bg:             gray;
+$form-text-color:                       $secondary;
+$form-file-button-color:          $white;
+$form-file-button-bg:             $secondary;
 $form-file-button-hover-bg:       shade-color($form-file-button-bg, 5%);
+
+// Override Bootstrap Global Classes
+.btn-primary {
+  color: white !important;
+}
 
 // Import Bootstrap Style Sheet
 @import "bootstrap/scss/bootstrap";
 
+// Define extra variables using Bootstrap Colors
 :root {
-  --wma-background-color: var(--bs-body-bg);
-  --wma-main-text: var(--bs-body-color);
   --wma-card-color: var(--bs-gray-200);
 }

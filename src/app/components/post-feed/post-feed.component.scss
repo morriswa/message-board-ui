@@ -4,7 +4,7 @@
 $post-size-max: 400px;
 
 .post-card {
-  background-color: var(--wma-card-color);
+  background-color: $post-card-bg;
   padding: 20px;
   margin: 10px;
   border-radius: 20px;

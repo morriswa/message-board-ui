@@ -1,28 +1,40 @@
-// THE ORDER MATTERS !!! <3
 
 // Override Bootstrap Global Variables
 $theme: "dark-styles" !default;
 
-
-
-
-
+// Colors
 $primary: #1f1f1f;
-$body-color: white;
+$secondary: orange;
 
+$black: #171717;
+$white: #f8f8f8;
 
-$input-bg:                              green;
-$input-disabled-bg:                     green;
+// Global Font Color
+$body-color: $white;
+// Global Background Color
+$body-bg: $black;
 
-$form-file-button-color:          green;
-$form-file-button-bg:             green;
-$form-file-button-hover-bg:       shade-color($form-file-button-bg, 5%);
+// Input Style Box Overrides
+// backgrounds
+  $input-bg:            $black;
+  $input-disabled-bg:   $secondary;
+// fonts
+  $input-color:         $body-color;
+  $input-border-color:  $secondary;
+
+// Forms Style overrides
+// fonts
+  $form-text-color:                 $body-color;
+  $form-file-button-color:          $body-color;
+// backgrounds
+  $form-file-button-bg:             $secondary;
+  $form-file-button-hover-bg:       shade-color($form-file-button-bg, 5%);
 
 // Import Bootstrap Style Sheet
 @import "bootstrap/scss/bootstrap";
 
 :root {
-  --wma-background-color: var(--bs-gray-800);
-  --wma-card-color: var(--bs-gray-600);
-  --wma-main-text: white;
+  //--wma-background-color: var(--bs-gray-800);
+  --wma-card-color: var(--bs-gray-800);
+  //--wma-main-text: white;
 }
