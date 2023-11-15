@@ -132,10 +132,10 @@ export class MessageBoardClientService {
       communityId:communityId
     }
 
-    if (communityRef.length>0)
+    if (communityRef)
       params.communityRef = communityRef
 
-    if (communityDisplayName.length>0)
+    if (communityDisplayName)
       params.communityDisplayName = communityDisplayName
 
     return this.http.patch(this.MESSAGE_BOARD_SERVICE_ENDPOINT+ 'community', {}, {

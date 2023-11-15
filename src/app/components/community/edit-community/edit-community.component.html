@@ -27,6 +27,8 @@
 
   <h2>Community Banner:</h2>
   <app-image-upload-and-crop
+    [MAINTAIN_ASPECT_RATIO]="true"
+    [ASPECT_RATIO]="16 / 9"
     [resetImageComponent]="this.resetEventEmitter"
     (imageCroppedAndReadyEvent)="uploadCommunityResource('banner',$event)">
   </app-image-upload-and-crop>

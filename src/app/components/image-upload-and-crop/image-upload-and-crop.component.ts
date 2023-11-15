@@ -57,6 +57,7 @@ export class ImageUploadAndCropComponent implements OnInit{
             heic2any({
               blob,
               toType: "image/jpeg",
+              quality: 0.5
             }))
           .then((conversionResult) =>
             // grab array buffer of converted object
