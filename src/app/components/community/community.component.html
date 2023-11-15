@@ -11,24 +11,36 @@
       <h1>{{ community.displayName }}</h1>
       <p>{{ community.communityMemberCount }} Members!</p>
 
-      <button
-        *ngIf="community.ownerId===userInfo.userId"
-        class="btn btn-outline-secondary"
-        [routerLink]="['/community',community.communityLocator,'edit']"
-      >Edit</button>
 
-      <button
-        *ngIf="!userIsCommunityMember && !isCommunityOwner"
-        class="btn btn-outline-secondary"
-        (click)="joinCommunity()"
-      >Join</button>
+      <div id="community-buttons">
+        <button
+          class="btn btn-outline-secondary"
+          [routerLink]="['/community',communityInfo.communityLocator]"
+        >Feed</button>
 
-      <button
-        *ngIf="userIsCommunityMember && !isCommunityOwner"
-        class="btn btn-outline-secondary"
-        (click)="leaveCommunity()"
-      >Leave</button>
+        <button
+          class="btn btn-outline-primary"
+          [routerLink]="['/community',communityInfo.communityLocator,'post']"
+        >Post</button>
 
+        <button
+          *ngIf="community.ownerId===userInfo.userId"
+          class="btn btn-secondary"
+          [routerLink]="['/community',community.communityLocator,'edit']"
+        >Edit</button>
+
+        <button
+          *ngIf="!userIsCommunityMember && !isCommunityOwner"
+          class="btn btn-outline-secondary"
+          (click)="joinCommunity()"
+        >Join</button>
+
+        <button
+          *ngIf="userIsCommunityMember && !isCommunityOwner"
+          class="btn btn-outline-secondary"
+          (click)="leaveCommunity()"
+        >Leave</button>
+      </div>
     </div>
 
     <router-outlet></router-outlet>

@@ -3,8 +3,8 @@
 $theme: "dark-styles" !default;
 
 // Colors
-$primary: #1f1f1f;
-$secondary: orange;
+$primary:  #5b35da;
+$secondary: #d2c5b7;
 
 $black: #171717;
 $white: #f8f8f8;
@@ -25,10 +25,15 @@ $body-bg: $black;
 // Forms Style overrides
 // fonts
   $form-text-color:                 $body-color;
-  $form-file-button-color:          $body-color;
+  $form-file-button-color:          $black;
 // backgrounds
   $form-file-button-bg:             $secondary;
   $form-file-button-hover-bg:       shade-color($form-file-button-bg, 5%);
+
+
+.btn-outline-primary {
+  color: $white !important;
+}
 
 // Import Bootstrap Style Sheet
 @import "bootstrap/scss/bootstrap";
@@ -36,5 +41,5 @@ $body-bg: $black;
 :root {
   //--wma-background-color: var(--bs-gray-800);
   --wma-card-color: var(--bs-gray-800);
-  //--wma-main-text: white;
+  --wma-header-bg: var(--wma-card-color);
 }

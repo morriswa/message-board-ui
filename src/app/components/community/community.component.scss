@@ -1,4 +1,3 @@
-//@import "src/styles";
 
 #community-content-wrapper {
   max-height: 100vh;
@@ -9,7 +8,8 @@
 
 #community-info-slide {
   width: 25vw;
-  max-height: 50vh;
+  height: 55vh;
+  max-height: fit-content;
   position: static;
   background-color: var(--wma-card-color);
   padding: 20px;
@@ -20,4 +20,15 @@
 #posts-wrapper {
   width: 75vw;
   overflow: scroll;
+}
+
+#community-buttons {
+
+  > button {
+    width: 90px;
+    margin-top: 20px;
+  }
+
+  display: flex;
+  flex-direction: column;
 }

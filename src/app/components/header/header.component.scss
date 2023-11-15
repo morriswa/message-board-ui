@@ -1,10 +1,9 @@
-//@import "src/styles";
 
 #app-header {
   display: flex;
   flex-direction: row;
   padding: 10px;
-  background-color: var(--wma-card-color);
+  background-color: var(--wma-header-bg);
 }
 
 .btn {

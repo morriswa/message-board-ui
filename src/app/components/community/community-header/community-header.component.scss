@@ -1,4 +1,3 @@
-@import "../../../../styles";
 
 $banner-height: 75px;
 
@@ -14,7 +13,7 @@ img {
   flex-direction: row;
   justify-content: center;
   flex-grow: 1;
-  background-color: #b0ff8e;
+  background-color: var(--bs-secondary);
 }
 
 #community-buttons {
