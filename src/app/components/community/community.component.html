@@ -24,7 +24,7 @@
         >Post</button>
 
         <button
-          *ngIf="community.ownerId===userInfo.userId"
+          *ngIf="isCommunityOwner"
           class="btn btn-secondary"
           [routerLink]="['/community',community.communityLocator,'edit']"
         >Edit</button>

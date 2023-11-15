@@ -51,7 +51,7 @@ export class CreatePostComponent{
     } catch {}
   }
 
-  public uploadPostImage($event:UploadImageRequest) {
+  public uploadPostImage($event:any) {
     this.pendingImageUpload=$event
   }
 

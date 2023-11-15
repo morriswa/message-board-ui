@@ -26,8 +26,11 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  updateProfileImage(newProfileImage:UploadImageRequest) {
-    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+'user/profileImage',newProfileImage)
+  updateProfileImage(content:any) {
+    let postBody = new FormData();
+    postBody.append("image",content)
+
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+'user/profileImage',postBody)
     .pipe(map((response:any)=>response.payload));
   }
 
@@ -44,11 +47,15 @@ export class MessageBoardClientService {
 
     const PATH_PARAMS = 'community/' + communityId + '/post';
 
-    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS, {
-      caption:caption,
-      description:description,
-      contentType:"PHOTO",
-      content:content
+    let postBody = new FormData();
+    postBody.append("image",content)
+
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS, postBody, {
+      params : {
+        caption: caption,
+        description: description,
+        contentType: "PHOTO"
+      }
     })
     .pipe(map((response:any)=>response.payload));
   }
@@ -91,17 +98,23 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  updateCommunityIcon(communityId: number, newCommunityIcon:UploadImageRequest) {
+  updateCommunityIcon(communityId: number, newCommunityIcon:any) {
     const PATH_PARAMS = 'community/'+communityId+'/icon';
 
-    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,newCommunityIcon)
+    let postBody = new FormData();
+    postBody.append("image",newCommunityIcon)
+
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,postBody)
     .pipe(map((response:any)=>response.payload));
   }
 
-  updateCommunityBanner(communityId:number, newCommunityBanner:UploadImageRequest) {
+  updateCommunityBanner(communityId:number, newCommunityBanner:any) {
     const PATH_PARAMS = 'community/'+communityId+'/banner';
 
-    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,newCommunityBanner)
+    let postBody = new FormData();
+    postBody.append("image",newCommunityBanner)
+
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT+PATH_PARAMS,postBody)
     .pipe(map((response:any)=>response.payload));
   }
 

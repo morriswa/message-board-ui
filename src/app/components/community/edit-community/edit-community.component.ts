@@ -105,7 +105,7 @@ export class EditCommunityComponent {
     return of('did not update icon')
   }
 
-  uploadCommunityResource(banner: string, $event: UploadImageRequest) {
+  uploadCommunityResource(banner: string, $event: any) {
     if (banner === "banner")
       this.stagedContentForUpload.banner = $event;
     else

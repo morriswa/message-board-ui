@@ -25,7 +25,7 @@ export class ImageUploadAndCropComponent implements OnInit{
   @Input() resetImageComponent: EventEmitter<any> = new EventEmitter<any>();
   @Input() ASPECT_RATIO: number = 1;
   @Input() MAINTAIN_ASPECT_RATIO: boolean = false;
-  @Output() imageCroppedAndReadyEvent: EventEmitter<UploadImageRequest> = new EventEmitter<UploadImageRequest>();
+  @Output() imageCroppedAndReadyEvent: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit(): void {
     this.resetImageComponent.subscribe(()=>this.reset())
@@ -95,14 +95,17 @@ export class ImageUploadAndCropComponent implements OnInit{
     if (this.stagedProfilePhotoForUpload) {
 
       this.croppingInProgress = false;
-      Utils.file2Base64(this.stagedProfilePhotoForUpload).then(b64Repr => {
-        let concatb64Repr = b64Repr.slice(b64Repr.indexOf(",") + 1)
-        let imageFormat = b64Repr.slice(b64Repr.indexOf("/") + 1, b64Repr.indexOf(";"))
 
-        if (imageFormat === "heic") imageFormat = "jpeg";
+      this.imageCroppedAndReadyEvent.emit(this.stagedProfilePhotoForUpload)
 
-        this.imageCroppedAndReadyEvent.emit({baseEncodedImage: concatb64Repr,imageFormat: imageFormat});
-      });
+      // Utils.file2Base64(this.stagedProfilePhotoForUpload).then(b64Repr => {
+      //   let concatb64Repr = b64Repr.slice(b64Repr.indexOf(",") + 1)
+      //   let imageFormat = b64Repr.slice(b64Repr.indexOf("/") + 1, b64Repr.indexOf(";"))
+      //
+      //   if (imageFormat === "heic") imageFormat = "jpeg";
+      //
+      //   this.imageCroppedAndReadyEvent.emit({baseEncodedImage: concatb64Repr,imageFormat: imageFormat});
+      // });
     }
   }
 

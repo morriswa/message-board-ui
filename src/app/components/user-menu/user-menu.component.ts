@@ -47,7 +47,7 @@ export class UserMenuComponent {
     this.userProfile$ = this.messageBoardService.getUserProfile();
   }
 
-  updateUserProfileImage($event:UploadImageRequest) {
+  updateUserProfileImage($event:any) {
     this.PROCESSING_REQUEST = true;
     this.messageBoardService.updateProfileImage($event)
     .subscribe({

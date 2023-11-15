@@ -52,7 +52,6 @@ export class CommunityComponent {
         .subscribe({
           next:result=>{
             this.userInfo = result;
-            // this.loading = false
             this.isCommunityOwner = this.userInfo.userId === this.communityInfo.ownerId;
             this.userIsCommunityMember = result.exists
           },
