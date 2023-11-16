@@ -31,6 +31,7 @@ export class UserMenuComponent {
               private messageBoardService: MessageBoardClientService,
               private router: Router,
               private themeService: ThemeService) {
+    this.refreshUserProfile();
     this.userProfile$
       .subscribe({
         // next: user=>this.loading = false,
@@ -39,7 +40,6 @@ export class UserMenuComponent {
           this.router.navigate(['/registerUser'])
         }
       });
-    this.refreshUserProfile();
     this.newThemeBuffer = !(themeService.current === "default")
   }
 
