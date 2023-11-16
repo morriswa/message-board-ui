@@ -20,7 +20,7 @@ $input-border-color:                    $secondary;
 $form-text-color:                       $secondary;
 $form-file-button-color:          $white;
 $form-file-button-bg:             $secondary;
-$form-file-button-hover-bg:       shade-color($form-file-button-bg, 5%);
+$form-file-button-hover-bg:       $primary;
 
 // Override Bootstrap Global Classes
 .btn-primary {
