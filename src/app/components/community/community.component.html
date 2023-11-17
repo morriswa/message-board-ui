@@ -8,7 +8,7 @@
 
     <div id="community-info-slide">
       <p>now viewing community/{{ community.communityLocator }}</p>
-      <h1>{{ community.displayName }}</h1>
+      <h3>{{ community.displayName }}</h3>
       <p>{{ community.communityMemberCount }} Members!</p>
 
 
@@ -43,7 +43,9 @@
       </div>
     </div>
 
-    <router-outlet></router-outlet>
+    <div  id="community-router">
+      <router-outlet></router-outlet>
+    </div>
 
   </div>
 </div>

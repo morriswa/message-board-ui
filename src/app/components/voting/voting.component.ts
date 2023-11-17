@@ -24,10 +24,7 @@ export class VotingComponent {
 
     this.service.voteOnPost(this.id, "UPVOTE")
       .subscribe({
-        next: (res:any)=>{
-          console.log(res)
-          this.voteUpdated.emit(res)
-        },
+        next: (res:number)=>this.voteUpdated.emit(res),
         error: err=>console.error(err)
       })
   }
@@ -41,10 +38,8 @@ export class VotingComponent {
     this.service.voteOnPost(this.id, "DOWNVOTE")
       .subscribe({
         next: (res:any)=>{
-          if(res < 0){
+          if(res < 0)
             res = 0;
-          }
-          console.log(res)
           this.voteUpdated.emit(res)
         },
         error: err=>console.error(err)

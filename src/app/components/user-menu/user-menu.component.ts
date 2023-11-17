@@ -6,6 +6,7 @@ import {FormControl, Validators} from "@angular/forms";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {UploadImageRequest} from "../../interface/upload-image-request";
 import {ThemeService} from "../../service/theme.service";
+import {Utils} from "../../Utils";
 
 @Component({
   selector: 'app-user-menu',
@@ -18,13 +19,7 @@ export class UserMenuComponent {
   showChangeDisplayNameForm = false;
   userProfile$: Observable<any> = of ( {});
   fileInput = new FormControl();
-  displayNameForm = new FormControl('',
-  [
-    Validators.required,
-    Validators.maxLength(30),
-    Validators.minLength(3),
-    Validators.pattern('^[a-zA-Z0-9._-]*$')
-  ]);
+  displayNameForm = Utils.displayNameForm;
   newThemeBuffer = false;
 
   constructor(private auth: AuthService,

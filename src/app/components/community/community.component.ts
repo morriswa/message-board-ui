@@ -16,18 +16,6 @@ export class CommunityComponent {
   community$:Observable<any> = of ({});
   userInfo:any;
 
-  static communityRefForm = new FormControl('',
-    [
-      Validators.maxLength(30),
-      Validators.minLength(3),
-      Validators.pattern("^[a-z][a-z0-9-]*[a-z0-9]$")
-    ]);
-
-  static communityDisplayNameForm = new FormControl('',
-    [
-      Validators.maxLength(100),
-      Validators.minLength(3),
-    ]);
 
   userIsCommunityMember = false;
   isCommunityOwner = false;

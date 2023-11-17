@@ -29,3 +29,9 @@
 .sidebar-vertical-card {
   min-width: 30vw;
 }
+
+:root {
+  --wma-community-banner-height: 150px;
+  --wma-community-header-info-height: 75px;
+  --wma-community-header-height: calc(var(--wma-community-banner-height) + var(--wma-community-header-info-height));
+}
