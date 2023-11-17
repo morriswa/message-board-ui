@@ -72,8 +72,6 @@ export class EditCommunityComponent {
   public updateCommunityBanner() {
     // this.PROCESSING_REQUEST = true;
 
-    console.log(this.stagedContentForUpload.banner)
-
     if (this.stagedContentForUpload.banner) {
 
       return this.messageBoardService.updateCommunityBanner(
