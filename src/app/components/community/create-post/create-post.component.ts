@@ -1,9 +1,7 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {FormControl, Validators} from "@angular/forms";
-import {UserMenuComponent} from "../../user-menu/user-menu.component";
-import {Utils} from "../../../Utils";
 import {UploadImageRequest} from "../../../interface/upload-image-request";
 import {switchMap} from "rxjs";
 
@@ -15,7 +13,7 @@ import {switchMap} from "rxjs";
 export class CreatePostComponent{
   communityInfo: any;
   loading: boolean = true;
-
+  currentDraft?:string;
   pendingImageUpload?: UploadImageRequest;
 
   clearImageUploadEmitter: EventEmitter<any> = new EventEmitter<any>();
@@ -58,19 +56,27 @@ export class CreatePostComponent{
   savePostAndUpload() {
     if (!this.pendingImageUpload) return
 
-    this.messageBoardService.createImagePostToCommunity(
+    this.messageBoardService.createPostDraft(
       this.communityInfo.communityId,
           this.postCaptionForm.getRawValue()!,
-          this.postDescriptionForm.getRawValue()!,
-          this.pendingImageUpload)
+          this.postDescriptionForm.getRawValue()!)
+      .pipe(
+        switchMap(draftId => {
+          this.currentDraft = draftId;
+          return this.messageBoardService.addContentToDraft(this.currentDraft!, this.pendingImageUpload);
+        }),
+        switchMap(() => this.messageBoardService.postDraft(this.currentDraft!))
+      )
       .subscribe({
             next: ()=> {
               this.clearImageUploadEmitter.emit();
               this.router.navigate(['/community',this.communityInfo.communityLocator])
+              this.currentDraft = undefined
             },
             error: err=>{
               this.clearImageUploadEmitter.emit();
               console.error(err);
+              this.currentDraft = undefined
             }
     });
   }

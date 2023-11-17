@@ -60,6 +60,36 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
+  createPostDraft(communityId:number, caption:string, description:string) {
+
+    const PATH_PARAMS = 'community/' + communityId + '/create';
+
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS, {}, {params : {
+        caption: caption,
+        description: description
+      }}).pipe(map((response:any)=>response.payload));
+  }
+
+  addContentToDraft(sessionId:string, content:any) {
+
+    const PATH_PARAMS = 'create/' + sessionId + '/add';
+
+    let postBody = new FormData();
+    postBody.append("content",content)
+
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS, postBody)
+      .pipe(map((response:any)=>response.payload));
+  }
+
+  postDraft(sessionId:string) {
+
+    const PATH_PARAMS = 'create/' + sessionId;
+
+    return this.http.post(this.MESSAGE_BOARD_SERVICE_ENDPOINT + PATH_PARAMS, {})
+      .pipe(map((response:any)=>response.payload));
+  }
+
+
   getFeedForCommunity(communityId:number) {
 
     const PATH_PARAMS = 'community/' + communityId + '/feed';
