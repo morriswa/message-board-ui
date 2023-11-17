@@ -4,7 +4,7 @@
 
     <div id="vote-card">
       <app-voting [id]="post.postId" (voteUpdated)="postVoteUpdated($event, i)"></app-voting>
-      <h1 id="vote-count">{{ post.vote }}</h1>
+      <h1 id="vote-count">{{ post.vote < 0? 0 : post.vote }}</h1>
     </div>
 
 
