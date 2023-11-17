@@ -1,19 +1,28 @@
 
-$banner-height: 75px;
+:host {
+  height: var(--wma-community-header-height);
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  position: absolute;
+}
 
-img {
-  max-height: 200px;
+#community-banner {
+  width: 100vw;
+  max-height: var(--wma-community-header-height);
+  object-fit: cover;
 }
 
 #community-header {
   width: 100vw;
-  max-height: $banner-height;
+  height: var(--wma-community-header-info-height);
   align-items: center;
   display: inline-flex;
   flex-direction: row;
   justify-content: center;
   flex-grow: 1;
   background-color: var(--bs-secondary);
+  margin: 0;
 }
 
 #community-buttons {
@@ -23,11 +32,7 @@ img {
 }
 
 #community-icon {
-  max-height: $banner-height;
+  max-height: var(--wma-community-header-info-height);
 }
 
-#community-banner {
-  width: 100vw;
-  max-height: 20vh;
-  object-fit: cover;
-}
+
