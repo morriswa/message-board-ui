@@ -36,7 +36,7 @@ const AUTH0_CONFIG = {
   // Specify configuration for the interceptor
   httpInterceptor: {
     allowedList: [
-      { uri: environment.api + '*' },
+      { uri: environment.api + '/*' },
     ]
   },
   cacheLocation: "localstorage" as const
