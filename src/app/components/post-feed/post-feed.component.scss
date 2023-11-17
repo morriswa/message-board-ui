@@ -8,17 +8,21 @@ $post-size-max: 400px;
   border-radius: 20px;
 }
 
-#vote-card {
+.vote-card {
   display: flex;
   flex-direction: row;
 }
 
-#vote-count {
+.vote-count {
   padding: 20px;
 }
 
-img {
-  width:$post-size-max;
+.image-element-wrapper {
+  overflow: scroll;
+}
+
+.image-element {
+  max-width: $post-size-max;
   max-height: $post-size-max;
   object-fit: cover;
 }

@@ -16,13 +16,14 @@
   margin: 20px 10px 0 10px;
   padding: 20px;
   border-radius: 20px;
-  flex-grow: 2;
+  flex-grow: 1;
 }
 
 #community-router {
-  flex-grow: 3;
+  flex-grow: 5;
   overflow: scroll;
   padding-top: 10px;
+  padding-bottom: 50px;
 }
 
 #community-buttons {
