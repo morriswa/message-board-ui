@@ -4,6 +4,7 @@ import {map, max, switchMap} from "rxjs";
 import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
+import {Utils} from "../../Utils";
 
 @Component({
   selector: 'app-register-user',
@@ -16,12 +17,7 @@ export class RegisterUserComponent implements OnInit{
   email?:string;
 
 
-  displayNameForm = new FormControl('',[
-    Validators.required,
-    Validators.maxLength(30),
-    Validators.minLength(3),
-    Validators.pattern('^[a-zA-Z0-9._-]*$')
-  ])
+  public displayNameForm = Utils.displayNameForm;
 
   constructor(private auth: AuthService,
               private router: Router,

@@ -4,6 +4,7 @@ import {MessageBoardClientService} from "../../../service/message-board-client.s
 import {UploadImageRequest} from "../../../interface/upload-image-request";
 import {CommunityComponent} from "../community.component";
 import {map, of, switchMap} from "rxjs";
+import {Utils} from "../../../Utils";
 
 @Component({
   selector: 'app-edit-community',
@@ -12,8 +13,8 @@ import {map, of, switchMap} from "rxjs";
 })
 export class EditCommunityComponent {
 
-  communityRefForm = CommunityComponent.communityRefForm;
-  communityDisplayNameForm = CommunityComponent.communityDisplayNameForm
+  communityRefForm = Utils.communityRefForm;
+  communityDisplayNameForm = Utils.communityDisplayNameForm
 
 
   loading=true;

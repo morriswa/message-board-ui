@@ -10,9 +10,14 @@
 }
 
 #community-info-slide {
+  line-break: anywhere;
+
   height: 55vh;
   max-height: fit-content;
+  max-width: 30vw;
+
   background-color: var(--wma-card-color);
+
   margin: 20px 10px 0 10px;
   padding: 20px;
   border-radius: 20px;

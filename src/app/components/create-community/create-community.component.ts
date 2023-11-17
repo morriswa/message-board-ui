@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {Router} from "@angular/router";
-import {CommunityComponent} from "../community/community.component";
+import {Utils} from "../../Utils";
 
 @Component({
   selector: 'app-create-community',
@@ -10,8 +10,8 @@ import {CommunityComponent} from "../community/community.component";
 })
 export class CreateCommunityComponent {
 
-  communityRefForm = CommunityComponent.communityRefForm;
-  communityDisplayNameForm = CommunityComponent.communityDisplayNameForm
+  communityRefForm = Utils.communityRefForm;
+  communityDisplayNameForm = Utils.communityDisplayNameForm
 
   constructor(private router: Router, private service: MessageBoardClientService) {
   }

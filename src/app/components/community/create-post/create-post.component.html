@@ -12,12 +12,37 @@
     placeholder="Enter a Caption..."
   >
 
+  <div id="caption-warnings">
+    <div
+      *ngIf="postCaptionForm.getRawValue()!.length < 10"
+      class="alert alert-danger"
+      role="alert">
+      Caption is required, and must be at least 10 characters.
+    </div>
+
+    <div
+      *ngIf="postCaptionForm.getRawValue()!.length > 200"
+      class="alert alert-danger"
+      role="alert">
+      Caption must be no longer than than 200 characters!
+    </div>
+  </div>
+
   <input
     type="text"
     class="form-control"
     [formControl]="postDescriptionForm"
     placeholder="...and description for your Post!"
   >
+
+  <div id="description-warnings">
+    <div
+      *ngIf="postDescriptionForm.getRawValue()!.length > 1000"
+      class="alert alert-danger"
+      role="alert">
+      Post description must be no longer than than 1000 characters!
+    </div>
+  </div>
 
   <button
     class="btn btn-primary"

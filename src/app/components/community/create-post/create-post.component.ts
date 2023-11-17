@@ -22,7 +22,7 @@ export class CreatePostComponent{
   postCaptionForm = new FormControl('',
     [
       Validators.required,
-      Validators.maxLength(100),
+      Validators.maxLength(200),
       Validators.minLength(10),
     ])
 
