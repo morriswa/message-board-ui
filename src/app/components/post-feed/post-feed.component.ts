@@ -11,4 +11,7 @@ export class PostFeedComponent {
   @Input() posts!:any[];
 
 
+  postVoteUpdated($event: number, i: number) {
+    this.posts[i].vote = $event
+  }
 }

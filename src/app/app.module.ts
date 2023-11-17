@@ -24,6 +24,7 @@ import { CommunityNavigationComponent } from './components/community-navigation/
 import { CommunityHeaderComponent } from './components/community/community-header/community-header.component';
 import { CommunityFeedComponent } from './components/community/community-feed/community-feed.component';
 import {ThemeService} from "./service/theme.service";
+import { VotingComponent } from './components/voting/voting.component';
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -58,6 +59,7 @@ const AUTH0_CONFIG = {
     CommunityNavigationComponent,
     CommunityHeaderComponent,
     CommunityFeedComponent,
+    VotingComponent,
   ],
     imports: [
         BrowserModule,

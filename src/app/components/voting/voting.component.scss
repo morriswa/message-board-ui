@@ -1,0 +1,13 @@
+
+.clicked-icon {
+  color: var(--bs-primary) !important;
+}
+
+#vote-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+i {
+  font-size: 30px;
+}

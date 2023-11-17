@@ -150,4 +150,13 @@ export class MessageBoardClientService {
     })
     .pipe();
   }
+
+  voteOnPost(postId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE') {
+    return this.http.post(`${this.SERVICE_PATH}/post/${postId}/vote`,{}, {
+      params: {
+        vote: vote
+      }
+    })
+    .pipe(map((res:any)=>res.payload));
+  }
 }
