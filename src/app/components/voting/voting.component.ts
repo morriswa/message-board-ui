@@ -41,6 +41,9 @@ export class VotingComponent {
     this.service.voteOnPost(this.id, "DOWNVOTE")
       .subscribe({
         next: (res:any)=>{
+          if(res < 0){
+            res = 0;
+          }
           console.log(res)
           this.voteUpdated.emit(res)
         },
