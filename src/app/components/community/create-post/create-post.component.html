@@ -22,8 +22,7 @@
   <button
     class="btn btn-primary"
     [disabled]="this.postCaptionForm.invalid
-    ||this.postDescriptionForm.invalid
-    ||!this.pendingImageUpload"
+    ||this.postDescriptionForm.invalid"
     (click)="savePostAndUpload()"
   >
     Save and Post!

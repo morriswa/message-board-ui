@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {FormControl, Validators} from "@angular/forms";
 import {UploadImageRequest} from "../../../interface/upload-image-request";
-import {switchMap} from "rxjs";
+import {of, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-create-post',
@@ -54,7 +54,6 @@ export class CreatePostComponent{
   }
 
   savePostAndUpload() {
-    if (!this.pendingImageUpload) return
 
     this.messageBoardService.createPostDraft(
       this.communityInfo.communityId,
@@ -63,6 +62,7 @@ export class CreatePostComponent{
       .pipe(
         switchMap(draftId => {
           this.currentDraft = draftId;
+          if (!this.pendingImageUpload) return of("no image content");
           return this.messageBoardService.addContentToDraft(this.currentDraft!, this.pendingImageUpload);
         }),
         switchMap(() => this.messageBoardService.postDraft(this.currentDraft!))
