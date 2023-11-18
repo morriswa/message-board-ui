@@ -1,5 +1,5 @@
 
-<div *ngIf="!this.loading">
+<div *ngIf="!this.loading; else loadingScreen">
 
   <h1>Community Owner: {{ communityInfo.ownerId }}</h1>
 
@@ -80,10 +80,29 @@
   </app-image-upload-and-crop>
 
   <button
+    *ngIf="!PROCESSING; else loadingScreen"
     class="btn btn-primary"
     [disabled]="this.communityRefForm.invalid||this.communityDisplayNameForm.invalid"
     (click)="updateCommunity()"
   >
     Update!
   </button>
+
+  <div
+    *ngIf="SHOW_ERROR"
+    id="away"
+    class="alert alert-danger alert-dismissible"
+    role="alert">
+    {{ ERROR_TEXT }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="SHOW_ERROR=false"></button>
+  </div>
+
 </div>
+
+<ng-template #loadingScreen>
+  <div style="margin: 50px">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

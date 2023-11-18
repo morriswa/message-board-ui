@@ -30,6 +30,7 @@ export class CreatePostComponent{
     [
       Validators.maxLength(1000),
     ])
+  PROCESSING = false;
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
@@ -55,6 +56,8 @@ export class CreatePostComponent{
 
   savePostAndUpload() {
 
+    this.PROCESSING = true;
+
     this.messageBoardService.createPostDraft(
       this.communityInfo.communityId,
           this.postCaptionForm.getRawValue()!,
@@ -77,6 +80,7 @@ export class CreatePostComponent{
               this.clearImageUploadEmitter.emit();
               console.error(err);
               this.currentDraft = undefined
+              this.PROCESSING = false
             }
     });
   }

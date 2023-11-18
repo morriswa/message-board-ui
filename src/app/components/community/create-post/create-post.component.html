@@ -1,4 +1,4 @@
-<div *ngIf="!loading">
+<div *ngIf="!loading; else loadingScreen">
 
   <app-image-upload-and-crop
     [resetImageComponent]="clearImageUploadEmitter"
@@ -45,6 +45,7 @@
   </div>
 
   <button
+    *ngIf="!this.PROCESSING; else loadingScreen"
     class="btn btn-primary"
     [disabled]="this.postCaptionForm.invalid
     ||this.postDescriptionForm.invalid"
@@ -52,6 +53,12 @@
   >
     Save and Post!
   </button>
-
-
 </div>
+
+<ng-template #loadingScreen>
+  <div style="margin: 50px">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

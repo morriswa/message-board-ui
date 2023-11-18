@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {UploadImageRequest} from "../../../interface/upload-image-request";
 import {CommunityComponent} from "../community.component";
-import {map, of, switchMap} from "rxjs";
+import {catchError, map, of, switchMap, throwError} from "rxjs";
 import {Utils} from "../../../Utils";
 
 @Component({
@@ -28,6 +28,9 @@ export class EditCommunityComponent {
   } = {};
 
   resetEventEmitter: EventEmitter<any> = new EventEmitter<any>();
+  PROCESSING= false;
+  SHOW_ERROR: boolean = false;
+  ERROR_TEXT?: any;
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
@@ -45,6 +48,7 @@ export class EditCommunityComponent {
 
   updateCommunity() {
 
+    this.PROCESSING = true;
 
     const newRef = this.communityRefForm.getRawValue()!
 
@@ -54,8 +58,8 @@ export class EditCommunityComponent {
       this.communityDisplayNameForm.getRawValue()!)
       .pipe(
         switchMap(()=>this.updateCommunityBanner()),
-        switchMap(()=>this.updateCommunityIcon())
-        // mergeAll()
+        switchMap(()=>this.updateCommunityIcon()),
+        // switchMap(()=>this.throwFit())
       )
       .subscribe({
       next: ()=>{
@@ -64,8 +68,9 @@ export class EditCommunityComponent {
         this.communityDisplayNameForm.reset()
         this.router.navigateByUrl('/',{ skipLocationChange: true})
           .then(()=>this.router.navigate(['/community',nav]));
-      }, error: () =>{
-
+      }, error: (response:any) =>{
+        this.PROCESSING = false;
+        this.reportError(response.error.description);
       }
     })
   }
@@ -109,5 +114,22 @@ export class EditCommunityComponent {
       this.stagedContentForUpload.banner = $event;
     else
       this.stagedContentForUpload.icon = $event
+  }
+
+  public resetError() {
+    let reporter = document.getElementById("reporter");
+
+    // @ts-ignore
+    reporter.innerHTML = ""
+  }
+  public reportError(response: any) {
+    console.error(response)
+    this.ERROR_TEXT = response
+
+    this.SHOW_ERROR = true;
+  }
+
+  private throwFit() {
+    return this.messageBoardService.bad()
   }
 }

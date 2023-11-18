@@ -9,7 +9,9 @@ import {Observable, of, switchMap} from "rxjs";
   styleUrls: ['./community-feed.component.scss']
 })
 export class CommunityFeedComponent {
-  posts$:Observable<any> = of ({});
+  posts$:Observable<any>;
+
+  loading = true;
   constructor(activeRoute: ActivatedRoute, private service: MessageBoardClientService) {
     const communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
 
@@ -19,5 +21,9 @@ export class CommunityFeedComponent {
         return this.service.getFeedForCommunity(result.communityId);
       })
     );
+
+    this.posts$.subscribe({
+      next: () => this.loading = false
+    })
   }
 }

@@ -1,1 +1,9 @@
-<app-post-feed [posts]="posts$|async"></app-post-feed>
+<app-post-feed *ngIf="!loading; else loadingScreen" [posts]="posts$|async"></app-post-feed>
+
+<ng-template #loadingScreen>
+  <div style="margin: 50px">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

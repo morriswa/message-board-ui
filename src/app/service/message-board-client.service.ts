@@ -11,6 +11,11 @@ export class MessageBoardClientService {
 
   constructor(private http: HttpClient) { }
 
+  bad() {
+    return this.http.get(`${this.SERVICE_PATH}/bad`)
+      .pipe(map((response:any)=>response.payload));
+  }
+
   registerUser(displayName: string) {
     return this.http.post(`${this.SERVICE_PATH}/user`,{},{
       params: {
