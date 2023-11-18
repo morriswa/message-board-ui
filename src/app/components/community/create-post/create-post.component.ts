@@ -31,6 +31,8 @@ export class CreatePostComponent{
       Validators.maxLength(1000),
     ])
   PROCESSING = false;
+  SHOW_ERROR = false;
+  ERROR_TEXT?: string;
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
@@ -74,15 +76,22 @@ export class CreatePostComponent{
             next: ()=> {
               this.clearImageUploadEmitter.emit();
               this.router.navigate(['/community',this.communityInfo.communityLocator])
-              this.currentDraft = undefined
             },
-            error: err=>{
+            error: (err:any)=>{
               this.clearImageUploadEmitter.emit();
-              console.error(err);
-              this.currentDraft = undefined
+              this.reportError(err.error.description)
               this.PROCESSING = false
             }
     });
   }
 
+  resetError() {
+    this.SHOW_ERROR = false;
+    this.ERROR_TEXT = undefined;
+  }
+
+  reportError(description:string) {
+    this.ERROR_TEXT = description;
+    this.SHOW_ERROR = true;
+  }
 }

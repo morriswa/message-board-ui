@@ -2,8 +2,7 @@ import {Component, EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {UploadImageRequest} from "../../../interface/upload-image-request";
-import {CommunityComponent} from "../community.component";
-import {catchError, map, of, switchMap, throwError} from "rxjs";
+import {map, of, switchMap} from "rxjs";
 import {Utils} from "../../../Utils";
 
 @Component({
@@ -59,7 +58,6 @@ export class EditCommunityComponent {
       .pipe(
         switchMap(()=>this.updateCommunityBanner()),
         switchMap(()=>this.updateCommunityIcon()),
-        // switchMap(()=>this.throwFit())
       )
       .subscribe({
       next: ()=>{
@@ -76,8 +74,6 @@ export class EditCommunityComponent {
   }
 
   public updateCommunityBanner() {
-    // this.PROCESSING_REQUEST = true;
-
     if (this.stagedContentForUpload.banner) {
 
       return this.messageBoardService.updateCommunityBanner(
@@ -92,7 +88,6 @@ export class EditCommunityComponent {
     return of('did not update banner')
   }
   public updateCommunityIcon() {
-    // this.PROCESSING_REQUEST = true;
 
     if (this.stagedContentForUpload.icon) {
 
@@ -117,19 +112,11 @@ export class EditCommunityComponent {
   }
 
   public resetError() {
-    let reporter = document.getElementById("reporter");
-
-    // @ts-ignore
-    reporter.innerHTML = ""
+    this.ERROR_TEXT = undefined;
+    this.SHOW_ERROR = false;
   }
-  public reportError(response: any) {
-    console.error(response)
-    this.ERROR_TEXT = response
-
+  public reportError(response: string) {
+    this.ERROR_TEXT = response;
     this.SHOW_ERROR = true;
-  }
-
-  private throwFit() {
-    return this.messageBoardService.bad()
   }
 }

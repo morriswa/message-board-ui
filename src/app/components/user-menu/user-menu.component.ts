@@ -2,9 +2,8 @@ import {Component} from '@angular/core';
 import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
 import {Observable, of} from "rxjs";
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
-import {UploadImageRequest} from "../../interface/upload-image-request";
 import {ThemeService} from "../../service/theme.service";
 import {Utils} from "../../Utils";
 
@@ -27,14 +26,11 @@ export class UserMenuComponent {
               private router: Router,
               private themeService: ThemeService) {
     this.refreshUserProfile();
-    this.userProfile$
-      .subscribe({
-        // next: user=>this.loading = false,
-        error: err=>{
-          console.error(err)
-          this.router.navigate(['/registerUser'])
-        }
-      });
+    this.userProfile$.subscribe({
+      error: err => {
+        this.router.navigateByUrl("/registerUser")
+      }
+    })
     this.newThemeBuffer = !(themeService.current === "default")
   }
 

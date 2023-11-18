@@ -1,4 +1,16 @@
 
-<div *ngFor="let community of communities$|async">
-  <a [routerLink]="['/community', community.communityLocator]">{{ community.displayName }}</a><br>
+<div *ngIf="communities$|async as communities; else loadingScreen">
+  <h1 *ngIf="communities.length === 0">No communities to show!</h1>
+
+  <div *ngFor="let community of communities">
+    <a [routerLink]="['/community', community.communityLocator]">{{ community.displayName }}</a><br>
+  </div>
 </div>
+
+<ng-template #loadingScreen>
+  <div style="margin: 50px">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

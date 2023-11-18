@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {ActivatedRoute} from "@angular/router";
-import {Observable, of, switchMap} from "rxjs";
+import {Observable, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-community-feed',
