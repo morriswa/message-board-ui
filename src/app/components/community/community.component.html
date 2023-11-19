@@ -1,4 +1,4 @@
-<div *ngIf="community$|async as community">
+<div *ngIf="community">
 
   <app-community-header [userId]="userInfo.userId" [communityInfo]="community"></app-community-header>
 
@@ -15,13 +15,13 @@
       <div id="community-buttons">
         <button
           class="btn btn-outline-secondary"
-          [routerLink]="['/community',communityInfo.communityLocator]"
+          [routerLink]="['/community',community.communityLocator]"
         >Feed</button>
 
         <button
           *ngIf="userIsCommunityMember||isCommunityOwner"
           class="btn btn-outline-primary"
-          [routerLink]="['/community',communityInfo.communityLocator,'post']"
+          [routerLink]="['/community',community.communityLocator,'post']"
         >Post</button>
 
         <button

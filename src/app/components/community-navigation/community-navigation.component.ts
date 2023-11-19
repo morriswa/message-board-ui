@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {MessageBoardClientService} from "../../service/message-board-client.service";
-import {Observable, of} from "rxjs";
 import {Router} from "@angular/router";
 
 @Component({
@@ -9,14 +8,11 @@ import {Router} from "@angular/router";
   styleUrls: ['./community-navigation.component.scss']
 })
 export class CommunityNavigationComponent {
-
-  loading = true;
-  communities$: Observable<any[]> = of([])
+  communities?: any[];
 
   constructor(service: MessageBoardClientService, router: Router) {
-    this.communities$ = service.getUsersCommunities();
-    this.communities$.subscribe({
-      next: ()=>this.loading=false,
+    service.getUsersCommunities().subscribe({
+      next: (res:any)=>this.communities = res,
       error: (err: any) => {
         if (err.error.error === "NoRegisteredUserException") router.navigateByUrl("/registerUser");
       }

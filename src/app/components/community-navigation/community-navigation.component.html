@@ -1,5 +1,5 @@
 
-<div *ngIf="communities$|async as communities; else loadingScreen">
+<div *ngIf="communities; else loadingScreen">
   <h1 *ngIf="communities.length === 0">No communities to show!</h1>
 
   <div *ngFor="let community of communities">

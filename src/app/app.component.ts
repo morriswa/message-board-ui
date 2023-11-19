@@ -12,19 +12,20 @@ import {of, switchMap} from "rxjs";
 export class AppComponent {
   title = 'message-board-ui';
 
-  constructor(authService: AuthService, themeservice: ThemeService, client: MessageBoardClientService) {
+  USER_UI_PROFILE?:any;
+
+  constructor(authService: AuthService, themes: ThemeService, client: MessageBoardClientService) {
     let authenticated$ = authService.isAuthenticated$;
     authenticated$
       .pipe(
-        switchMap(res=>{
-          if (res) {
-            return client.getUIProfile();
-          }
+        switchMap(authenticated=>{
+          if (authenticated) return client.getUIProfile();
           return of({theme:"default"});
         })
       )
       .subscribe(result=>{
-        themeservice.current = result.theme;
-      })
+        this.USER_UI_PROFILE = result;
+        themes.current = this.USER_UI_PROFILE.theme;
+      });
   }
 }
