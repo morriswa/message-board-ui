@@ -1,4 +1,7 @@
-<app-post-feed *ngIf="!loading; else loadingScreen" [posts]="posts$|async"></app-post-feed>
+<app-post-feed
+  *ngIf="!loading; else loadingScreen"
+  [posts]="posts$|async"
+  [membership]="membershipInfo"></app-post-feed>
 
 <ng-template #loadingScreen>
   <div style="margin: 50px">

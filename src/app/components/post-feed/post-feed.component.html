@@ -3,10 +3,25 @@
 
   <div class="post-card">
 
-    <div class="vote-card">
-      <app-voting [id]="post.postId" (voteUpdated)="postVoteUpdated($event, i)"></app-voting>
-      <h1 class="vote-count">{{ post.vote }}</h1>
-    </div>
+
+      <div *ngIf="membership.exists;else altVoteCard">
+        <div class="vote-card">
+          <app-voting
+            [id]="post.postId"
+            (voteUpdated)="postVoteUpdated($event, i)"
+            ></app-voting>
+          <h1 class="vote-count">{{ post.vote }}</h1>
+        </div>
+      </div>
+      <ng-template #altVoteCard>
+        <div class="vote-card">
+          <div class="my-tooltip">
+            <i class="bi bi-arrows-expand"></i>
+          </div>
+          <p class="my-tooltip-tip">Please join community to vote on posts!</p>
+          <h1 class="vote-count">{{ post.vote }}</h1>
+        </div>
+      </ng-template>
 
 
     <h2>{{ post.caption }} <br>:{{ post.userInfo.displayName }}</h2>

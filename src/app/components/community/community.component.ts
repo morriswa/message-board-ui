@@ -50,12 +50,16 @@ export class CommunityComponent {
 
   joinCommunity() {
     this.messageBoardService.joinCommunity(this.communityInfo.communityId)
-      .subscribe(()=>this.reloadCommunityStatus());
+      .subscribe(()=>
+        this.router.navigate(['/'], {skipLocationChange: true})
+          .then(()=>this.router.navigate(['/community', this.communityInfo.communityLocator])));
   }
 
   leaveCommunity() {
     this.messageBoardService.leaveCommunity(this.communityInfo.communityId)
-      .subscribe(()=>this.reloadCommunityStatus());
+      .subscribe(()=>
+        this.router.navigate(['/'], {skipLocationChange: true})
+          .then(()=>this.router.navigate(['/community', this.communityInfo.communityLocator])));
   }
 
   reloadCommunityStatus() {

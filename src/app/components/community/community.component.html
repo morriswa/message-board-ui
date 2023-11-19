@@ -19,6 +19,7 @@
         >Feed</button>
 
         <button
+          *ngIf="userIsCommunityMember"
           class="btn btn-outline-primary"
           [routerLink]="['/community',communityInfo.communityLocator,'post']"
         >Post</button>

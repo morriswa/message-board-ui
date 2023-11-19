@@ -30,6 +30,21 @@
   min-width: 30vw;
 }
 
+.my-tooltip-tip {
+  display: none;
+}
+
+.my-tooltip:hover + .my-tooltip-tip {
+  display: block;
+  position: fixed;
+  border-width: 1px;
+  border-style: solid;
+  background-color: white;
+  color: black;
+  margin: 0 0 60px 10px;
+  padding: 1px 10px;
+}
+
 :root {
   --wma-community-banner-height: 150px;
   --wma-community-header-info-height: 75px;

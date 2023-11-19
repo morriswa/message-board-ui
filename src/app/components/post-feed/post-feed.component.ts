@@ -9,6 +9,7 @@ import {CommunityComponent} from "../community/community.component";
 })
 export class PostFeedComponent {
   @Input() posts!:any[];
+  @Input() membership:any;
 
 
   postVoteUpdated($event: number, i: number) {

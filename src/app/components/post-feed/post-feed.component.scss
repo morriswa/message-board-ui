@@ -11,9 +11,11 @@ $post-size-max: 400px;
 .vote-card {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .vote-count {
+  margin-top: 5px;
   padding: 20px;
 }
 
@@ -25,4 +27,9 @@ $post-size-max: 400px;
   max-width: $post-size-max;
   max-height: $post-size-max;
   object-fit: cover;
+}
+
+i {
+  font-size: 30px;
+  color: var(--bs-secondary);
 }
