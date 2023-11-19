@@ -12,6 +12,7 @@ $post-size-max: 400px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: relative;
 }
 
 .vote-count {

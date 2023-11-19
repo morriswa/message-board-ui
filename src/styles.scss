@@ -35,13 +35,17 @@
 }
 
 .my-tooltip:hover + .my-tooltip-tip {
+  // important: must be used in position: relative div
   display: block;
-  position: fixed;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+
   border-width: 1px;
   border-style: solid;
   background-color: white;
   color: black;
-  margin: 0 0 60px 10px;
+  margin: 0 0 30px 30px;
   padding: 1px 10px;
 }
 

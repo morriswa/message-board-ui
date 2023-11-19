@@ -4,7 +4,7 @@
   <div class="post-card">
 
 
-      <div *ngIf="membership.exists;else altVoteCard">
+      <div *ngIf="enabled ;else altVoteCard">
         <div class="vote-card">
           <app-voting
             [id]="post.postId"
