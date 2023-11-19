@@ -3,8 +3,13 @@ import package_settings from 'package.json';
 
 export const environment = {
   production: false,
-  api : "https://qa.api.messageboard.morriswa.org/",
-  securepath : 'v0/',
+  api : {
+    scheme: 'https',
+    path: 'qa.api.messageboard.morriswa.org',
+    routes: {
+      secure: 'v0'
+    }
+  },
   auth : {
     "domain" : "dev-9deub659.us.auth0.com",
     "clientId" : "FiugLBKKkUvCHYDSaJkztCMxkldOEMpv",

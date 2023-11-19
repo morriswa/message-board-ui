@@ -7,7 +7,7 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 export class MessageBoardClientService {
-  public SERVICE_PATH= `${environment.api}/${environment.securepath}`;
+  public SERVICE_PATH= `${environment.api.scheme}://${environment.api.path}/${environment.api.routes.secure}`;
 
   constructor(private http: HttpClient) { }
 
