@@ -1,5 +1,5 @@
 
-<div class="user-menu-card" *ngIf="userProfile$|async as user">
+<div class="user-menu-card" *ngIf="user">
 
   <div>
     <img
@@ -8,7 +8,7 @@
       [src]="user.userProfileImage"
       >
 
-    <div *ngIf="showChangeDisplayNameForm; else showDisplayName">
+    <div *ngIf="change_display_name_form_toggle; else showDisplayName">
 
       <input
         class="form-control"
@@ -79,7 +79,7 @@
       role="switch"
       id="flexSwitchCheckDefault"
       (change)="darkModeUpdated($event)"
-      [checked]="newThemeBuffer"
+      [checked]="dark_mode_switch_toggle"
       >
     <label class="form-check-label" for="flexSwitchCheckDefault">Dark Mode?</label>
   </div>

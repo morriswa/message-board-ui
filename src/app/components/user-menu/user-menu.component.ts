@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
-import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
-import {Observable, of} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {ThemeService} from "../../service/theme.service";
@@ -15,27 +13,31 @@ import {Utils} from "../../Utils";
 export class UserMenuComponent {
 
   PROCESSING_REQUEST = false
-  showChangeDisplayNameForm = false;
-  userProfile$: Observable<any> = of ( {});
-  fileInput = new FormControl();
-  displayNameForm = Utils.displayNameForm;
-  newThemeBuffer = false;
+  change_display_name_form_toggle = false;
+  dark_mode_switch_toggle = false;
 
-  constructor(private auth: AuthService,
-              private messageBoardService: MessageBoardClientService,
+  fileInput = new FormControl();
+
+  displayNameForm = Utils.displayNameForm;
+
+  user?: any;
+
+  constructor(private messageBoardService: MessageBoardClientService,
               private router: Router,
               private themeService: ThemeService) {
     this.refreshUserProfile();
-    this.userProfile$.subscribe({
+    this.dark_mode_switch_toggle = !(themeService.current === "default")
+  }
+
+  refreshUserProfile() {
+    this.messageBoardService.getUserProfile().subscribe({
+      next: result => {
+        this.user = result;
+      },
       error: err => {
         this.router.navigateByUrl("/registerUser")
       }
     })
-    this.newThemeBuffer = !(themeService.current === "default")
-  }
-
-  refreshUserProfile() {
-    this.userProfile$ = this.messageBoardService.getUserProfile();
   }
 
   updateUserProfileImage($event:any) {
@@ -56,19 +58,19 @@ export class UserMenuComponent {
   }
 
   toggleChangeDisplayNameForm() {
-    this.showChangeDisplayNameForm = !this.showChangeDisplayNameForm;
+    this.change_display_name_form_toggle = !this.change_display_name_form_toggle;
   }
 
   changeDisplayName() {
     this.messageBoardService.updateDisplayName(this.displayNameForm.getRawValue()!)
       .subscribe({
         next: ()=>{
-          this.showChangeDisplayNameForm = false;
+          this.change_display_name_form_toggle = false;
           this.displayNameForm.reset();
           this.refreshUserProfile();
         },
         error: err => {
-          this.showChangeDisplayNameForm = false;
+          this.change_display_name_form_toggle = false;
           this.displayNameForm.reset();
           console.error(err);
         }
@@ -76,10 +78,10 @@ export class UserMenuComponent {
   }
 
   darkModeUpdated($event: any) {
-    this.newThemeBuffer = $event.target.checked
+    this.dark_mode_switch_toggle = $event.target.checked
 
     let newTheme: string
-    if (this.newThemeBuffer) newTheme = "dark-mode";
+    if (this.dark_mode_switch_toggle) newTheme = "dark-mode";
     else newTheme = "default"
 
     this.themeService.current = newTheme;
