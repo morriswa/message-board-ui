@@ -31,12 +31,8 @@ export class UserMenuComponent {
 
   refreshUserProfile() {
     this.messageBoardService.getUserProfile().subscribe({
-      next: result => {
-        this.user = result;
-      },
-      error: err => {
-        this.router.navigateByUrl("/registerUser")
-      }
+      next: result => this.user = result,
+      error: () => this.router.navigateByUrl("/registerUser")
     })
   }
 
