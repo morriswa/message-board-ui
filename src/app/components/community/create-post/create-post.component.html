@@ -1,46 +1,54 @@
-<div *ngIf="!loading; else loadingScreen">
+<div id="create-post-wrapper" *ngIf="!loading; else loadingScreen">
 
-  <app-image-upload-and-crop
-    [resetImageComponent]="clearImageUploadEmitter"
-   (imageCroppedAndReadyEvent)="uploadPostImage($event)">
-  </app-image-upload-and-crop>
+  <div class="create-post-element">
+    <app-image-upload-and-crop
+      userDialog="Add content to post: "
+      [resetImageComponent]="clearImageUploadEmitter"
+     (imageCroppedAndReadyEvent)="uploadPostImage($event)">
+    </app-image-upload-and-crop>
+  </div>
 
-  <input
-    type="text"
-    class="form-control"
-    [formControl]="postCaptionForm"
-    placeholder="Enter a Caption..."
-  >
+  <div class="create-post-element">
+    <input
+      type="text"
+      class="form-control"
+      [formControl]="postCaptionForm"
+      placeholder="Enter a Caption..."
+    >
 
-  <div id="caption-warnings">
-    <div
-      *ngIf="postCaptionForm.getRawValue()!.length < 10"
-      class="alert alert-danger"
-      role="alert">
-      Caption is required, and must be at least 10 characters.
-    </div>
+    <div class="warnings" id="caption-warnings">
+      <div
+        *ngIf="postCaptionForm.getRawValue()!.length < 10"
+        class="alert alert-danger"
+        role="alert">
+        Caption is required, and must be at least 10 characters.
+      </div>
 
-    <div
-      *ngIf="postCaptionForm.getRawValue()!.length > 200"
-      class="alert alert-danger"
-      role="alert">
-      Caption must be no longer than than 200 characters!
+      <div
+        *ngIf="postCaptionForm.getRawValue()!.length > 200"
+        class="alert alert-danger"
+        role="alert">
+        Caption must be no longer than than 200 characters!
+      </div>
     </div>
   </div>
 
-  <input
-    type="text"
-    class="form-control"
-    [formControl]="postDescriptionForm"
-    placeholder="...and description for your Post!"
-  >
+  <div class="create-post-element">
 
-  <div id="description-warnings">
-    <div
-      *ngIf="postDescriptionForm.getRawValue()!.length > 1000"
-      class="alert alert-danger"
-      role="alert">
-      Post description must be no longer than than 1000 characters!
+    <input
+      type="text"
+      class="form-control"
+      [formControl]="postDescriptionForm"
+      placeholder="...and description for your Post!"
+    >
+
+    <div class="warnings" id="description-warnings">
+      <div
+        *ngIf="postDescriptionForm.getRawValue()!.length > 1000"
+        class="alert alert-danger"
+        role="alert">
+        Post description must be no longer than than 1000 characters!
+      </div>
     </div>
   </div>
 

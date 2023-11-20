@@ -1,9 +1,18 @@
 
-<div *ngIf="communities; else loadingScreen">
-  <h1 *ngIf="communities.length === 0">No communities to show!</h1>
 
-  <div *ngFor="let community of communities">
-    <a [routerLink]="['/community', community.communityLocator]">{{ community.displayName }}</a><br>
+<div id="community-navigation-wrapper" *ngIf="communities; else loadingScreen">
+
+  <button class="btn btn-primary" routerLink="/communityTools/create">Create</button>
+
+  <h1 *ngIf="communities.length === 0">No communities to show!</h1>
+<!--  <h3 style="margin: 20px 0 0 0 " *ngIf="communities.length !== 0">Your communities: </h3>-->
+
+  <div id="community-blurb-wrapper">
+    <div class="community-blurb" *ngFor="let community of communities">
+      <br>
+      <h2><a [routerLink]="['/community', community.communityLocator]">{{ community.displayName }}</a></h2>
+      <img [src]="community.resourceUrls.icon"><br>
+    </div>
   </div>
 </div>
 

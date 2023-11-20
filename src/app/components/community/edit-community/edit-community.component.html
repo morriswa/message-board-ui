@@ -1,16 +1,14 @@
 
-<div *ngIf="!this.loading; else loadingScreen">
-
-  <h1>Community Owner: {{ communityInfo.ownerId }}</h1>
+<div style="padding: 10px;" *ngIf="!this.loading; else loadingScreen">
 
   <input
     type="text"
-    class="form-control"
+    class="form-control edit-community-field"
     [formControl]="communityRefForm"
     placeholder="Enter new Community Ref (used in URLs and to search your community)"
   >
 
-  <div id="edit-ref-warnings">
+  <div class="warnings" id="edit-ref-warnings">
     <div
       *ngIf="communityRefForm.hasError('pattern')"
       class="alert alert-danger"
@@ -41,12 +39,12 @@
 
   <input
     type="text"
-    class="form-control"
+    class="form-control edit-community-field"
     [formControl]="communityDisplayNameForm"
     placeholder="Enter new Community Display Name"
   >
 
-  <div id="edit-display-name-warnings">
+  <div class="warnings" id="edit-display-name-warnings">
     <div
       *ngIf="communityDisplayNameForm.getRawValue()!.length < 3 &&
             communityDisplayNameForm.getRawValue()!.length != 0"
@@ -63,25 +61,30 @@
     </div>
   </div>
 
-  <h2>Community Icon:</h2>
+  <div class="edit-community-field">
   <app-image-upload-and-crop
+    class="edit-community-field"
+    userDialog="Update community icon: "
     [MAINTAIN_ASPECT_RATIO]="true"
     [ASPECT_RATIO]="1"
     [resetImageComponent]="this.resetEventEmitter"
     (imageCroppedAndReadyEvent)="uploadCommunityResource('icon',$event)">
   </app-image-upload-and-crop>
+</div>
 
-  <h2>Community Banner:</h2>
+  <div class="edit-community-field">
   <app-image-upload-and-crop
+    userDialog="Update community banner: "
     [MAINTAIN_ASPECT_RATIO]="true"
     [ASPECT_RATIO]="16 / 9"
     [resetImageComponent]="this.resetEventEmitter"
     (imageCroppedAndReadyEvent)="uploadCommunityResource('banner',$event)">
   </app-image-upload-and-crop>
+  </div>
 
   <button
     *ngIf="!PROCESSING; else loadingScreen"
-    class="btn btn-primary"
+    class="btn btn-primary edit-community-field"
     [disabled]="this.communityRefForm.invalid||this.communityDisplayNameForm.invalid"
     (click)="updateCommunity()"
   >
