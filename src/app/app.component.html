@@ -1,3 +1,11 @@
 <app-header *ngIf="USER_UI_PROFILE"></app-header>
 
+<div
+  *ngIf="SERVER_REFUSED_TO_RESPOND"
+  class="alert alert-danger"
+  role="alert"
+  style="margin: 20px">
+  Server refused to respond!
+</div>
+
 <router-outlet></router-outlet>

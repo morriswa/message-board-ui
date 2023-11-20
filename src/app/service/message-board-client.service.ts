@@ -179,4 +179,9 @@ export class MessageBoardClientService {
     })
       .pipe(map((response:any)=>response.payload));
   }
+
+  isHealthy() {
+    return this.http.get(`${this.SERVICE_PATH}/health`)
+      .pipe(map((response:any)=>response.payload));
+  }
 }
