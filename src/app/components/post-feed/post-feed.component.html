@@ -1,41 +1,41 @@
-<div *ngIf="posts.length > 0; else noPosts">
-<div *ngFor="let post of posts; let i = index">
+<div class="post-feed" *ngIf="posts; else loadingScreen">
 
-  <div class="post-card">
+  <div *ngIf="posts.length > 0; else noPosts">
+  <div *ngFor="let post of posts;">
 
+    <div class="post-card">
 
-      <div *ngIf="enabled ;else altVoteCard">
-        <div class="vote-card">
-          <app-voting
-            [id]="post.postId"
-            (voteUpdated)="postVoteUpdated($event, i)"
-            ></app-voting>
-          <h1 class="vote-count">{{ post.vote }}</h1>
+      <div class="vote-card">
+        <div class="my-tooltip">
+          <i class="bi bi-arrows-expand"></i>
         </div>
+        <p class="my-tooltip-tip">Please join community to vote on posts!</p>
+        <h1 class="vote-count">{{ post.vote }}</h1>
       </div>
-      <ng-template #altVoteCard>
-        <div class="vote-card">
-          <div class="my-tooltip">
-            <i class="bi bi-arrows-expand"></i>
-          </div>
-          <p class="my-tooltip-tip">Please join community to vote on posts!</p>
-          <h1 class="vote-count">{{ post.vote }}</h1>
-        </div>
-      </ng-template>
 
+      <h2>{{ post.caption }} <br>from <a [routerLink]="['/community', post.communityInfo.communityLocator]">{{ post.communityInfo.displayName }}</a></h2>
+      <p>{{ post.description }}</p>
 
-    <h2>{{ post.caption }} <br>:{{ post.userInfo.displayName }}</h2>
-    <p>{{ post.description }}</p>
-
-    <div class="image-element-wrapper">
-      <img class="image-element" [src]="post.resources[0]">
+      <div class="image-element-wrapper">
+        <img class="image-element" [src]="post.resources[0]">
+      </div>
     </div>
+
   </div>
-</div>
+  </div>
 </div>
 
 <ng-template #noPosts>
   <div class="post-card">
-    <h1>No posts to display!</h1>
+    <h1>Join a community to start posting content!</h1>
+  </div>
+</ng-template>
+
+
+<ng-template #loadingScreen>
+  <div style="margin: 50px">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
   </div>
 </ng-template>

@@ -26,17 +26,12 @@ export class RegisterUserComponent implements OnInit{
   ngOnInit(): void {
     this.auth.user$.pipe(
       map(user=>{
-        if (!user) {
-          console.log('Please authenticate with Auth0 before registering a user');
-          this.router.navigate(['/']);
-        } else {
+        if (!user)
+          this.auth.loginWithRedirect({ appState: { target: '/' }})
+        else
           this.email = user.email;
-          console.log('retrieved user email from auth0: ' + this.email);
-        }
 
         return user!;
-
-        // this.loading = false;
       }),
       switchMap(()=>{
         return this.messageBoardService.getUserProfile()

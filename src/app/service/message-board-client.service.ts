@@ -7,17 +7,18 @@ import {environment} from "../../environments/environment";
   providedIn: 'root'
 })
 export class MessageBoardClientService {
-  public SERVICE_PATH= `${environment.api.scheme}://${environment.api.path}/${environment.api.routes.secure}`;
+  public SERVICE_PATH= `${environment.api.scheme}://${environment.api.path}`;
+  public SECURE_SERVICE_PATH= `${this.SERVICE_PATH}/${environment.api.routes.secure}`;
 
   constructor(private http: HttpClient) { }
 
   bad() {
-    return this.http.get(`${this.SERVICE_PATH}/bad`)
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/bad`)
       .pipe(map((response:any)=>response.payload));
   }
 
   registerUser(displayName: string) {
-    return this.http.post(`${this.SERVICE_PATH}/user`,{},{
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/user`,{},{
       params: {
         displayName: displayName
       }
@@ -26,7 +27,7 @@ export class MessageBoardClientService {
   }
 
   getUserProfile() {
-    return this.http.get(`${this.SERVICE_PATH}/user`)
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/user`)
     .pipe(map((response:any)=>response.payload));
   }
 
@@ -34,12 +35,12 @@ export class MessageBoardClientService {
     let postBody = new FormData();
     postBody.append("image",content)
 
-    return this.http.post(`${this.SERVICE_PATH}/user/profileImage`,postBody)
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/user/profileImage`,postBody)
     .pipe(map((response:any)=>response.payload));
   }
 
   updateDisplayName(newDisplayName:string) {
-    return this.http.patch(`${this.SERVICE_PATH}/user/displayName`, {},{
+    return this.http.patch(`${this.SECURE_SERVICE_PATH}/user/displayName`, {},{
       params: {
         displayName: newDisplayName
       }
@@ -48,7 +49,7 @@ export class MessageBoardClientService {
   }
 
   createPostDraft(communityId:number, caption:string, description:string) {
-    return this.http.post(`${this.SERVICE_PATH}/community/${communityId}/draft`, {}, {params : {
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/draft`, {}, {params : {
         caption: caption,
         description: description
       }}).pipe(map((response:any)=>response.payload));
@@ -58,23 +59,28 @@ export class MessageBoardClientService {
     let postBody = new FormData();
     postBody.append("content",content)
 
-    return this.http.post(`${this.SERVICE_PATH}/draft/${draftId}/add`, postBody)
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/draft/${draftId}/add`, postBody)
       .pipe(map((response:any)=>response.payload));
   }
 
   postDraft(draftId:string) {
-    return this.http.post(`${this.SERVICE_PATH}/draft/${draftId}`, {})
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`, {})
       .pipe(map((response:any)=>response.payload));
   }
 
 
   getFeedForCommunity(communityId:number) {
-    return this.http.get(`${this.SERVICE_PATH}/community/${communityId}/feed`)
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/feed`)
     .pipe(map((response:any)=>response.payload));
   }
 
+  getRecentPosts() {
+    return this.http.get(`${this.SERVICE_PATH}/feed`)
+      .pipe(map((response:any)=>response.payload));
+  }
+
   getCommunityInfo(communityLocator: string) {
-    return this.http.get(`${this.SERVICE_PATH}/community`,{
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/community`,{
       params: {
         communityLocator:communityLocator
       }
@@ -83,17 +89,17 @@ export class MessageBoardClientService {
   }
 
   getMembership(communityId:string) {
-    return this.http.get(`${this.SERVICE_PATH}/community/${communityId}/membership`,{})
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
       .pipe(map((response:any)=>response.payload));
   }
 
   joinCommunity(communityId:string) {
-    return this.http.post(`${this.SERVICE_PATH}/community/${communityId}/membership`,{})
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
     .pipe(map((response:any)=>response.payload));
   }
 
   leaveCommunity(communityId:string) {
-    return this.http.delete(`${this.SERVICE_PATH}/community/${communityId}/membership`,{})
+    return this.http.delete(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
     .pipe(map((response:any)=>response.payload));
   }
 
@@ -101,7 +107,7 @@ export class MessageBoardClientService {
     let postBody = new FormData();
     postBody.append("image",newCommunityIcon)
 
-    return this.http.post(`${this.SERVICE_PATH}/community/${communityId}/icon`,postBody)
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/icon`,postBody)
     .pipe(map((response:any)=>response.payload));
   }
 
@@ -109,12 +115,12 @@ export class MessageBoardClientService {
     let postBody = new FormData();
     postBody.append("image",newCommunityBanner)
 
-    return this.http.post(`${this.SERVICE_PATH}/community/${communityId}/banner`,postBody)
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/banner`,postBody)
     .pipe(map((response:any)=>response.payload));
   }
 
   createCommunity(communityRef:string, communityDisplayName:string) {
-    return this.http.post(`${this.SERVICE_PATH}/community`,{
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/community`,{
       communityRef:communityRef,
       communityName:communityDisplayName
     })
@@ -133,31 +139,31 @@ export class MessageBoardClientService {
     if (communityDisplayName)
       params.communityDisplayName = communityDisplayName
 
-    return this.http.patch(`${this.SERVICE_PATH}/community`, {}, {
+    return this.http.patch(`${this.SECURE_SERVICE_PATH}/community`, {}, {
       params: params
     })
     .pipe(map((response:any)=>response.payload));
   }
 
   getUsersCommunities() {
-    return this.http.get(`${this.SERVICE_PATH}/communities`)
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/communities`)
     .pipe(map((response:any)=>response.payload));
   }
 
   getUIProfile() {
-    return this.http.get(`${this.SERVICE_PATH}/user/ui`)
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/user/ui`)
       .pipe(map((response:any)=>response.payload));
   }
 
   updateUIProfile(theme: string) {
-    return this.http.patch(`${this.SERVICE_PATH}/user/ui`,{
+    return this.http.patch(`${this.SECURE_SERVICE_PATH}/user/ui`,{
       "theme":theme
     })
     .pipe();
   }
 
   voteOnPost(postId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE') {
-    return this.http.post(`${this.SERVICE_PATH}/post/${postId}/vote`,{}, {
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/vote`,{}, {
       params: {
         vote: vote
       }

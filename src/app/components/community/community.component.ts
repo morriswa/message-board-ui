@@ -10,6 +10,7 @@ import {switchMap, tap} from "rxjs";
 })
 export class CommunityComponent {
 
+  loading = true;
   community?:any;
   userInfo?:any;
 
@@ -24,7 +25,6 @@ export class CommunityComponent {
 
       this.messageBoardService.getCommunityInfo(communityName)
         .pipe(
-          tap(),
           switchMap((result:any) =>{
            this.community = result;
            return this.messageBoardService.getMembership(this.community.communityId)
@@ -33,9 +33,10 @@ export class CommunityComponent {
           next:result=>{
             this.userInfo = result;
             this.isCommunityOwner = this.userInfo.userId === this.community.ownerId;
-            this.userIsCommunityMember = result.exists
+            this.userIsCommunityMember = this.userInfo.exists;
+            this.loading = false;
           },
-          error: ()=>this.router.navigate(['/'])
+          error: ()=>this.router.navigate(['/registerUser'])
         });
     } catch {}
   }
@@ -54,14 +55,4 @@ export class CommunityComponent {
           .then(()=>this.router.navigate(['/community', this.community.communityLocator])));
   }
 
-  // reloadCommunityStatus() {
-  //   this.messageBoardService.getMembership(this.communityInfo.communityId).subscribe({
-  //     next:result=>{
-  //       console.log("in reload", result)
-  //       this.userInfo = result;
-  //       this.isCommunityOwner = this.userInfo.userId === this.communityInfo.ownerId;
-  //       this.userIsCommunityMember = result.exists
-  //     }
-  //   })
-  // }
 }

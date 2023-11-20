@@ -9,9 +9,11 @@ import {switchMap} from "rxjs";
   styleUrls: ['./community-feed.component.scss']
 })
 export class CommunityFeedComponent {
+  loading = true
   communityInfo?:any;
   membershipInfo?:any;
   posts?: any;
+
   constructor(activeRoute: ActivatedRoute, service: MessageBoardClientService) {
     const communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
 
@@ -28,8 +30,13 @@ export class CommunityFeedComponent {
       ).subscribe({
       next: (res:any) =>{
         this.membershipInfo = res;
+        this.loading = false
       }
     })
+  }
+
+  postVoteUpdated($event: number, i: number) {
+    this.posts[i].vote = $event
   }
 
   votingEnabled(): boolean {
