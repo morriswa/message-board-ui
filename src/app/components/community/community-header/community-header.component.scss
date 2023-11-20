@@ -1,6 +1,14 @@
 
-:host {
+.header-wrapper {
   height: var(--wma-community-header-height);
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  position: absolute;
+}
+
+.header-wrapper-no-picture {
+  height: var(--wma-community-header-info-height);
   margin: 0;
   padding: 0;
   border-width: 0;
@@ -9,7 +17,7 @@
 
 #community-banner {
   width: 100vw;
-  max-height: var(--wma-community-header-height);
+  height: var(--wma-community-banner-height);
   object-fit: cover;
 }
 
@@ -32,7 +40,7 @@
 }
 
 #community-icon {
-  max-height: var(--wma-community-header-info-height);
+  height: var(--wma-community-header-info-height);
 }
 
 

@@ -2,6 +2,12 @@
 
   <app-community-header [userId]="userInfo.userId" [communityInfo]="community"></app-community-header>
 
+  <div
+    [ngClass]="{
+      'header-buffer-no-picture': !community.resourceUrls.banner,
+      'header-buffer-picture': community.resourceUrls.banner,
+    }"></div>
+
   <br>
 
   <div id="community-content-wrapper">

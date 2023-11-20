@@ -102,4 +102,15 @@ export class ImageUploadAndCropComponent implements OnInit{
     }
   }
 
+  getBackgroundColor() {
+
+    // let color = document.body.parentElement.
+    //
+    // // @ts-ignore
+    // // let color = heresBackground.style.backgroundColor
+    //
+    // console.log(`color found ${color}`)
+    //
+    // return 'var(--bs-body-bg)';
+  }
 }

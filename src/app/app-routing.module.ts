@@ -12,12 +12,8 @@ import {CommunityFeedComponent} from "./components/community/community-feed/comm
 
 
 const routes: Routes = [
-  { path: 'communityTools',
-    children: [
-      { path: 'create', component: CreateCommunityComponent,},
-      { path: 'list', component: CommunityNavigationComponent,},
-    ]
-  },
+  { path: 'communityTools',component: CommunityNavigationComponent, },
+  { path: 'communityTools/create',component: CreateCommunityComponent, },
   { path: 'community/:communityId', component: CommunityComponent,
     children: [
       { path: 'edit', component: EditCommunityComponent,  },

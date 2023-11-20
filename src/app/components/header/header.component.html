@@ -1,6 +1,6 @@
 <div id="app-header">
   <button class="btn btn-primary" *ngIf="authenticated$|async" routerLink="/">Home</button>
-  <button class="btn btn-primary" *ngIf="authenticated$|async" routerLink="/communityTools/list">Communities</button>
+  <button class="btn btn-primary" *ngIf="authenticated$|async" routerLink="/communityTools">Communities</button>
   <button class="btn btn-primary" *ngIf="authenticated$|async" routerLink="/user">Menu</button>
 
   <button class="btn btn-primary" *ngIf="!(authenticated$|async)" (click)="login()">Login</button>

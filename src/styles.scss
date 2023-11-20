@@ -30,11 +30,11 @@
   min-width: 30vw;
 }
 
-.my-tooltip-tip {
+.icon-tooltip {
   display: none;
 }
 
-.my-tooltip:hover + .my-tooltip-tip {
+.icon-tooltip-hover:hover + .icon-tooltip {
   // important: must be used in position: relative div
   display: block;
   position: absolute;
@@ -46,6 +46,31 @@
   background-color: white;
   color: black;
   margin: 0 0 30px 30px;
+  padding: 1px 10px;
+}
+
+.text-tooltip {
+  display: none;
+}
+
+//.text-tooltip-hover {
+//  display: block;
+//}
+
+.text-tooltip-hover:hover + .text-tooltip {
+  // important: must be used in position: relative div
+  display: block;
+  position: absolute;
+  //top: 0;
+  z-index: 1;
+
+  border-width: 1px;
+  border-style: solid;
+  background-color: white;
+  color: black;
+  margin: 0 0 50px 50px ;
+  bottom: 0;
+  //top: 0;
   padding: 1px 10px;
 }
 
@@ -93,7 +118,9 @@
 }
 
 :root {
-  --wma-community-banner-height: 150px;
+  --wma-community-banner-height: 200px;
   --wma-community-header-info-height: 75px;
   --wma-community-header-height: calc(var(--wma-community-banner-height) + var(--wma-community-header-info-height));
+  --cropper-overlay-color: rgba(0,0,0,0);
+  --cropper-outline-color:  rgba(0,0,0,0);
 }
