@@ -22,7 +22,10 @@ export class CreateCommunityComponent {
       this.communityDisplayNameForm.getRawValue()!).subscribe(
       {
         next:()=>{
-          this.router.navigateByUrl('community/'+this.communityRefForm.getRawValue()!);
+          const newCommunity = this.communityRefForm.getRawValue()!
+          this.communityRefForm.reset();
+          this.communityDisplayNameForm.reset();
+          this.router.navigate(['/community',newCommunity]);
         },
         error:err=>console.error(err)
       }
