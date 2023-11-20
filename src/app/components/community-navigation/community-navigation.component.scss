@@ -5,11 +5,13 @@ a {
 
 #community-navigation-wrapper {
   padding: 20px;
+  max-width: 100vw;
 }
 
 #community-blurb-wrapper {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   margin: 0;
 }
 

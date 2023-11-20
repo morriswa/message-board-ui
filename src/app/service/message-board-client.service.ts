@@ -170,4 +170,13 @@ export class MessageBoardClientService {
     })
     .pipe(map((res:any)=>res.payload));
   }
+
+  searchCommunity(value: string) {
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/communities/search`,{
+      params : {
+        searchText: value
+      }
+    })
+      .pipe(map((response:any)=>response.payload));
+  }
 }

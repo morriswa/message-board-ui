@@ -2,7 +2,7 @@
 
 <div id="community-navigation-wrapper" *ngIf="communities; else loadingScreen">
 
-  <button class="btn btn-primary" routerLink="/communityTools/create">Create</button>
+  <app-search-community></app-search-community>
 
   <h1 *ngIf="communities.length === 0">No communities to show!</h1>
 <!--  <h3 style="margin: 20px 0 0 0 " *ngIf="communities.length !== 0">Your communities: </h3>-->
@@ -14,6 +14,9 @@
       <img [src]="community.resourceUrls.icon"><br>
     </div>
   </div>
+
+  <button class="btn btn-primary" routerLink="/communityTools/create">Create</button>
+
 </div>
 
 <ng-template #loadingScreen>

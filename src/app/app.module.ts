@@ -16,7 +16,7 @@ import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import {NgOptimizedImage} from "@angular/common";
 import {ImageCropperModule} from "ngx-image-cropper";
-import { CreateCommunityComponent } from './components/create-community/create-community.component';
+import { CreateCommunityComponent } from './components/community-navigation/create-community/create-community.component';
 import { EditCommunityComponent } from './components/community/edit-community/edit-community.component';
 import { CreatePostComponent } from './components/community/create-post/create-post.component';
 import { ImageUploadAndCropComponent } from './components/image-upload-and-crop/image-upload-and-crop.component';
@@ -25,6 +25,7 @@ import { CommunityHeaderComponent } from './components/community/community-heade
 import { CommunityFeedComponent } from './components/community/community-feed/community-feed.component';
 import {ThemeService} from "./service/theme.service";
 import { VotingComponent } from './components/voting/voting.component';
+import { SearchCommunityComponent } from './components/community-navigation/search-community/search-community.component';
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -60,6 +61,7 @@ const AUTH0_CONFIG = {
     CommunityHeaderComponent,
     CommunityFeedComponent,
     VotingComponent,
+    SearchCommunityComponent,
   ],
     imports: [
         BrowserModule,
