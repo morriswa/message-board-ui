@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Utils} from "../../../Utils";
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {Router} from "@angular/router";
@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   templateUrl: './search-community.component.html',
   styleUrls: ['./search-community.component.scss']
 })
-export class SearchCommunityComponent {
+export class SearchCommunityComponent implements OnInit {
   communityDisplayNameForm = Utils.communityDisplayNameForm;
   communities?: any;
 
@@ -20,6 +20,10 @@ export class SearchCommunityComponent {
     this.service.searchCommunity($event.target.value).subscribe({
       next: (res:any)=>this.communities = res
     });
+  }
+
+  ngOnInit(): void {
+    this.communityDisplayNameForm.reset();
   }
 
 }

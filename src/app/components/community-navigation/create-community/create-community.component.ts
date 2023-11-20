@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {Router} from "@angular/router";
 import {Utils} from "../../../Utils";
@@ -8,7 +8,7 @@ import {Utils} from "../../../Utils";
   templateUrl: './create-community.component.html',
   styleUrls: ['./create-community.component.scss']
 })
-export class CreateCommunityComponent {
+export class CreateCommunityComponent implements OnInit {
 
   communityRefForm = Utils.communityRefForm;
   communityDisplayNameForm = Utils.communityDisplayNameForm
@@ -30,6 +30,11 @@ export class CreateCommunityComponent {
         error:err=>console.error(err)
       }
     )
+  }
+
+  ngOnInit(): void {
+    this.communityRefForm.reset();
+    this.communityDisplayNameForm.reset();
   }
 
 }

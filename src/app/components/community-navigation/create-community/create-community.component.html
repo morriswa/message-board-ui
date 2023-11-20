@@ -21,14 +21,14 @@
       </div>
 
       <div
-        *ngIf="communityRefForm.getRawValue()!.length < 3"
+        *ngIf="!communityRefForm.value || communityRefForm.getRawValue()!.length < 3"
         class="alert alert-danger"
         role="alert">
         Community Locator is required and must be longer than 2 characters.
       </div>
 
       <div
-        *ngIf="communityRefForm.getRawValue()!.length > 30"
+        *ngIf="communityRefForm.value && communityRefForm.getRawValue()!.length > 30"
         class="alert alert-danger"
         role="alert">
         Community Locator must be no longer than than 30 characters!
@@ -45,15 +45,16 @@
 
   <div class="warnings" id="display-name-warnings">
     <div
-      *ngIf="communityDisplayNameForm.getRawValue()!.length < 3 &&
-              communityDisplayNameForm.getRawValue()!.length != 0"
+      *ngIf="!communityDisplayNameForm.value || (
+              communityDisplayNameForm.getRawValue()!.length < 3 &&
+              communityDisplayNameForm.getRawValue()!.length != 0)"
       class="alert alert-danger"
       role="alert">
-      Community Display Name must be longer than 2 characters!
+      Community Display Name is required and must be longer than 2 characters!
     </div>
 
     <div
-      *ngIf="communityDisplayNameForm.getRawValue()!.length > 100"
+      *ngIf="communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > 100"
       class="alert alert-danger"
       role="alert">
       Community Display Name must be no longer than than 100 characters!
