@@ -13,12 +13,18 @@ export class AppComponent {
   title = 'message-board-ui';
 
   USER_UI_PROFILE?:any;
-  SERVER_REFUSED_TO_RESPOND = false;
+  HEALTHY = true;
 
   constructor(authService: AuthService, themes: ThemeService, client: MessageBoardClientService) {
     let authenticated$ = authService.isAuthenticated$;
-    client.isHealthy().pipe(
-        switchMap(()=>authenticated$),
+    client.isHealthy().subscribe({
+      error: err => {
+        this.HEALTHY = false;
+      }
+    });
+
+    authenticated$
+      .pipe(
         switchMap(authenticated=>{
           if (authenticated) return client.getUIProfile();
           return of({theme:"default"});
@@ -28,8 +34,6 @@ export class AppComponent {
         next: result => {
           this.USER_UI_PROFILE = result;
           themes.current = this.USER_UI_PROFILE.theme;
-        }, error: err => {
-          this.SERVER_REFUSED_TO_RESPOND = true;
         }
       });
   }

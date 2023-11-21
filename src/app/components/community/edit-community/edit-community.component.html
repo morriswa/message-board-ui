@@ -1,12 +1,15 @@
 
 <div style="padding: 10px;" *ngIf="!this.loading; else loadingScreen">
 
-  <input
-    type="text"
-    class="form-control edit-community-field"
-    [formControl]="communityRefForm"
-    placeholder="Enter new Community Ref (used in URLs and to search your community)"
-  >
+  <div class="edit-community-field">
+    <span>Enter new community locator! <br>Used in URLs and to locate your community...</span>
+    <input
+      type="text"
+      class="form-control"
+      [formControl]="communityRefForm"
+      placeholder="Enter new Locator"
+    >
+  </div>
 
   <div class="warnings" id="edit-ref-warnings">
     <div
@@ -37,12 +40,16 @@
     </div>
   </div>
 
-  <input
-    type="text"
-    class="form-control edit-community-field"
-    [formControl]="communityDisplayNameForm"
-    placeholder="Enter new Community Display Name"
-  >
+  <div class="edit-community-field">
+    <span>Enter new community display name! <br>Used to search for your community...</span>
+    <input
+      type="text"
+      class="form-control"
+      [formControl]="communityDisplayNameForm"
+      placeholder="Enter new Display Name"
+    >
+  </div>
+
 
   <div class="warnings" id="edit-display-name-warnings">
     <div

@@ -25,7 +25,7 @@ export class ImageUploadAndCropComponent implements OnInit{
   @Input() ASPECT_RATIO: number = 1;
   @Input() MAINTAIN_ASPECT_RATIO: boolean = false;
   @Output() imageCroppedAndReadyEvent: EventEmitter<any> = new EventEmitter<any>();
-  @Input() userDialog?: string;
+  @Input() userDialog: string = "";
 
   ngOnInit(): void {
     this.resetImageComponent.subscribe(()=>this.reset())

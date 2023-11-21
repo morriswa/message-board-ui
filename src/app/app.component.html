@@ -1,7 +1,7 @@
-<app-header *ngIf="USER_UI_PROFILE"></app-header>
+<app-header *ngIf="HEALTHY"></app-header>
 
 <div
-  *ngIf="SERVER_REFUSED_TO_RESPOND"
+  *ngIf="!HEALTHY"
   class="alert alert-danger"
   role="alert"
   style="margin: 20px">
