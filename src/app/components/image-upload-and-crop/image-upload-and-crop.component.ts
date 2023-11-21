@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ImageCroppedEvent} from "ngx-image-cropper";
-import {Utils} from "../../Utils";
 import {FormControl} from "@angular/forms";
-import {UploadImageRequest} from "../../interface/upload-image-request";
 import heic2any from "heic2any";
 
 
@@ -25,7 +23,7 @@ export class ImageUploadAndCropComponent implements OnInit{
   @Input() ASPECT_RATIO: number = 1;
   @Input() MAINTAIN_ASPECT_RATIO: boolean = false;
   @Output() imageCroppedAndReadyEvent: EventEmitter<any> = new EventEmitter<any>();
-  @Input() userDialog: string = "";
+  @Input() userDialog?: string;
 
   ngOnInit(): void {
     this.resetImageComponent.subscribe(()=>this.reset())

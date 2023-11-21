@@ -1,4 +1,9 @@
 
+span {
+  display: block;
+  color: var(--bs-body-color);
+}
+
 .form-control-container {
   display: flex;
   flex-direction: row;
