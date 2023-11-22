@@ -48,11 +48,14 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  createPostDraft(communityId:number, caption:string, description:string) {
-    return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/draft`, {}, {params : {
-        caption: caption,
-        description: description
-      }}).pipe(map((response:any)=>response.payload));
+  createPostDraft(communityId:number, caption?:string|null, description?:string|null) {
+
+    let params:any = {};
+
+    if (caption != null) params.caption = caption;
+    if (description != null) params.description = description;
+
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/draft`, {}, {params : params}).pipe(map((response:any)=>response.payload));
   }
 
   addContentToDraft(draftId:string, content:any) {
@@ -182,6 +185,21 @@ export class MessageBoardClientService {
 
   isHealthy() {
     return this.http.get(`${this.SERVICE_PATH}/health`)
+      .pipe(map((response:any)=>response.payload));
+  }
+
+  editDraft(draftId: string, caption:string | null, description: string|null) {
+    let params:any = {};
+
+    if (caption != null) params.caption = caption;
+    if (description != null) params.description = description;
+
+    return this.http.patch(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`, {}, {params : params}).pipe(map((response:any)=>response.payload));
+
+  }
+
+  getDraft(draftId: string) {
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`)
       .pipe(map((response:any)=>response.payload));
   }
 }

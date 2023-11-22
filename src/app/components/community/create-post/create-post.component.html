@@ -1,11 +1,28 @@
 <div id="create-post-wrapper" *ngIf="!loading; else loadingScreen">
 
-  <div class="create-post-element">
+  <div *ngIf="currentDraft">
+    <div *ngFor="let content of this.currentDraft.resources">
+      <img
+        class="post-content-preview-img"
+        [src]="content">
+    </div>
+  </div>
+
+  <div class="create-post-element" *ngIf="!PROCESSING">
     <app-image-upload-and-crop
       userDialog="Add content to post: "
       [resetImageComponent]="clearImageUploadEmitter"
      (imageCroppedAndReadyEvent)="uploadPostImage($event)">
     </app-image-upload-and-crop>
+
+    <button
+      *ngIf="!this.PROCESSING; else loadingScreen"
+      class="btn btn-primary"
+      [disabled]="!this.pendingImageUpload"
+      (click)="saveDraftAndResetImageUploader()"
+    >
+      Add another Image!
+    </button>
   </div>
 
   <div class="create-post-element">

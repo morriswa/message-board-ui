@@ -28,8 +28,8 @@
       <h2>{{ post.caption }} <br>:{{ post.userInfo.displayName }}</h2>
       <p>{{ post.description }}</p>
 
-      <div class="image-element-wrapper">
-        <img class="image-element" [src]="post.resources[0]">
+      <div class="image-element-wrapper" *ngFor="let content of post.resources">
+        <img class="image-element" [src]="content">
       </div>
     </div>
   </div></div>
