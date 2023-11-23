@@ -14,7 +14,7 @@ import { CommunityComponent } from './components/community/community.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
-import {NgOptimizedImage} from "@angular/common";
+import {APP_BASE_HREF, NgOptimizedImage} from "@angular/common";
 import {ImageCropperModule} from "ngx-image-cropper";
 import { CreateCommunityComponent } from './components/community-navigation/create-community/create-community.component';
 import { EditCommunityComponent } from './components/community/edit-community/edit-community.component';
@@ -26,6 +26,7 @@ import { CommunityFeedComponent } from './components/community/community-feed/co
 import {ThemeService} from "./service/theme.service";
 import { VotingComponent } from './components/voting/voting.component';
 import { SearchCommunityComponent } from './components/community-navigation/search-community/search-community.component';
+import {ValidatorFactory} from "./service/validator.factory";
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -77,7 +78,8 @@ const AUTH0_CONFIG = {
     {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
     // {provide: APP_BASE_HREF, useValue: '/messageboard'},
     AuthService,
-    ThemeService
+    ThemeService,
+    ValidatorFactory
   ],
   bootstrap: [AppComponent]
 })

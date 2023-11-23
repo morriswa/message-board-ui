@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {UploadImageRequest} from "../../../interface/upload-image-request";
 import {map, of, switchMap} from "rxjs";
-import {Utils} from "../../../Utils";
+import {ValidatorFactory} from "../../../service/validator.factory";
 
 @Component({
   selector: 'app-edit-community',
@@ -12,8 +12,8 @@ import {Utils} from "../../../Utils";
 })
 export class EditCommunityComponent {
 
-  communityRefForm = Utils.communityRefForm;
-  communityDisplayNameForm = Utils.communityDisplayNameForm
+  communityRefForm;
+  communityDisplayNameForm;
 
 
   loading=true;
@@ -33,8 +33,12 @@ export class EditCommunityComponent {
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
-              private messageBoardService: MessageBoardClientService) {
-    let communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
+              private messageBoardService: MessageBoardClientService,
+              validatorFactory: ValidatorFactory) {
+    let communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId'];
+
+    this.communityRefForm = validatorFactory.getCommunityRefForm();
+    this.communityDisplayNameForm = validatorFactory.getCommunityDisplayNameForm();
 
     this.messageBoardService.getCommunityInfo(communityLocator)
       .subscribe({
@@ -42,7 +46,7 @@ export class EditCommunityComponent {
           this.communityInfo = result;
           this.loading = false;
         }, error: err => console.error(err)
-      })
+      });
   }
 
   updateCommunity() {

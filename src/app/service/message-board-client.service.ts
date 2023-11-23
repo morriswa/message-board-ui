@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs";
+import {map, of} from "rxjs";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -12,11 +12,32 @@ export class MessageBoardClientService {
 
   constructor(private http: HttpClient) { }
 
+
+  // test endpoints
   bad() {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/bad`)
       .pipe(map((response:any)=>response.payload));
   }
 
+
+  // public endpoints
+  isHealthy() {
+    return this.http.get(`${this.SERVICE_PATH}/health`)
+      .pipe(map((response:any)=>response.payload));
+  }
+
+  getPreferences() {
+    return this.http.get(`${this.SERVICE_PATH}/preferences`).pipe(
+      map((res:any)=>res.payload));
+  }
+
+  getRecentPosts() {
+    return this.http.get(`${this.SERVICE_PATH}/feed`)
+      .pipe(map((response:any)=>response.payload));
+  }
+
+
+  // user endpoints
   registerUser(displayName: string) {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/user`,{},{
       params: {
@@ -48,6 +69,20 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
+  getUIProfile() {
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/user/ui`)
+      .pipe(map((response:any)=>response.payload));
+  }
+
+  updateUIProfile(theme: string) {
+    return this.http.patch(`${this.SECURE_SERVICE_PATH}/user/ui`,{
+      "theme":theme
+    })
+      .pipe();
+  }
+
+
+  // post endpoints
   createPostDraft(communityId:number, caption?:string|null, description?:string|null) {
 
     let params:any = {};
@@ -71,15 +106,26 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
+  editDraft(draftId: string, caption:string | null, description: string|null) {
+    let params:any = {};
 
+    if (caption != null) params.caption = caption;
+    if (description != null) params.description = description;
+
+    return this.http.patch(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`, {}, {params : params})
+      .pipe(map((response:any)=>response.payload));
+  }
+
+  getDraft(draftId: string) {
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`)
+      .pipe(map((response:any)=>response.payload));
+  }
+
+
+  // community endpoints
   getFeedForCommunity(communityId:number) {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/feed`)
     .pipe(map((response:any)=>response.payload));
-  }
-
-  getRecentPosts() {
-    return this.http.get(`${this.SERVICE_PATH}/feed`)
-      .pipe(map((response:any)=>response.payload));
   }
 
   getCommunityInfo(communityLocator: string) {
@@ -153,18 +199,6 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  getUIProfile() {
-    return this.http.get(`${this.SECURE_SERVICE_PATH}/user/ui`)
-      .pipe(map((response:any)=>response.payload));
-  }
-
-  updateUIProfile(theme: string) {
-    return this.http.patch(`${this.SECURE_SERVICE_PATH}/user/ui`,{
-      "theme":theme
-    })
-    .pipe();
-  }
-
   voteOnPost(postId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE') {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/vote`,{}, {
       params: {
@@ -180,26 +214,6 @@ export class MessageBoardClientService {
         searchText: value
       }
     })
-      .pipe(map((response:any)=>response.payload));
-  }
-
-  isHealthy() {
-    return this.http.get(`${this.SERVICE_PATH}/health`)
-      .pipe(map((response:any)=>response.payload));
-  }
-
-  editDraft(draftId: string, caption:string | null, description: string|null) {
-    let params:any = {};
-
-    if (caption != null) params.caption = caption;
-    if (description != null) params.description = description;
-
-    return this.http.patch(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`, {}, {params : params}).pipe(map((response:any)=>response.payload));
-
-  }
-
-  getDraft(draftId: string) {
-    return this.http.get(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`)
       .pipe(map((response:any)=>response.payload));
   }
 }

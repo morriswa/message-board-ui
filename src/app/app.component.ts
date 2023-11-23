@@ -3,6 +3,7 @@ import {AuthService} from "@auth0/auth0-angular";
 import {ThemeService} from "./service/theme.service";
 import {MessageBoardClientService} from "./service/message-board-client.service";
 import {of, switchMap} from "rxjs";
+import {ValidatorFactory} from "./service/validator.factory";
 
 @Component({
   selector: 'app-root',
@@ -15,12 +16,16 @@ export class AppComponent {
   USER_UI_PROFILE?:any;
   HEALTHY = true;
 
-  constructor(authService: AuthService, themes: ThemeService, client: MessageBoardClientService) {
+  constructor(authService: AuthService,
+              themes: ThemeService,
+              client: MessageBoardClientService,
+              prefs: ValidatorFactory) {
     let authenticated$ = authService.isAuthenticated$;
-    client.isHealthy().subscribe({
-      error: err => {
-        this.HEALTHY = false;
-      }
+
+    client.isHealthy().pipe(
+      switchMap(()=>prefs.prefsSet)
+    ).subscribe({
+      error: () => this.HEALTHY = false
     });
 
     authenticated$
