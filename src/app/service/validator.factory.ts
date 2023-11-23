@@ -17,7 +17,6 @@ export class ValidatorFactory {
         next: value => {
           this.prefs = value;
           this.prefsSet.emit(true);
-          console.log("prefs have been set", this.prefs)
         },
         error: err=>console.error(err)
      });
