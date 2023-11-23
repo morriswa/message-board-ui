@@ -36,7 +36,6 @@ export class ValidatorFactory {
     ]);
   }
 
-
   getCommunityRefForm() {
     if (!this.prefs){
       console.error("UH OH")
@@ -64,4 +63,28 @@ export class ValidatorFactory {
       ]);
   }
 
+  getPostCaptionForm() {
+    if (!this.prefs){
+      console.error("UH OH")
+      throw new Error("We need PREFERENCES!!!!")
+    }
+
+    return new FormControl('',
+      [
+        Validators.maxLength(this.prefs.POST_CAPTION_MAX),
+        Validators.minLength(this.prefs.POST_CAPTION_MIN),
+      ]);
+  }
+
+  getPostDescriptionForm() {
+    if (!this.prefs){
+      console.error("UH OH")
+      throw new Error("We need PREFERENCES!!!!")
+    }
+
+    return  new FormControl('',
+      [
+        Validators.maxLength(this.prefs.POST_DESCRIPTION_MAX),
+      ]);
+  }
 }

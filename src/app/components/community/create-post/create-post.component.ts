@@ -4,6 +4,7 @@ import {MessageBoardClientService} from "../../../service/message-board-client.s
 import {FormControl, Validators} from "@angular/forms";
 import {UploadImageRequest} from "../../../interface/upload-image-request";
 import {of, switchMap, tap} from "rxjs";
+import {ValidatorFactory} from "../../../service/validator.factory";
 
 @Component({
   selector: 'app-create-post',
@@ -19,17 +20,9 @@ export class CreatePostComponent{
   clearImageUploadEmitter: EventEmitter<any> = new EventEmitter<any>();
 
 
-  postCaptionForm = new FormControl('',
-    [
-      Validators.required,
-      Validators.maxLength(200),
-      Validators.minLength(10),
-    ])
+  postCaptionForm;
+  postDescriptionForm;
 
-  postDescriptionForm = new FormControl('',
-    [
-      Validators.maxLength(1000),
-    ])
   PROCESSING = false;
   SHOW_ERROR = false;
   ERROR_TEXT?: string;
@@ -37,7 +30,12 @@ export class CreatePostComponent{
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
-              private messageBoardService: MessageBoardClientService) {
+              private messageBoardService: MessageBoardClientService,
+              validators: ValidatorFactory) {
+
+    this.postCaptionForm = validators.getPostCaptionForm();
+    this.postDescriptionForm = validators.getPostDescriptionForm();
+
     try {
 
       const communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
