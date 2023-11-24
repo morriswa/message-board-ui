@@ -3,11 +3,11 @@ import {MessageBoardClientService} from "../../service/message-board-client.serv
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-community-navigation',
-  templateUrl: './community-navigation.component.html',
-  styleUrls: ['./community-navigation.component.scss']
+  selector: 'app-community-tools',
+  templateUrl: './community-tools.component.html',
+  styleUrls: ['./community-tools.component.scss']
 })
-export class CommunityNavigationComponent {
+export class CommunityToolsComponent {
   communities?: any[];
 
   constructor(service: MessageBoardClientService, router: Router) {

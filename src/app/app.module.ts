@@ -16,16 +16,16 @@ import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import {APP_BASE_HREF, NgOptimizedImage} from "@angular/common";
 import {ImageCropperModule} from "ngx-image-cropper";
-import { CreateCommunityComponent } from './components/community-navigation/create-community/create-community.component';
+import { CreateCommunityComponent } from './components/community-tools/create-community/create-community.component';
 import { EditCommunityComponent } from './components/community/edit-community/edit-community.component';
 import { CreatePostComponent } from './components/community/create-post/create-post.component';
 import { ImageUploadAndCropComponent } from './components/image-upload-and-crop/image-upload-and-crop.component';
-import { CommunityNavigationComponent } from './components/community-navigation/community-navigation.component';
+import { CommunityToolsComponent } from './components/community-tools/community-tools.component';
 import { CommunityHeaderComponent } from './components/community/community-header/community-header.component';
 import { CommunityFeedComponent } from './components/community/community-feed/community-feed.component';
 import {ThemeService} from "./service/theme.service";
 import { VotingComponent } from './components/voting/voting.component';
-import { SearchCommunityComponent } from './components/community-navigation/search-community/search-community.component';
+import { SearchCommunityComponent } from './components/community-tools/search-community/search-community.component';
 import {ValidatorFactory} from "./service/validator.factory";
 import {MessageBoardClientService} from "./service/message-board-client.service";
 import {PreferencesService} from "./service/preferences.service";
@@ -61,7 +61,7 @@ const AUTH0_CONFIG = {
     EditCommunityComponent,
     CreatePostComponent,
     ImageUploadAndCropComponent,
-    CommunityNavigationComponent,
+    CommunityToolsComponent,
     CommunityHeaderComponent,
     CommunityFeedComponent,
     VotingComponent,
