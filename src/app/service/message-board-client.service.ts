@@ -216,4 +216,18 @@ export class MessageBoardClientService {
     })
       .pipe(map((response:any)=>response.payload));
   }
+
+  getPostDetails(postId: number) {
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/post/${postId}`)
+      .pipe(map((response:any)=>response.payload));
+  }
+
+  voteOnComment(postId: number, commentId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE') {
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment/${commentId}/vote`,{}, {
+      params: {
+        vote: vote
+      }
+    })
+      .pipe(map((res:any)=>res.payload));
+  }
 }

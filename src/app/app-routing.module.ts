@@ -9,6 +9,7 @@ import {EditCommunityComponent} from "./components/community/edit-community/edit
 import {CreatePostComponent} from "./components/community/create-post/create-post.component";
 import {CommunityNavigationComponent} from "./components/community-navigation/community-navigation.component";
 import {CommunityFeedComponent} from "./components/community/community-feed/community-feed.component";
+import {PostDetailsComponent} from "./components/community/post-details/post-details.component";
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'community/:communityId', component: CommunityComponent,
     children: [
       { path: 'edit', component: EditCommunityComponent,  },
+      { path: 'post/:postId', component: PostDetailsComponent, },
       { path: 'post', component: CreatePostComponent, },
       { path: '', component: CommunityFeedComponent, pathMatch: "full" }
     ]
