@@ -18,7 +18,7 @@ export class PostDetailsComponent {
   commentForm: any;
 
   constructor(active: ActivatedRoute,
-              client: MessageBoardClientService,
+              private client: MessageBoardClientService,
               validators: ValidatorFactory) {
     this.commentForm = validators.getPostDescriptionForm();
 
@@ -40,9 +40,15 @@ export class PostDetailsComponent {
       next: (res: any) => {
         this.post = res.post;
         this.comments = res.comments;
-        console.log(this.comments)
       }
     });
+  }
+
+  refreshComments() {
+    this.client.getComments(this.post.postId)
+      .subscribe({
+        next: value => this.comments = value
+      });
   }
 
   postVoteUpdated($event: number) {
@@ -54,7 +60,13 @@ export class PostDetailsComponent {
   }
 
   postComment() {
-    this.commentForm.reset();
+    this.client.leaveComment(this.post.postId, this.commentForm.value)
+      .subscribe({
+      next: ()=>{
+        this.commentForm.reset();
+        this.refreshComments();
+      }
+    })
   }
 
   commentVoteUpdated($event: number, i: number) {

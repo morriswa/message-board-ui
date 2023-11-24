@@ -230,4 +230,16 @@ export class MessageBoardClientService {
     })
       .pipe(map((res:any)=>res.payload));
   }
+
+  leaveComment(postId:number, comment: string) {
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment`,comment, { headers: {
+        'Content-Type': 'text/plain'
+      }})
+      .pipe(map((res:any)=>res.payload));
+  }
+
+  getComments(postId: any) {
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment`)
+      .pipe(map((res:any)=>res.payload));
+  }
 }
