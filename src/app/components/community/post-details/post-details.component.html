@@ -36,21 +36,39 @@
          [formControl]="commentForm"
          placeholder="Enter comment">
   <button
+    style="margin-top: 5px"
     type="button"
     class="btn btn-primary"
     [disabled]="this.commentForm.invalid"
     (click)="postComment()">Leave Comment!</button>
 </div>
 
-<div class="post-card" *ngFor="let comment of this.comments; index as i">
-  <h3>{{comment.body}}</h3>
-  <div class="vote-card">
-    <app-voting
-      [type]="'COMMENT'"
-      [postId]="post.postId"
-      [commentId]="comment.commentId"
-      (voteUpdated)="commentVoteUpdated($event, i)"
-    ></app-voting>
-    <h1 class="vote-count">{{ comments[i].vote }}</h1>
+<div id="comment-card-wrapper">
+  <div class="comment-card" *ngFor="let comment of this.comments; index as i">
+
+    <div *ngIf="votingEnabled() ;else altCommentVoteCard">
+      <div class="vote-card">
+        <app-voting
+          [type]="'COMMENT'"
+          [postId]="post.postId"
+          [commentId]="comment.commentId"
+          (voteUpdated)="commentVoteUpdated($event, i)"
+        ></app-voting>
+        <h1 class="vote-count">{{ comment.vote }}</h1>
+      </div>
+    </div>
+    <ng-template #altCommentVoteCard>
+      <div class="vote-card">
+        <div class="icon-tooltip-hover">
+          <i class="bi bi-arrows-expand"></i>
+        </div>
+        <p class="icon-tooltip">Please join community to interact with posts and comments!</p>
+        <h1 class="vote-count">{{ comment.vote }}</h1>
+      </div>
+    </ng-template>
+
+    <h4>{{comment.body}}</h4>
+
+
   </div>
 </div>
