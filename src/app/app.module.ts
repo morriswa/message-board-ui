@@ -27,6 +27,8 @@ import {ThemeService} from "./service/theme.service";
 import { VotingComponent } from './components/voting/voting.component';
 import { SearchCommunityComponent } from './components/community-navigation/search-community/search-community.component';
 import {ValidatorFactory} from "./service/validator.factory";
+import {MessageBoardClientService} from "./service/message-board-client.service";
+import {PreferencesService} from "./service/preferences.service";
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -79,6 +81,8 @@ const AUTH0_CONFIG = {
     // {provide: APP_BASE_HREF, useValue: '/messageboard'},
     AuthService,
     ThemeService,
+    MessageBoardClientService,
+    PreferencesService,
     ValidatorFactory
   ],
   bootstrap: [AppComponent]

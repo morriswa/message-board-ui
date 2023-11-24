@@ -1,33 +1,30 @@
 import {FormControl, Validators} from "@angular/forms";
-import {MessageBoardClientService} from "./message-board-client.service";
-import {EventEmitter, Injectable} from "@angular/core";
+import {Injectable} from "@angular/core";
+import {of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ValidatorFactory {
 
-  prefs?: any;
-  prefsSet = new EventEmitter<boolean>();
+  private data?: any;
 
-  constructor(client: MessageBoardClientService) {
-    client
-      .getPreferences()
-      .subscribe({
-        next: value => {
-          this.prefs = value;
-          this.prefsSet.emit(true);
-        },
-        error: err=>console.error(err)
-     });
+  init(prefs: any) {
+    this.prefs = prefs;
+    return of('successfully initialized Validator Factory Service!');
+  }
+
+  get prefs() {
+    if (!this.data) throw new Error("NEED APPLICATION PREFERENCES");
+    return this.data;
+  }
+
+  set prefs(data: any) {
+    if (!data) throw new Error("NEED APPLICATION PREFERENCES");
+    this.data = data;
   }
 
   getDisplayNameForm()  {
-    if (!this.prefs){
-      console.error("UH OH")
-      throw new Error("We need PREFERENCES!!!!")
-    }
-
     return new FormControl('',
     [
       Validators.maxLength(this.prefs.DISPLAY_NAME_MAX),
@@ -37,11 +34,6 @@ export class ValidatorFactory {
   }
 
   getCommunityRefForm() {
-    if (!this.prefs){
-      console.error("UH OH")
-      throw new Error("We need PREFERENCES!!!!")
-    }
-
     return new FormControl('',
       [
         Validators.maxLength(this.prefs.COMMUNITY_REF_MAX),
@@ -51,11 +43,6 @@ export class ValidatorFactory {
   }
 
   getCommunityDisplayNameForm(){
-    if (!this.prefs){
-      console.error("UH OH")
-      throw new Error("We need PREFERENCES!!!!")
-    }
-
     return new FormControl('',
       [
         Validators.maxLength(this.prefs.COMMUNITY_NAME_MAX),
@@ -64,11 +51,6 @@ export class ValidatorFactory {
   }
 
   getPostCaptionForm() {
-    if (!this.prefs){
-      console.error("UH OH")
-      throw new Error("We need PREFERENCES!!!!")
-    }
-
     return new FormControl('',
       [
         Validators.maxLength(this.prefs.POST_CAPTION_MAX),
@@ -77,11 +59,6 @@ export class ValidatorFactory {
   }
 
   getPostDescriptionForm() {
-    if (!this.prefs){
-      console.error("UH OH")
-      throw new Error("We need PREFERENCES!!!!")
-    }
-
     return  new FormControl('',
       [
         Validators.maxLength(this.prefs.POST_DESCRIPTION_MAX),
