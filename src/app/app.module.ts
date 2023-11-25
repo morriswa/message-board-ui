@@ -30,6 +30,7 @@ import {ValidatorFactory} from "./service/validator.factory";
 import {MessageBoardClientService} from "./service/message-board-client.service";
 import {PreferencesService} from "./service/preferences.service";
 import { PostDetailsComponent } from './components/community/post-details/post-details.component';
+import { CommentsComponent } from './components/community/comments/comments.component';
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -67,6 +68,7 @@ const AUTH0_CONFIG = {
     VotingComponent,
     SearchCommunityComponent,
     PostDetailsComponent,
+    CommentsComponent,
   ],
     imports: [
         BrowserModule,

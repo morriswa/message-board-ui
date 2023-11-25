@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs";
 import {ValidatorFactory} from "../../../service/validator.factory";
 import {Comment, PostCommentResponse} from "../../../interface/posts";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-post-details',
@@ -15,13 +16,9 @@ export class PostDetailsComponent {
   communityInfo?:any;
   membershipInfo?:any;
   post?:PostCommentResponse;
-  comments:Comment[]=[];
-  commentForm: any;
 
   constructor(active: ActivatedRoute,
-              private client: MessageBoardClientService,
-              validators: ValidatorFactory) {
-    this.commentForm = validators.getPostDescriptionForm();
+              client: MessageBoardClientService) {
 
     const postId = active.snapshot.params['postId'];
 
@@ -40,16 +37,8 @@ export class PostDetailsComponent {
       ).subscribe({
       next: res => {
         this.post = res;
-        this.comments = res.comments;
       }
     });
-  }
-
-  refreshComments() {
-    this.client.getComments(this.post!.postId)
-      .subscribe({
-        next: (value:Comment[]) => this.comments = value
-      });
   }
 
   postVoteUpdated($event: number) {
@@ -60,17 +49,4 @@ export class PostDetailsComponent {
     return this.membershipInfo!.exists||this.membershipInfo!.userId===this.communityInfo!.ownerId
   }
 
-  postComment() {
-    this.client.leaveComment(this.post!.postId, this.commentForm.value)
-      .subscribe({
-      next: ()=>{
-        this.commentForm.reset();
-        this.refreshComments();
-      }
-    })
-  }
-
-  commentVoteUpdated($event: number, i: number) {
-    this.comments[i].vote = $event;
-  }
 }

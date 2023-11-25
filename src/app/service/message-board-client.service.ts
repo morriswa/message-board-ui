@@ -247,13 +247,27 @@ export class MessageBoardClientService {
       .pipe(map((res:any)=>res.payload));
   }
 
-  leaveComment(postId:number, comment: string): Observable<void> {
-    return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment`,comment)
+  leaveComment(postId:number, comment: string, parentId?:number): Observable<void> {
+    if (!parentId)
+
+      return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment`,comment)
       .pipe(map((res:any)=>res.payload));
+
+    else
+
+      return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment/${parentId}`,comment)
+        .pipe(map((res:any)=>res.payload));
   }
 
-  getComments(postId: any): Observable<Comment[]> {
+  getComments(postId: any, parentId?: number): Observable<Comment[]> {
+    if (!parentId)
+
     return this.http.get(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment`)
+      .pipe(map((res:any)=>res.payload));
+
+    else
+
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment/${parentId}`)
       .pipe(map((res:any)=>res.payload));
   }
 }
