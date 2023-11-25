@@ -3,7 +3,7 @@ import {MessageBoardClientService} from "../../../service/message-board-client.s
 import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs";
 import {ValidatorFactory} from "../../../service/validator.factory";
-import {Comment, PostUserResponse} from "../../../interface/posts";
+import {Comment, PostCommentResponse, PostUserResponse} from "../../../interface/posts";
 
 @Component({
   selector: 'app-post-details',
@@ -14,7 +14,7 @@ export class PostDetailsComponent {
 
   communityInfo?:any;
   membershipInfo?:any;
-  post?:PostUserResponse;
+  post?:PostCommentResponse;
   comments:Comment[]=[];
   commentForm: any;
 
@@ -39,7 +39,7 @@ export class PostDetailsComponent {
         })
       ).subscribe({
       next: res => {
-        this.post = res.post;
+        this.post = res;
         this.comments = res.comments;
       }
     });

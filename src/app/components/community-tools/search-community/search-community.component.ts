@@ -17,7 +17,7 @@ export class SearchCommunityComponent implements OnInit {
   }
 
   searchForCommunity($event:any) {
-    this.service.searchCommunity($event.target.value).subscribe({
+    this.service.searchCommunities($event.target.value).subscribe({
       next: (res:any)=>this.communities = res
     });
   }

@@ -6,7 +6,7 @@ import {UserProfile, UserUIProfile} from "../interface/user-profile";
 import {
   Comment,
   PostCommunityResponse,
-  PostDetailsResponse,
+  PostCommentResponse,
   PostDraftResponse,
   PostUserResponse
 } from "../interface/posts";
@@ -135,6 +135,20 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
+  getPostDetails(postId: number): Observable<PostCommentResponse> {
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/post/${postId}`)
+      .pipe(map((response:any)=>response.payload));
+  }
+
+  voteOnPost(postId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE'): Observable<number> {
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/vote`,{}, {
+      params: {
+        vote: vote
+      }
+    })
+      .pipe(map((res:any)=>res.payload));
+  }
+
 
   // community endpoints
   getFeedForCommunity(communityId:number): Observable<PostUserResponse[]> {
@@ -213,16 +227,7 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  voteOnPost(postId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE'): Observable<number> {
-    return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/vote`,{}, {
-      params: {
-        vote: vote
-      }
-    })
-    .pipe(map((res:any)=>res.payload));
-  }
-
-  searchCommunity(value: string): Observable<CommunityResponse[]> {
+  searchCommunities(value: string): Observable<CommunityResponse[]> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/communities/search`,{
       params : {
         searchText: value
@@ -231,11 +236,8 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
-  getPostDetails(postId: number): Observable<PostDetailsResponse> {
-    return this.http.get(`${this.SECURE_SERVICE_PATH}/post/${postId}`)
-      .pipe(map((response:any)=>response.payload));
-  }
 
+  // comment endpoints
   voteOnComment(postId: number, commentId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE'): Observable<number> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment/${commentId}/vote`,{}, {
       params: {
@@ -246,9 +248,7 @@ export class MessageBoardClientService {
   }
 
   leaveComment(postId:number, comment: string): Observable<null> {
-    return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment`,comment, { headers: {
-        'Content-Type': 'text/plain'
-      }})
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment`,comment)
       .pipe(map((res:any)=>res.payload));
   }
 

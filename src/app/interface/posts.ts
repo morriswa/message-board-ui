@@ -1,3 +1,4 @@
+
 interface Post {
   postId:number;
   vote:number;
@@ -8,28 +9,16 @@ interface Post {
   resources:string[];
 }
 
-export interface PostDetailsResponse{
-  post: PostUserResponse;
-  comments:Comment[];
-}
-
-export interface PostDraftResponse {
-  draftId:string;
-  userId:string;
-  communityId:number;
-  caption:string;
-  description:string;
-  contentType:string;
-  resources:string[];
-
-}
-
 export interface PostUserResponse extends Post {
   userInfo:{
     userId:string;
     displayName:string;
     userProfileImage:string;
   };
+}
+
+export interface PostCommentResponse extends PostUserResponse {
+  comments:Comment[];
 }
 
 export interface PostCommunityResponse extends Post {
@@ -49,4 +38,14 @@ export interface Comment {
   body:string;
   vote:number;
   dateCreated:Date;
+}
+
+export interface PostDraftResponse {
+  draftId:string;
+  userId:string;
+  communityId:number;
+  caption:string;
+  description:string;
+  contentType:string;
+  resources:string[];
 }
