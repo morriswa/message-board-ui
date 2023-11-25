@@ -8,7 +8,7 @@ import {
   PostCommunityResponse,
   PostCommentResponse,
   PostDraftResponse,
-  PostUserResponse
+  PostResponse
 } from "../interface/posts";
 import {CommunityMembership, CommunityResponse} from "../interface/community";
 
@@ -62,7 +62,7 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  updateProfileImage(content:any): Observable<null> {
+  updateProfileImage(content:any): Observable<void> {
     let postBody = new FormData();
     postBody.append("image",content)
 
@@ -70,7 +70,7 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
-  updateDisplayName(newDisplayName:string):Observable<null> {
+  updateDisplayName(newDisplayName:string):Observable<void> {
     return this.http.patch(`${this.SECURE_SERVICE_PATH}/user/displayName`, {},{
       params: {
         displayName: newDisplayName
@@ -84,7 +84,7 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
-  updateUIProfile(theme: string): Observable<null> {
+  updateUIProfile(theme: string): Observable<void> {
     return this.http.patch(`${this.SECURE_SERVICE_PATH}/user/ui`,{
       "theme":theme
     })
@@ -107,7 +107,7 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  addContentToDraft(draftId:string, content:any): Observable<null> {
+  addContentToDraft(draftId:string, content:any): Observable<void> {
     let postBody = new FormData();
     postBody.append("content",content)
 
@@ -115,12 +115,12 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
-  postDraft(draftId:string):Observable<null> {
+  postDraft(draftId:string):Observable<void> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`, {})
       .pipe(map((response:any)=>response.payload));
   }
 
-  editDraft(draftId: string, caption:string | null, description: string|null): Observable<null> {
+  editDraft(draftId: string, caption:string | null, description: string|null): Observable<void> {
     let params:any = {};
 
     if (caption != null) params.caption = caption;
@@ -151,7 +151,7 @@ export class MessageBoardClientService {
 
 
   // community endpoints
-  getFeedForCommunity(communityId:number): Observable<PostUserResponse[]> {
+  getFeedForCommunity(communityId:number): Observable<PostResponse[]> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/feed`)
     .pipe(map((response:any)=>response.payload));
   }
@@ -170,17 +170,17 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
-  joinCommunity(communityId:number): Observable<null> {
+  joinCommunity(communityId:number): Observable<void> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
     .pipe(map((response:any)=>response.payload));
   }
 
-  leaveCommunity(communityId:number): Observable<null> {
+  leaveCommunity(communityId:number): Observable<void> {
     return this.http.delete(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
     .pipe(map((response:any)=>response.payload));
   }
 
-  updateCommunityIcon(communityId: number, newCommunityIcon:any): Observable<null> {
+  updateCommunityIcon(communityId: number, newCommunityIcon:any): Observable<void> {
     let postBody = new FormData();
     postBody.append("image",newCommunityIcon)
 
@@ -188,7 +188,7 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  updateCommunityBanner(communityId:number, newCommunityBanner:any): Observable<null> {
+  updateCommunityBanner(communityId:number, newCommunityBanner:any): Observable<void> {
     let postBody = new FormData();
     postBody.append("image",newCommunityBanner)
 
@@ -196,7 +196,7 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  createCommunity(communityRef:string, communityDisplayName:string): Observable<null> {
+  createCommunity(communityRef:string, communityDisplayName:string): Observable<void> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/community`,{
       communityRef:communityRef,
       communityName:communityDisplayName
@@ -204,7 +204,7 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  editCommunityAttributes(communityId: number, communityRef:string, communityDisplayName:string): Observable<null> {
+  editCommunityAttributes(communityId: number, communityRef:string, communityDisplayName:string): Observable<void> {
 
     let params: any = {
       communityId:communityId
@@ -247,7 +247,7 @@ export class MessageBoardClientService {
       .pipe(map((res:any)=>res.payload));
   }
 
-  leaveComment(postId:number, comment: string): Observable<null> {
+  leaveComment(postId:number, comment: string): Observable<void> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment`,comment)
       .pipe(map((res:any)=>res.payload));
   }

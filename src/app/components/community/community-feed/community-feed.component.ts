@@ -3,7 +3,7 @@ import {MessageBoardClientService} from "../../../service/message-board-client.s
 import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs";
 import {CommunityMembership, CommunityResponse} from "../../../interface/community";
-import {PostUserResponse} from "../../../interface/posts";
+import {PostResponse} from "../../../interface/posts";
 
 @Component({
   selector: 'app-community-feed',
@@ -13,7 +13,7 @@ import {PostUserResponse} from "../../../interface/posts";
 export class CommunityFeedComponent {
   communityInfo?:CommunityResponse;
   membershipInfo?:CommunityMembership;
-  posts?: PostUserResponse[];
+  posts?: PostResponse[];
 
   constructor(activeRoute: ActivatedRoute, service: MessageBoardClientService) {
     const communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']

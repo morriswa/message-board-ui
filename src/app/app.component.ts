@@ -26,7 +26,7 @@ export class AppComponent {
     // initialize preferences service
     prefs.init()
       // initialize Validator factory with retrieved preferences
-      .pipe(switchMap((res:any)=>validators.init(res)))
+      .pipe(switchMap(()=>validators.init(prefs.preferences)))
     // ensure it is running correctly or do not load upp
     .subscribe({
       next: ()=> this.READY = true,

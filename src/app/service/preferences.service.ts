@@ -1,6 +1,6 @@
 import {MessageBoardClientService} from "./message-board-client.service";
-import {EventEmitter, Injectable} from "@angular/core";
-import {tap} from "rxjs";
+import {Injectable} from "@angular/core";
+import {map, of, switchMap} from "rxjs";
 
 
 
@@ -16,14 +16,15 @@ export class PreferencesService {
   public init() {
     return this.client
       .getPreferences()
-      .pipe(tap((res:any)=> {
+      .pipe(map((res:any)=> {
         this.prefs = res;
+        return 'preferences-service initialized';
       }));
   }
 
   get preferences () {
     if (this.prefs)
       return this.prefs;
-    throw new Error("NEED PREFERENCES NOW.")
+    throw new Error("NEED PREFERENCES... has the preferences-service been initialized?")
   }
 }

@@ -25,7 +25,7 @@
       </ng-template>
 
 
-      <h2><a [routerLink]="['post',post.postId]">{{ post.caption }}</a> <br>:{{ post.userInfo.displayName }}</h2>
+      <h2><a [routerLink]="['post',post.postId]">{{ post.caption }}</a> <br>:{{ post.displayName }}</h2>
       <p>{{ post.description }}</p>
 
       <div class="image-element-wrapper" *ngFor="let content of post.resources">

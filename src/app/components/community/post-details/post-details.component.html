@@ -20,7 +20,7 @@
       </div>
     </ng-template>
 
-    <h2>{{ post.caption }} <br>:{{ post.userInfo.displayName }}</h2>
+    <h2>{{ post.caption }} <br>:{{ post.displayName }}</h2>
     <p>{{ post.description }}</p>
 
     <div class="image-element-wrapper" *ngFor="let content of post.resources">
@@ -66,6 +66,8 @@
           <h1 class="vote-count">{{ comment.vote }}</h1>
         </div>
       </ng-template>
+
+      <h3>:{{comment.displayName}}</h3>
 
       <h4>{{comment.body}}</h4>
 

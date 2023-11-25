@@ -1,9 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs";
 import {ValidatorFactory} from "../../../service/validator.factory";
-import {Comment, PostCommentResponse, PostUserResponse} from "../../../interface/posts";
+import {Comment, PostCommentResponse} from "../../../interface/posts";
 
 @Component({
   selector: 'app-post-details',
