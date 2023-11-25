@@ -1,74 +1,74 @@
 
-<div *ngIf="post" class="post-card">
-
-  <div *ngIf="votingEnabled() ;else altVoteCard">
-    <div class="vote-card">
-      <app-voting
-        [postId]="post.postId"
-        (voteUpdated)="postVoteUpdated($event)"
-      ></app-voting>
-      <h1 class="vote-count">{{ post.vote }}</h1>
-    </div>
-  </div>
-  <ng-template #altVoteCard>
-    <div class="vote-card">
-      <div class="icon-tooltip-hover">
-        <i class="bi bi-arrows-expand"></i>
-      </div>
-      <p class="icon-tooltip">Please join community to vote on posts!</p>
-      <h1 class="vote-count">{{ post.vote }}</h1>
-    </div>
-  </ng-template>
-
-  <h2>{{ post.caption }} <br>:{{ post.userInfo.displayName }}</h2>
-  <p>{{ post.description }}</p>
-
-  <div class="image-element-wrapper" *ngFor="let content of post.resources">
-    <img class="image-element" [src]="content">
-  </div>
-
-</div>
-
-<div id="leave-comment-card">
-  <input type="text"
-         required
-         class="form-control"
-         [formControl]="commentForm"
-         placeholder="Enter comment">
-  <button
-    style="margin-top: 5px"
-    type="button"
-    class="btn btn-primary"
-    [disabled]="this.commentForm.invalid"
-    (click)="postComment()">Leave Comment!</button>
-</div>
-
-<div id="comment-card-wrapper">
-  <div class="comment-card" *ngFor="let comment of this.comments; index as i">
-
-    <div *ngIf="votingEnabled() ;else altCommentVoteCard">
+<div *ngIf="post">
+  <div class="post-card">
+    <div *ngIf="votingEnabled() ;else altVoteCard">
       <div class="vote-card">
         <app-voting
-          [type]="'COMMENT'"
           [postId]="post.postId"
-          [commentId]="comment.commentId"
-          (voteUpdated)="commentVoteUpdated($event, i)"
+          (voteUpdated)="postVoteUpdated($event)"
         ></app-voting>
-        <h1 class="vote-count">{{ comment.vote }}</h1>
+        <h1 class="vote-count">{{ post.vote }}</h1>
       </div>
     </div>
-    <ng-template #altCommentVoteCard>
+    <ng-template #altVoteCard>
       <div class="vote-card">
         <div class="icon-tooltip-hover">
           <i class="bi bi-arrows-expand"></i>
         </div>
-        <p class="icon-tooltip">Please join community to interact with posts and comments!</p>
-        <h1 class="vote-count">{{ comment.vote }}</h1>
+        <p class="icon-tooltip">Please join community to vote on posts!</p>
+        <h1 class="vote-count">{{ post.vote }}</h1>
       </div>
     </ng-template>
 
-    <h4>{{comment.body}}</h4>
+    <h2>{{ post.caption }} <br>:{{ post.userInfo.displayName }}</h2>
+    <p>{{ post.description }}</p>
 
+    <div class="image-element-wrapper" *ngFor="let content of post.resources">
+      <img class="image-element" [src]="content">
+    </div>
 
+  </div>
+
+  <div id="leave-comment-card">
+    <input type="text"
+           required
+           class="form-control"
+           [formControl]="commentForm"
+           placeholder="Enter comment">
+    <button
+      style="margin-top: 5px"
+      type="button"
+      class="btn btn-primary"
+      [disabled]="this.commentForm.invalid"
+      (click)="postComment()">Leave Comment!</button>
+  </div>
+
+  <div id="comment-card-wrapper">
+    <div class="comment-card" *ngFor="let comment of this.comments; index as i">
+
+      <div *ngIf="votingEnabled() ;else altCommentVoteCard">
+        <div class="vote-card">
+          <app-voting
+            [type]="'COMMENT'"
+            [postId]="post.postId"
+            [commentId]="comment.commentId"
+            (voteUpdated)="commentVoteUpdated($event, i)"
+          ></app-voting>
+          <h1 class="vote-count">{{ comment.vote }}</h1>
+        </div>
+      </div>
+      <ng-template #altCommentVoteCard>
+        <div class="vote-card">
+          <div class="icon-tooltip-hover">
+            <i class="bi bi-arrows-expand"></i>
+          </div>
+          <p class="icon-tooltip">Please join community to interact with posts and comments!</p>
+          <h1 class="vote-count">{{ comment.vote }}</h1>
+        </div>
+      </ng-template>
+
+      <h4>{{comment.body}}</h4>
+
+    </div>
   </div>
 </div>

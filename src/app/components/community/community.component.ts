@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {switchMap, tap} from "rxjs";
+import {CommunityMembership, CommunityResponse} from "../../interface/community";
 
 @Component({
   selector: 'app-community',
@@ -9,10 +10,8 @@ import {switchMap, tap} from "rxjs";
   styleUrls: ['./community.component.scss']
 })
 export class CommunityComponent {
-
-  loading = true;
-  community?:any;
-  userInfo?:any;
+  community?:CommunityResponse;
+  userInfo?:CommunityMembership;
 
   userIsCommunityMember = false;
   isCommunityOwner = false;
@@ -25,16 +24,15 @@ export class CommunityComponent {
 
       this.messageBoardService.getCommunityInfo(communityName)
         .pipe(
-          switchMap((result:any) =>{
+          switchMap((result:CommunityResponse) =>{
            this.community = result;
            return this.messageBoardService.getMembership(this.community.communityId)
           })
         ).subscribe({
           next:result=>{
             this.userInfo = result;
-            this.isCommunityOwner = this.userInfo.userId === this.community.ownerId;
+            this.isCommunityOwner = this.userInfo.userId === this.community!.ownerId;
             this.userIsCommunityMember = this.userInfo.exists;
-            this.loading = false;
           },
           error: ()=>this.router.navigate(['/registerUser'])
         });
@@ -42,17 +40,17 @@ export class CommunityComponent {
   }
 
   joinCommunity() {
-    this.messageBoardService.joinCommunity(this.community.communityId)
+    this.messageBoardService.joinCommunity(this.community!.communityId)
       .subscribe(()=>
         this.router.navigate(['/'], {skipLocationChange: true})
-          .then(()=>this.router.navigate(['/community', this.community.communityLocator])));
+          .then(()=>this.router.navigate(['/community', this.community!.communityLocator])));
   }
 
   leaveCommunity() {
-    this.messageBoardService.leaveCommunity(this.community.communityId)
+    this.messageBoardService.leaveCommunity(this.community!.communityId)
       .subscribe(()=>
         this.router.navigate(['/'], {skipLocationChange: true})
-          .then(()=>this.router.navigate(['/community', this.community.communityLocator])));
+          .then(()=>this.router.navigate(['/community', this.community!.communityLocator])));
   }
 
 }

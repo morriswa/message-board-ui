@@ -16,6 +16,7 @@ export class AppComponent {
 
   USER_UI_PROFILE?:any;
   HEALTHY = true;
+  READY = false;
 
   constructor(authService: AuthService,
               themes: ThemeService,
@@ -28,6 +29,7 @@ export class AppComponent {
       .pipe(switchMap((res:any)=>validators.init(res)))
     // ensure it is running correctly or do not load upp
     .subscribe({
+      next: ()=> this.READY = true,
       error: () => this.HEALTHY = false
     });
 

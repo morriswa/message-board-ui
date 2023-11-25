@@ -1,7 +1,17 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map, of} from "rxjs";
+import {map, Observable, of} from "rxjs";
 import {environment} from "../../environments/environment";
+import {UserProfile, UserUIProfile} from "../interface/user-profile";
+import {
+  Comment,
+  PostCommunityResponse,
+  PostDetailsResponse,
+  PostDraftResponse,
+  PostUserResponse
+} from "../interface/posts";
+import {CommunityMembership, CommunityResponse} from "../interface/community";
+
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +41,14 @@ export class MessageBoardClientService {
       map((res:any)=>res.payload));
   }
 
-  getRecentPosts() {
+  getRecentPosts(): Observable<PostCommunityResponse[]> {
     return this.http.get(`${this.SERVICE_PATH}/feed`)
       .pipe(map((response:any)=>response.payload));
   }
 
 
   // user endpoints
-  registerUser(displayName: string) {
+  registerUser(displayName: string): Observable<string> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/user`,{},{
       params: {
         displayName: displayName
@@ -47,20 +57,20 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  getUserProfile() {
+  getUserProfile(): Observable<UserProfile> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/user`)
     .pipe(map((response:any)=>response.payload));
   }
 
-  updateProfileImage(content:any) {
+  updateProfileImage(content:any): Observable<null> {
     let postBody = new FormData();
     postBody.append("image",content)
 
     return this.http.post(`${this.SECURE_SERVICE_PATH}/user/profileImage`,postBody)
-    .pipe(map((response:any)=>response.payload));
+      .pipe(map((response:any)=>response.payload));
   }
 
-  updateDisplayName(newDisplayName:string) {
+  updateDisplayName(newDisplayName:string):Observable<null> {
     return this.http.patch(`${this.SECURE_SERVICE_PATH}/user/displayName`, {},{
       params: {
         displayName: newDisplayName
@@ -69,31 +79,35 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  getUIProfile() {
+  getUIProfile(): Observable<UserUIProfile> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/user/ui`)
       .pipe(map((response:any)=>response.payload));
   }
 
-  updateUIProfile(theme: string) {
+  updateUIProfile(theme: string): Observable<null> {
     return this.http.patch(`${this.SECURE_SERVICE_PATH}/user/ui`,{
       "theme":theme
     })
-      .pipe();
+      .pipe(map((response:any)=>response.payload));
   }
 
 
   // post endpoints
-  createPostDraft(communityId:number, caption?:string|null, description?:string|null) {
+  createPostDraft(communityId:number, caption?:string|null, description?:string|null): Observable<string> {
 
     let params:any = {};
 
     if (caption != null) params.caption = caption;
     if (description != null) params.description = description;
 
-    return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/draft`, {}, {params : params}).pipe(map((response:any)=>response.payload));
+    return this.http
+      .post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/draft`,
+      {},
+      {params : params})
+    .pipe(map((response:any)=>response.payload));
   }
 
-  addContentToDraft(draftId:string, content:any) {
+  addContentToDraft(draftId:string, content:any): Observable<null> {
     let postBody = new FormData();
     postBody.append("content",content)
 
@@ -101,12 +115,12 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
-  postDraft(draftId:string) {
+  postDraft(draftId:string):Observable<null> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`, {})
       .pipe(map((response:any)=>response.payload));
   }
 
-  editDraft(draftId: string, caption:string | null, description: string|null) {
+  editDraft(draftId: string, caption:string | null, description: string|null): Observable<null> {
     let params:any = {};
 
     if (caption != null) params.caption = caption;
@@ -116,19 +130,19 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
-  getDraft(draftId: string) {
+  getDraft(draftId: string): Observable<PostDraftResponse> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`)
       .pipe(map((response:any)=>response.payload));
   }
 
 
   // community endpoints
-  getFeedForCommunity(communityId:number) {
+  getFeedForCommunity(communityId:number): Observable<PostUserResponse[]> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/feed`)
     .pipe(map((response:any)=>response.payload));
   }
 
-  getCommunityInfo(communityLocator: string) {
+  getCommunityInfo(communityLocator: string): Observable<CommunityResponse> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/community`,{
       params: {
         communityLocator:communityLocator
@@ -137,22 +151,22 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  getMembership(communityId:string) {
+  getMembership(communityId:number): Observable<CommunityMembership> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
       .pipe(map((response:any)=>response.payload));
   }
 
-  joinCommunity(communityId:string) {
+  joinCommunity(communityId:number): Observable<null> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
     .pipe(map((response:any)=>response.payload));
   }
 
-  leaveCommunity(communityId:string) {
+  leaveCommunity(communityId:number): Observable<null> {
     return this.http.delete(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
     .pipe(map((response:any)=>response.payload));
   }
 
-  updateCommunityIcon(communityId: number, newCommunityIcon:any) {
+  updateCommunityIcon(communityId: number, newCommunityIcon:any): Observable<null> {
     let postBody = new FormData();
     postBody.append("image",newCommunityIcon)
 
@@ -160,7 +174,7 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  updateCommunityBanner(communityId:number, newCommunityBanner:any) {
+  updateCommunityBanner(communityId:number, newCommunityBanner:any): Observable<null> {
     let postBody = new FormData();
     postBody.append("image",newCommunityBanner)
 
@@ -168,7 +182,7 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  createCommunity(communityRef:string, communityDisplayName:string) {
+  createCommunity(communityRef:string, communityDisplayName:string): Observable<null> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/community`,{
       communityRef:communityRef,
       communityName:communityDisplayName
@@ -176,7 +190,7 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  editCommunityAttributes(communityId: number, communityRef:string, communityDisplayName:string) {
+  editCommunityAttributes(communityId: number, communityRef:string, communityDisplayName:string): Observable<null> {
 
     let params: any = {
       communityId:communityId
@@ -194,12 +208,12 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  getUsersCommunities() {
+  getUsersCommunities(): Observable<CommunityResponse[]> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/communities`)
     .pipe(map((response:any)=>response.payload));
   }
 
-  voteOnPost(postId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE') {
+  voteOnPost(postId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE'): Observable<number> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/vote`,{}, {
       params: {
         vote: vote
@@ -208,7 +222,7 @@ export class MessageBoardClientService {
     .pipe(map((res:any)=>res.payload));
   }
 
-  searchCommunity(value: string) {
+  searchCommunity(value: string): Observable<CommunityResponse[]> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/communities/search`,{
       params : {
         searchText: value
@@ -217,12 +231,12 @@ export class MessageBoardClientService {
       .pipe(map((response:any)=>response.payload));
   }
 
-  getPostDetails(postId: number) {
+  getPostDetails(postId: number): Observable<PostDetailsResponse> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/post/${postId}`)
       .pipe(map((response:any)=>response.payload));
   }
 
-  voteOnComment(postId: number, commentId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE') {
+  voteOnComment(postId: number, commentId: number, vote: 'UPVOTE' | 'DOWNVOTE' | 'DELETE'): Observable<number> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment/${commentId}/vote`,{}, {
       params: {
         vote: vote
@@ -231,14 +245,14 @@ export class MessageBoardClientService {
       .pipe(map((res:any)=>res.payload));
   }
 
-  leaveComment(postId:number, comment: string) {
+  leaveComment(postId:number, comment: string): Observable<null> {
     return this.http.post(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment`,comment, { headers: {
         'Content-Type': 'text/plain'
       }})
       .pipe(map((res:any)=>res.payload));
   }
 
-  getComments(postId: any) {
+  getComments(postId: any): Observable<Comment[]> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment`)
       .pipe(map((res:any)=>res.payload));
   }

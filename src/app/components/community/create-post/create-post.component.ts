@@ -5,28 +5,32 @@ import {FormControl, Validators} from "@angular/forms";
 import {UploadImageRequest} from "../../../interface/upload-image-request";
 import {of, switchMap, tap} from "rxjs";
 import {ValidatorFactory} from "../../../service/validator.factory";
+import {CommunityResponse} from "../../../interface/community";
+import {PostDraftResponse} from "../../../interface/posts";
 
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.scss']
 })
-export class CreatePostComponent{
-  communityInfo: any;
-  loading: boolean = true;
+export class CreatePostComponent {
+  PROCESSING = false;
+  SHOW_ERROR = false;
+  ERROR_TEXT?: string;
+
+  communityInfo?: CommunityResponse;
+  currentDraft?: PostDraftResponse;
+
   currentDraftId?:string;
   pendingImageUpload?: UploadImageRequest;
 
   clearImageUploadEmitter: EventEmitter<any> = new EventEmitter<any>();
 
 
-  postCaptionForm;
-  postDescriptionForm;
+  postCaptionForm: FormControl;
+  postDescriptionForm: FormControl;
 
-  PROCESSING = false;
-  SHOW_ERROR = false;
-  ERROR_TEXT?: string;
-  currentDraft: any;
+
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
@@ -42,9 +46,8 @@ export class CreatePostComponent{
 
       this.messageBoardService.getCommunityInfo(communityLocator)
         .subscribe({
-          next: (result: any)=>{
+          next: result =>{
             this.communityInfo = result;
-            this.loading = false;
           },
           error: ()=>router.navigate(['/'])
         });
@@ -63,7 +66,7 @@ export class CreatePostComponent{
       switchMap(()=>{
         // if there is not a draft ID registered, a new one will have to be created
         if (!this.currentDraftId) return this.messageBoardService.createPostDraft(
-            this.communityInfo.communityId,
+            this.communityInfo!.communityId,
             this.postCaptionForm.value,
             this.postDescriptionForm.value) .pipe(
           tap(draftId => {
@@ -90,7 +93,7 @@ export class CreatePostComponent{
       .subscribe({
             next: ()=> {
               this.clearImageUploadEmitter.emit();
-              this.router.navigate(['/community',this.communityInfo.communityLocator])
+              this.router.navigate(['/community',this.communityInfo!.communityLocator])
             },
             error: (err:any)=>{
               this.clearImageUploadEmitter.emit();
@@ -117,7 +120,7 @@ export class CreatePostComponent{
       switchMap(() => {
         // if there is not a draft ID registered, a new one will have to be created
         if (!this.currentDraftId) return this.messageBoardService.createPostDraft(
-          this.communityInfo.communityId)
+          this.communityInfo!.communityId)
           .pipe(
             tap(draftId => {
               this.currentDraftId = draftId;

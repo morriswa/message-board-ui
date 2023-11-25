@@ -1,6 +1,6 @@
-<div id="create-post-wrapper" *ngIf="!loading; else loadingScreen">
+<div id="create-post-wrapper" *ngIf="communityInfo; else loadingScreen">
 
-  <div *ngIf="currentDraft">
+  <div *ngIf="this.currentDraft">
     <div
       class="create-post-element"
       *ngFor="let content of this.currentDraft.resources">

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {MessageBoardClientService} from "../../service/message-board-client.service";
+import {PostCommunityResponse} from "../../interface/posts";
 
 
 @Component({
@@ -9,13 +10,13 @@ import {MessageBoardClientService} from "../../service/message-board-client.serv
 })
 export class PostFeedComponent {
 
-  posts?: any[];
+  posts?: PostCommunityResponse[];
 
   constructor(service: MessageBoardClientService) {
 
     service.getRecentPosts()
       .subscribe({
-        next: (res:any) =>{
+        next: res =>{
           this.posts = res;
         }
       });

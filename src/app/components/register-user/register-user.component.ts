@@ -4,6 +4,7 @@ import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {ValidatorFactory} from "../../service/validator.factory";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-register-user',
@@ -16,7 +17,7 @@ export class RegisterUserComponent implements OnInit{
   email?:string;
 
 
-  displayNameForm;
+  displayNameForm: FormControl;
 
   constructor(private auth: AuthService,
               private router: Router,

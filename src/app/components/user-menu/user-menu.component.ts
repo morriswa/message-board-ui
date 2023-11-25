@@ -4,6 +4,7 @@ import {FormControl} from "@angular/forms";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {ThemeService} from "../../service/theme.service";
 import {ValidatorFactory} from "../../service/validator.factory";
+import {UserProfile} from "../../interface/user-profile";
 
 @Component({
   selector: 'app-user-menu',
@@ -16,11 +17,11 @@ export class UserMenuComponent {
   change_display_name_form_toggle = false;
   dark_mode_switch_toggle = false;
 
-  fileInput = new FormControl();
+  fileInput:FormControl<File> = new FormControl();
 
-  displayNameForm;
+  displayNameForm:FormControl;
 
-  user?: any;
+  user?: UserProfile;
 
   constructor(private messageBoardService: MessageBoardClientService,
               private router: Router,

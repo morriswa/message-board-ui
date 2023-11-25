@@ -4,6 +4,8 @@ import {MessageBoardClientService} from "../../../service/message-board-client.s
 import {UploadImageRequest} from "../../../interface/upload-image-request";
 import {map, of, switchMap} from "rxjs";
 import {ValidatorFactory} from "../../../service/validator.factory";
+import {FormControl} from "@angular/forms";
+import {CommunityResponse} from "../../../interface/community";
 
 @Component({
   selector: 'app-edit-community',
@@ -12,14 +14,17 @@ import {ValidatorFactory} from "../../../service/validator.factory";
 })
 export class EditCommunityComponent {
 
-  communityRefForm;
-  communityDisplayNameForm;
+  PROCESSING= false;
+  SHOW_ERROR: boolean = false;
+  ERROR_TEXT?: string;
+
+  communityRefForm: FormControl;
+  communityDisplayNameForm: FormControl;
 
 
-  loading=true;
 
   // communityLocator;
-  communityInfo:any;
+  communityInfo?:CommunityResponse;
 
   stagedContentForUpload: {
    icon?: UploadImageRequest
@@ -27,9 +32,6 @@ export class EditCommunityComponent {
   } = {};
 
   resetEventEmitter: EventEmitter<any> = new EventEmitter<any>();
-  PROCESSING= false;
-  SHOW_ERROR: boolean = false;
-  ERROR_TEXT?: any;
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
@@ -44,7 +46,6 @@ export class EditCommunityComponent {
       .subscribe({
         next: result => {
           this.communityInfo = result;
-          this.loading = false;
         }, error: err => console.error(err)
       });
   }
@@ -56,7 +57,7 @@ export class EditCommunityComponent {
     const newRef = this.communityRefForm.getRawValue()!
 
     this.messageBoardService.editCommunityAttributes(
-      this.communityInfo.communityId,
+      this.communityInfo!.communityId,
       newRef!,
       this.communityDisplayNameForm.getRawValue()!)
       .pipe(
@@ -65,7 +66,7 @@ export class EditCommunityComponent {
       )
       .subscribe({
       next: ()=>{
-        let nav = newRef? newRef : this.communityInfo.communityLocator
+        let nav = newRef? newRef : this.communityInfo!.communityLocator
         this.communityRefForm.reset()
         this.communityDisplayNameForm.reset()
         this.router.navigateByUrl('/',{ skipLocationChange: true})
@@ -81,7 +82,7 @@ export class EditCommunityComponent {
     if (this.stagedContentForUpload.banner) {
 
       return this.messageBoardService.updateCommunityBanner(
-          this.communityInfo.communityId!,
+          this.communityInfo!.communityId,
           this.stagedContentForUpload.banner!)
         .pipe(map(()=> {
             this.resetEventEmitter.emit();
@@ -96,7 +97,7 @@ export class EditCommunityComponent {
     if (this.stagedContentForUpload.icon) {
 
       return this.messageBoardService.updateCommunityIcon(
-          this.communityInfo.communityId!,
+          this.communityInfo!.communityId,
           this.stagedContentForUpload.icon!)
         .pipe(map(()=> {
           this.resetEventEmitter.emit();

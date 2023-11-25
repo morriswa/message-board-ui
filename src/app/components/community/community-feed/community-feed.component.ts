@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs";
+import {CommunityMembership, CommunityResponse} from "../../../interface/community";
+import {PostUserResponse} from "../../../interface/posts";
 
 @Component({
   selector: 'app-community-feed',
@@ -9,34 +11,32 @@ import {switchMap} from "rxjs";
   styleUrls: ['./community-feed.component.scss']
 })
 export class CommunityFeedComponent {
-  loading = true
-  communityInfo?:any;
-  membershipInfo?:any;
-  posts?: any;
+  communityInfo?:CommunityResponse;
+  membershipInfo?:CommunityMembership;
+  posts?: PostUserResponse[];
 
   constructor(activeRoute: ActivatedRoute, service: MessageBoardClientService) {
     const communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
 
     service.getCommunityInfo(communityLocator)
       .pipe(
-        switchMap((result:any)=> {
+        switchMap(result=> {
           this.communityInfo = result;
           return service.getFeedForCommunity(this.communityInfo.communityId);
         }),
-        switchMap((result:any)=>{
+        switchMap(result=>{
           this.posts = result;
-          return service.getMembership(this.communityInfo.communityId)
+          return service.getMembership(this.communityInfo!.communityId)
         })
       ).subscribe({
       next: (res:any) =>{
         this.membershipInfo = res;
-        this.loading = false
       }
     })
   }
 
   postVoteUpdated($event: number, i: number) {
-    this.posts[i].vote = $event
+    this.posts![i].vote = $event
   }
 
   votingEnabled(): boolean {

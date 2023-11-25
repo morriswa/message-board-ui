@@ -3,6 +3,7 @@ import {MessageBoardClientService} from "../../../service/message-board-client.s
 import {ActivatedRoute} from "@angular/router";
 import {switchMap} from "rxjs";
 import {ValidatorFactory} from "../../../service/validator.factory";
+import {Comment, PostUserResponse} from "../../../interface/posts";
 
 @Component({
   selector: 'app-post-details',
@@ -13,8 +14,8 @@ export class PostDetailsComponent {
 
   communityInfo?:any;
   membershipInfo?:any;
-  post?:any;
-  comments:any[]=[];
+  post?:PostUserResponse;
+  comments:Comment[]=[];
   commentForm: any;
 
   constructor(active: ActivatedRoute,
@@ -37,7 +38,7 @@ export class PostDetailsComponent {
           return client.getPostDetails(postId);
         })
       ).subscribe({
-      next: (res: any) => {
+      next: res => {
         this.post = res.post;
         this.comments = res.comments;
       }
@@ -45,14 +46,14 @@ export class PostDetailsComponent {
   }
 
   refreshComments() {
-    this.client.getComments(this.post.postId)
+    this.client.getComments(this.post!.postId)
       .subscribe({
-        next: value => this.comments = value
+        next: (value:Comment[]) => this.comments = value
       });
   }
 
   postVoteUpdated($event: number) {
-    this.post.vote = $event
+    this.post!.vote = $event
   }
 
   votingEnabled(): boolean {
@@ -60,7 +61,7 @@ export class PostDetailsComponent {
   }
 
   postComment() {
-    this.client.leaveComment(this.post.postId, this.commentForm.value)
+    this.client.leaveComment(this.post!.postId, this.commentForm.value)
       .subscribe({
       next: ()=>{
         this.commentForm.reset();

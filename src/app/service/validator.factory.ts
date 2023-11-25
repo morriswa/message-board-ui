@@ -15,12 +15,12 @@ export class ValidatorFactory {
   }
 
   get prefs() {
-    if (!this.data) throw new Error("NEED APPLICATION PREFERENCES");
+    // if (!this.data) throw new Error("NEED APPLICATION PREFERENCES");
     return this.data;
   }
 
   set prefs(data: any) {
-    if (!data) throw new Error("NEED APPLICATION PREFERENCES");
+    // if (!data) throw new Error("NEED APPLICATION PREFERENCES");
     this.data = data;
   }
 
