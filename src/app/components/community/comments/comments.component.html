@@ -47,9 +47,11 @@
           </div>
         </ng-template>
 
-        <h3>:{{comment.displayName}}</h3>
+        <div class="comment-text">
+          <h4>:{{comment.displayName}}</h4>
 
-        <h4>{{comment.body}}</h4>
+          <p>{{comment.body}}</p>
+        </div>
       </div>
 
       <app-comments [postId]="postId" [parentId]="comment.commentId" [votingEnabled]="votingEnabled"></app-comments>

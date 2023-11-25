@@ -74,51 +74,41 @@
   padding: 1px 10px;
 }
 
-//.post-feed {
-  $post-size-max: 400px;
+$post-size-max: 400px;
 
-  .post-card {
-    background-color: var(--wma-card-color);
-    padding: 20px;
-    margin: 10px;
-    border-radius: 20px;
-  }
-
-  .vote-card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    position: relative;
-  }
-
-  .vote-count {
-    margin-top: 5px;
-    padding: 20px;
-  }
-
-.comment-card {
+.post-card {
   background-color: var(--wma-card-color);
   padding: 20px;
   margin: 10px;
   border-radius: 20px;
 }
 
-  .image-element-wrapper {
-    overflow: scroll;
-  }
+.vote-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
 
-  .image-element {
-    max-width: $post-size-max;
-    max-height: $post-size-max;
-    object-fit: cover;
-  }
+.vote-count {
+  margin-top: 5px;
+  padding: 20px;
+}
 
-  i {
-    font-size: 30px;
-    color: var(--bs-secondary);
-  }
+.image-element-wrapper {
+  overflow: scroll;
+}
 
-//}
+.image-element {
+  max-width: $post-size-max;
+  max-height: $post-size-max;
+  object-fit: cover;
+}
+
+i {
+  font-size: 30px;
+  color: var(--bs-secondary);
+}
 
 .warnings {
   margin: 5px 20px;
