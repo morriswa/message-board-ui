@@ -8,6 +8,6 @@ export interface UserProfile {
 }
 
 export interface UserUIProfile {
-  userId:string;
+  userId?:string;
   theme:string;
 }

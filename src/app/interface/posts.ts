@@ -1,5 +1,5 @@
 
-interface Post {
+export interface PostResponse {
   postId:number;
   userId:string;
   displayName:string;
@@ -11,15 +11,11 @@ interface Post {
   resources:string[];
 }
 
-export interface PostResponse extends Post {
-
-}
-
 export interface PostCommentResponse extends PostResponse {
   comments:Comment[];
 }
 
-export interface PostCommunityResponse extends Post {
+export interface PostCommunityResponse extends PostResponse {
   communityInfo: {
     communityId:number;
     communityLocator:string;

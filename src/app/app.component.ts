@@ -5,6 +5,7 @@ import {MessageBoardClientService} from "./service/message-board-client.service"
 import {of, switchMap, tap} from "rxjs";
 import {ValidatorFactory} from "./service/validator.factory";
 import {PreferencesService} from "./service/preferences.service";
+import {UserUIProfile} from "./interface/user-profile";
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,19 @@ import {PreferencesService} from "./service/preferences.service";
 export class AppComponent {
   title = 'message-board-ui';
 
-  USER_UI_PROFILE?:any;
+  /**
+   * optional member to store User specific UI settings
+   */
+  USER_UI_PROFILE?: UserUIProfile;
+
+  /**
+   * indicates application's health status
+   */
   HEALTHY = true;
+
+  /**
+   * indicates if app is ready for router to take over
+   */
   READY = false;
 
   constructor(authService: AuthService,
@@ -25,7 +37,7 @@ export class AppComponent {
               validators: ValidatorFactory) {
     // initialize preferences service
     prefs.init()
-      // initialize Validator factory with retrieved preferences
+      // initialize Validator factory after preferences service
       .pipe(switchMap(()=>validators.init(prefs.preferences)))
     // ensure it is running correctly or do not load upp
     .subscribe({
@@ -44,7 +56,7 @@ export class AppComponent {
         })
       )
       .subscribe({
-        next: result => {
+        next: (result: UserUIProfile) => {
           // assign app theme
           this.USER_UI_PROFILE = result;
           // and update

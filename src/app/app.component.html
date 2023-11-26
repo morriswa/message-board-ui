@@ -8,4 +8,6 @@
   Server refused to respond!
 </div>
 
-<router-outlet *ngIf="READY"></router-outlet>
+<div *ngIf="READY" id="app-content">
+  <router-outlet></router-outlet>
+</div>

@@ -7,29 +7,6 @@
   border-radius: 0 !important;
 }
 
-.main-layout {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-}
-
-.main-vertical-card, .sidebar-vertical-card {
-  border-color: #b0ff8e;
-  border-style: solid;
-  border-radius: 0.5rem;
-  padding: 20px;
-  margin: 10px;
-}
-
-.main-vertical-card {
-  min-width: 65vw;
-}
-
-.sidebar-vertical-card {
-  min-width: 30vw;
-}
-
 .icon-tooltip {
   display: none;
 }
@@ -114,10 +91,22 @@ i {
   margin: 5px 20px;
 }
 
+#app-content {
+  max-height: var(--app-content-height);
+  overflow: scroll;
+}
+
 :root {
-  --wma-community-banner-height: 200px;
-  --wma-community-header-info-height: 75px;
+  --app-header-height: 6vh;
+  --app-content-height: calc(100vh - var(--app-header-height));
+
+  --wma-community-banner-height: 150px;
+  --wma-community-header-info-height: 60px;
   --wma-community-header-height: calc(var(--wma-community-banner-height) + var(--wma-community-header-info-height));
+
+  --wma-community-content-height: calc(var(--app-content-height) - var(--wma-community-header-height));
+  --wma-community-content-height-no-banner-image: calc(var(--app-content-height) - var(--wma-community-header-info-height));
+
   --cropper-overlay-color: rgba(0,0,0,0);
   --cropper-outline-color:  rgba(0,0,0,0);
 }

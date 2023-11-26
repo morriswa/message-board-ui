@@ -10,7 +10,12 @@
 
   <br>
 
-  <div id="community-content-wrapper">
+  <div
+    id="community-content-wrapper"
+    [ngClass]="{
+    'community-content-wrapper':  community.resourceUrls.banner,
+    'community-content-wrapper-no-banner-image':  !community.resourceUrls.banner
+  }">
 
     <div id="community-info-slide">
       <p>now viewing community/{{ community.communityLocator }}</p>
