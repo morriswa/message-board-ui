@@ -15,15 +15,11 @@ import {CommunityResponse} from "../../../interface/community";
 export class EditCommunityComponent {
 
   PROCESSING= false;
-  SHOW_ERROR: boolean = false;
-  ERROR_TEXT?: string;
+  ERROR_MESSAGES: { message: string, show: boolean }[] = [];
 
-  communityRefForm: FormControl;
+  communityLocatorForm: FormControl;
   communityDisplayNameForm: FormControl;
 
-
-
-  // communityLocator;
   communityInfo?:CommunityResponse;
 
   stagedContentForUpload: {
@@ -39,7 +35,7 @@ export class EditCommunityComponent {
               validatorFactory: ValidatorFactory) {
     let communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId'];
 
-    this.communityRefForm = validatorFactory.getCommunityRefForm();
+    this.communityLocatorForm = validatorFactory.getCommunityRefForm();
     this.communityDisplayNameForm = validatorFactory.getCommunityDisplayNameForm();
 
     this.messageBoardService.getCommunityInfo(communityLocator)
@@ -54,12 +50,12 @@ export class EditCommunityComponent {
 
     this.PROCESSING = true;
 
-    const newRef = this.communityRefForm.getRawValue()!
+    const newRef = this.communityLocatorForm.value!;
 
     this.messageBoardService.editCommunityAttributes(
       this.communityInfo!.communityId,
-      newRef!,
-      this.communityDisplayNameForm.getRawValue()!)
+      newRef,
+      this.communityDisplayNameForm.value)
       .pipe(
         switchMap(()=>this.updateCommunityBanner()),
         switchMap(()=>this.updateCommunityIcon()),
@@ -67,13 +63,18 @@ export class EditCommunityComponent {
       .subscribe({
       next: ()=>{
         let nav = newRef? newRef : this.communityInfo!.communityLocator
-        this.communityRefForm.reset()
+        this.communityLocatorForm.reset()
         this.communityDisplayNameForm.reset()
         this.router.navigateByUrl('/',{ skipLocationChange: true})
           .then(()=>this.router.navigate(['/community',nav]));
       }, error: (response:any) =>{
         this.PROCESSING = false;
-        this.reportError(response.error.description);
+
+        if (response.error.error === "ValidationException")
+          for (let error of response.error.stack) {
+            this.reportError(error.message);
+          }
+        else this.reportError(response.error.description);
       }
     })
   }
@@ -116,12 +117,11 @@ export class EditCommunityComponent {
       this.stagedContentForUpload.icon = $event
   }
 
-  public resetError() {
-    this.ERROR_TEXT = undefined;
-    this.SHOW_ERROR = false;
+  reportError(response: string) {
+    this.ERROR_MESSAGES.push({ message: response, show: true });
   }
-  public reportError(response: string) {
-    this.ERROR_TEXT = response;
-    this.SHOW_ERROR = true;
+
+  hideError(i: number) {
+    this.ERROR_MESSAGES[i].show = false;
   }
 }

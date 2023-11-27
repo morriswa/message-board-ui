@@ -204,21 +204,19 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  editCommunityAttributes(communityId: number, communityRef:string, communityDisplayName:string): Observable<void> {
+  editCommunityAttributes(communityId: number, communityRef?:string, communityDisplayName?:string): Observable<void> {
 
     let params: any = {
       communityId:communityId
     }
 
     if (communityRef)
-      params.communityRef = communityRef
+      params.communityLocator = communityRef
 
     if (communityDisplayName)
       params.communityDisplayName = communityDisplayName
 
-    return this.http.patch(`${this.SECURE_SERVICE_PATH}/community`, {}, {
-      params: params
-    })
+    return this.http.patch(`${this.SECURE_SERVICE_PATH}/community`, params)
     .pipe(map((response:any)=>response.payload));
   }
 

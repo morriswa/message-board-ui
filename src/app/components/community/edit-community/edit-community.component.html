@@ -6,14 +6,14 @@
     <input
       type="text"
       class="form-control"
-      [formControl]="communityRefForm"
+      [formControl]="communityLocatorForm"
       placeholder="Enter new Locator"
     >
   </div>
 
   <div class="warnings" id="edit-ref-warnings">
     <div
-      *ngIf="communityRefForm.hasError('pattern')"
+      *ngIf="communityLocatorForm.hasError('pattern')"
       class="alert alert-danger"
       role="alert">
       Community Locator must... <br>
@@ -25,16 +25,16 @@
     </div>
 
     <div
-      *ngIf="communityRefForm.dirty && (
-            communityRefForm.getRawValue()!.length < 3 &&
-            communityRefForm.getRawValue()!.length != 0)"
+      *ngIf="communityLocatorForm.dirty && (
+            communityLocatorForm.getRawValue()!.length < 3 &&
+            communityLocatorForm.getRawValue()!.length != 0)"
       class="alert alert-danger"
       role="alert">
       Community Locator must be longer than 2 characters!
     </div>
 
     <div
-      *ngIf="communityRefForm.value && communityRefForm.getRawValue()!.length > 30"
+      *ngIf="communityLocatorForm.value && communityLocatorForm.getRawValue()!.length > 30"
       class="alert alert-danger"
       role="alert">
       Community Locator must be no longer than than 30 characters!
@@ -93,19 +93,21 @@
   <button
     *ngIf="!PROCESSING; else loadingScreen"
     class="btn btn-primary edit-community-field"
-    [disabled]="this.communityRefForm.invalid||this.communityDisplayNameForm.invalid"
+    [disabled]="this.communityLocatorForm.invalid||this.communityDisplayNameForm.invalid"
     (click)="updateCommunity()"
   >
     Update!
   </button>
 
-  <div
-    *ngIf="SHOW_ERROR"
-    id="away"
-    class="alert alert-danger alert-dismissible"
-    role="alert">
-    {{ ERROR_TEXT }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="resetError()"></button>
+  <div *ngFor="let error of ERROR_MESSAGES; index as i">
+    <div
+      *ngIf="error.show"
+      id="away"
+      class="alert alert-danger alert-dismissible"
+      role="alert">
+      {{ error.message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="hideError(i)"></button>
+    </div>
   </div>
 
 </div>
