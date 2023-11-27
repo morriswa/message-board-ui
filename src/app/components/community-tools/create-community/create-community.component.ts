@@ -13,6 +13,7 @@ export class CreateCommunityComponent implements OnInit {
 
   communityRefForm: FormControl;
   communityDisplayNameForm: FormControl;
+  ERROR_MESSAGES: { message: string, show: boolean }[] = [];
 
   constructor(private router: Router, private service: MessageBoardClientService, validatorFactory: ValidatorFactory) {
     this.communityRefForm = validatorFactory.getCommunityRefForm();
@@ -30,7 +31,13 @@ export class CreateCommunityComponent implements OnInit {
           this.communityDisplayNameForm.reset();
           this.router.navigate(['/community',newCommunity]);
         },
-        error:err=>console.error(err)
+        error:(response:any)=>{
+          if (response.error.error === "ValidationException")
+            for (let error of response.error.stack) {
+              this.reportError(error.message);
+            }
+          else this.reportError(response.error.description);
+        }
       }
     )
   }
@@ -38,6 +45,14 @@ export class CreateCommunityComponent implements OnInit {
   ngOnInit(): void {
     this.communityRefForm.reset();
     this.communityDisplayNameForm.reset();
+  }
+
+  reportError(response: string) {
+    this.ERROR_MESSAGES.push({ message: response, show: true });
+  }
+
+  hideError(i: number) {
+    this.ERROR_MESSAGES[i].show = false;
   }
 
 }

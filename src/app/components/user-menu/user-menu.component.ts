@@ -17,6 +17,8 @@ export class UserMenuComponent {
   change_display_name_form_toggle = false;
   dark_mode_switch_toggle = false;
 
+  ERROR_MESSAGES: { message:string, show:boolean }[] = [];
+
   fileInput:FormControl<File> = new FormControl();
 
   displayNameForm:FormControl;
@@ -68,10 +70,12 @@ export class UserMenuComponent {
           this.displayNameForm.reset();
           this.refreshUserProfile();
         },
-        error: err => {
-          this.change_display_name_form_toggle = false;
-          this.displayNameForm.reset();
-          console.error(err);
+        error: (response:any) => {
+          if (response.error.error === "ValidationException")
+            for (let error of response.error.stack) {
+              this.reportError(error.message);
+            }
+          else this.reportError(response.error.description);
         }
       });
   }
@@ -87,6 +91,14 @@ export class UserMenuComponent {
     this.messageBoardService.updateUIProfile(newTheme).subscribe({
       error:err=>console.error(err)
     });
+  }
+
+  reportError(response: string) {
+    this.ERROR_MESSAGES.push({ message: response, show: true });
+  }
+
+  hideError(i: number) {
+    this.ERROR_MESSAGES[i].show = false;
   }
 
 }

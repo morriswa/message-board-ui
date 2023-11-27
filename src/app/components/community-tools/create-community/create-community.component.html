@@ -69,11 +69,23 @@
   </div>
 
   <button
+    style="margin-bottom: 10px;"
     class="btn btn-primary"
     [disabled]="this.communityRefForm.invalid||this.communityDisplayNameForm.invalid"
     (click)="createCommunity()"
   >
     Get Started!
   </button>
+
+  <div *ngFor="let error of ERROR_MESSAGES; index as i">
+    <div
+      *ngIf="error.show"
+      id="away"
+      class="alert alert-danger alert-dismissible"
+      role="alert">
+      {{ error.message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="hideError(i)"></button>
+    </div>
+  </div>
 
 </div>

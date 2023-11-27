@@ -18,6 +18,7 @@ export class RegisterUserComponent implements OnInit{
 
 
   displayNameForm: FormControl;
+  ERROR_MESSAGES: { message:string, show:boolean }[] = [];
 
   constructor(private auth: AuthService,
               private router: Router,
@@ -50,8 +51,21 @@ export class RegisterUserComponent implements OnInit{
     this.messageBoardService.registerUser(this.displayNameForm.getRawValue()!)
       .subscribe({
         next: ()=>this.router.navigate(['/user']),
-        error: er=>console.error(er)
+        error: (response:any)=>{
+          if (response.error.error === "ValidationException")
+            for (let error of response.error.stack) {
+              this.reportError(error.message);
+            }
+          else this.reportError(response.error.description);
+        }
       })
   }
 
+  reportError(response: string) {
+    this.ERROR_MESSAGES.push({ message: response, show: true });
+  }
+
+  hideError(i: number) {
+    this.ERROR_MESSAGES[i].show = false;
+  }
 }
