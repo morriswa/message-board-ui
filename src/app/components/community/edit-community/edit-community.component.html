@@ -1,5 +1,5 @@
 
-<div style="padding: 10px;" *ngIf="communityInfo; else loadingScreen">
+<div style="padding: 10px;" *ngIf="currentCommunity.initialized; else loadingScreen">
 
   <div class="edit-community-field">
     <span>Enter new community locator! <br>Used in URLs and to locate your community...</span>

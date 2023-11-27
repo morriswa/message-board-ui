@@ -1,11 +1,11 @@
-<div *ngIf="userInfo && community">
+<div *ngIf="currentCommunity.initialized">
 
-  <app-community-header [userId]="userInfo.userId" [communityInfo]="community"></app-community-header>
+  <app-community-header [userId]="currentCommunity.membership.userId" [communityInfo]="currentCommunity.community"></app-community-header>
 
   <div
     [ngClass]="{
-      'header-buffer-no-picture': !community.resourceUrls.banner,
-      'header-buffer-picture': community.resourceUrls.banner,
+      'header-buffer-no-picture': !currentCommunity.community.resourceUrls.banner,
+      'header-buffer-picture': currentCommunity.community.resourceUrls.banner,
     }"></div>
 
   <br>
@@ -13,42 +13,42 @@
   <div
     id="community-content-wrapper"
     [ngClass]="{
-    'community-content-wrapper':  community.resourceUrls.banner,
-    'community-content-wrapper-no-banner-image':  !community.resourceUrls.banner
+    'community-content-wrapper':  currentCommunity.community.resourceUrls.banner,
+    'community-content-wrapper-no-banner-image':  !currentCommunity.community.resourceUrls.banner
   }">
 
     <div id="community-info-slide">
-      <p>now viewing community/{{ community.communityLocator }}</p>
-      <h3>{{ community.displayName }}</h3>
-      <p>{{ community.communityMemberCount }} Members!</p>
+      <p>now viewing community/{{ currentCommunity.community.communityLocator }}</p>
+      <h3>{{ currentCommunity.community.displayName }}</h3>
+      <p>{{ currentCommunity.community.communityMemberCount }} Members!</p>
 
 
       <div id="community-buttons">
         <button
           class="btn btn-outline-secondary"
-          [routerLink]="['/community',community.communityLocator]"
+          [routerLink]="['/community',currentCommunity.community.communityLocator]"
         >Feed</button>
 
         <button
-          *ngIf="userIsCommunityMember||isCommunityOwner"
+          *ngIf="currentCommunity.isCommunityOwner||currentCommunity.isCommunityMember"
           class="btn btn-outline-primary"
-          [routerLink]="['/community',community.communityLocator,'post']"
+          [routerLink]="['/community',currentCommunity.community.communityLocator,'post']"
         >Post</button>
 
         <button
-          *ngIf="isCommunityOwner"
+          *ngIf="currentCommunity.isCommunityOwner"
           class="btn btn-secondary"
-          [routerLink]="['/community',community.communityLocator,'edit']"
+          [routerLink]="['/community',currentCommunity.community.communityLocator,'edit']"
         >Edit</button>
 
         <button
-          *ngIf="!userIsCommunityMember && !isCommunityOwner"
+          *ngIf="!currentCommunity.isCommunityMember && !currentCommunity.isCommunityOwner"
           class="btn btn-outline-secondary"
           (click)="joinCommunity()"
         >Join</button>
 
         <button
-          *ngIf="userIsCommunityMember && !isCommunityOwner"
+          *ngIf="currentCommunity.isCommunityMember && !currentCommunity.isCommunityOwner"
           class="btn btn-outline-secondary"
           (click)="leaveCommunity()"
         >Leave</button>

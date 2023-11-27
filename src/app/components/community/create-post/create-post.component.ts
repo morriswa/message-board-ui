@@ -1,12 +1,12 @@
 import {Component, EventEmitter} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 import {UploadImageRequest} from "../../../interface/upload-image-request";
 import {of, switchMap, tap} from "rxjs";
 import {ValidatorFactory} from "../../../service/validator.factory";
-import {CommunityResponse} from "../../../interface/community";
 import {PostDraftResponse} from "../../../interface/posts";
+import {CurrentCommunityService} from "../current-community.service";
 
 @Component({
   selector: 'app-create-post',
@@ -18,40 +18,21 @@ export class CreatePostComponent {
   SHOW_ERROR = false;
   ERROR_TEXT?: string;
 
-  communityInfo?: CommunityResponse;
-  currentDraft?: PostDraftResponse;
-
   currentDraftId?:string;
+  currentDraft?: PostDraftResponse;
   pendingImageUpload?: UploadImageRequest;
 
   clearImageUploadEmitter: EventEmitter<any> = new EventEmitter<any>();
 
-
   postCaptionForm: FormControl;
   postDescriptionForm: FormControl;
 
-
-
-  constructor(private activeRoute: ActivatedRoute,
+  constructor(validators: ValidatorFactory,
               private router: Router,
               private messageBoardService: MessageBoardClientService,
-              validators: ValidatorFactory) {
-
+              public communityInfo: CurrentCommunityService) {
     this.postCaptionForm = validators.getPostCaptionForm();
     this.postDescriptionForm = validators.getPostDescriptionForm();
-
-    try {
-
-      const communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
-
-      this.messageBoardService.getCommunityInfo(communityLocator)
-        .subscribe({
-          next: result =>{
-            this.communityInfo = result;
-          },
-          error: ()=>router.navigate(['/'])
-        });
-    } catch {}
   }
 
   public uploadPostImage($event:any) {
@@ -66,7 +47,7 @@ export class CreatePostComponent {
       switchMap(()=>{
         // if there is not a draft ID registered, a new one will have to be created
         if (!this.currentDraftId) return this.messageBoardService.createPostDraft(
-            this.communityInfo!.communityId,
+            this.communityInfo.id,
             this.postCaptionForm.value,
             this.postDescriptionForm.value) .pipe(
           tap(draftId => {
@@ -93,7 +74,7 @@ export class CreatePostComponent {
       .subscribe({
             next: ()=> {
               this.clearImageUploadEmitter.emit();
-              this.router.navigate(['/community',this.communityInfo!.communityLocator])
+              this.router.navigate(['/community',this.communityInfo.locator])
             },
             error: (err:any)=>{
               this.clearImageUploadEmitter.emit();
@@ -120,7 +101,7 @@ export class CreatePostComponent {
       switchMap(() => {
         // if there is not a draft ID registered, a new one will have to be created
         if (!this.currentDraftId) return this.messageBoardService.createPostDraft(
-          this.communityInfo!.communityId)
+          this.communityInfo.id)
           .pipe(
             tap(draftId => {
               this.currentDraftId = draftId;

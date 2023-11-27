@@ -6,6 +6,7 @@ import {map, of, switchMap} from "rxjs";
 import {ValidatorFactory} from "../../../service/validator.factory";
 import {FormControl} from "@angular/forms";
 import {CommunityResponse} from "../../../interface/community";
+import {CurrentCommunityService} from "../current-community.service";
 
 @Component({
   selector: 'app-edit-community',
@@ -20,7 +21,9 @@ export class EditCommunityComponent {
   communityLocatorForm: FormControl;
   communityDisplayNameForm: FormControl;
 
-  communityInfo?:CommunityResponse;
+  // get communityInfo():CommunityResponse {
+  //   return this.currentCommunity.community;
+  // }
 
   stagedContentForUpload: {
    icon?: UploadImageRequest
@@ -29,21 +32,14 @@ export class EditCommunityComponent {
 
   resetEventEmitter: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private activeRoute: ActivatedRoute,
+  constructor(validatorFactory: ValidatorFactory,
+              private activeRoute: ActivatedRoute,
               private router: Router,
               private messageBoardService: MessageBoardClientService,
-              validatorFactory: ValidatorFactory) {
-    let communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId'];
-
+              public currentCommunity: CurrentCommunityService,
+  ) {
     this.communityLocatorForm = validatorFactory.getCommunityRefForm();
     this.communityDisplayNameForm = validatorFactory.getCommunityDisplayNameForm();
-
-    this.messageBoardService.getCommunityInfo(communityLocator)
-      .subscribe({
-        next: result => {
-          this.communityInfo = result;
-        }, error: err => console.error(err)
-      });
   }
 
   updateCommunity() {
@@ -53,7 +49,7 @@ export class EditCommunityComponent {
     const newRef = this.communityLocatorForm.value!;
 
     this.messageBoardService.editCommunityAttributes(
-      this.communityInfo!.communityId,
+      this.currentCommunity.id,
       newRef,
       this.communityDisplayNameForm.value)
       .pipe(
@@ -62,7 +58,7 @@ export class EditCommunityComponent {
       )
       .subscribe({
       next: ()=>{
-        let nav = newRef? newRef : this.communityInfo!.communityLocator
+        let nav = newRef? newRef : this.currentCommunity.locator
         this.communityLocatorForm.reset()
         this.communityDisplayNameForm.reset()
         this.router.navigateByUrl('/',{ skipLocationChange: true})
@@ -83,7 +79,7 @@ export class EditCommunityComponent {
     if (this.stagedContentForUpload.banner) {
 
       return this.messageBoardService.updateCommunityBanner(
-          this.communityInfo!.communityId,
+          this.currentCommunity.id,
           this.stagedContentForUpload.banner!)
         .pipe(map(()=> {
             this.resetEventEmitter.emit();
@@ -98,7 +94,7 @@ export class EditCommunityComponent {
     if (this.stagedContentForUpload.icon) {
 
       return this.messageBoardService.updateCommunityIcon(
-          this.communityInfo!.communityId,
+          this.currentCommunity.id,
           this.stagedContentForUpload.icon!)
         .pipe(map(()=> {
           this.resetEventEmitter.emit();

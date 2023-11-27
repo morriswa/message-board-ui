@@ -1,4 +1,4 @@
-<div id="create-post-wrapper" *ngIf="communityInfo; else loadingScreen">
+<div id="create-post-wrapper" *ngIf="communityInfo.initialized; else loadingScreen">
 
   <div *ngIf="this.currentDraft">
     <div

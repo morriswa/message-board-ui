@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
-import {ActivatedRoute} from "@angular/router";
-import {switchMap} from "rxjs";
-import {CommunityMembership, CommunityResponse} from "../../../interface/community";
 import {PostResponse} from "../../../interface/posts";
+import {CurrentCommunityService} from "../current-community.service";
 
 @Component({
   selector: 'app-community-feed',
@@ -11,26 +9,15 @@ import {PostResponse} from "../../../interface/posts";
   styleUrls: ['./community-feed.component.scss']
 })
 export class CommunityFeedComponent {
-  communityInfo?:CommunityResponse;
-  membershipInfo?:CommunityMembership;
+
   posts?: PostResponse[];
 
-  constructor(activeRoute: ActivatedRoute, service: MessageBoardClientService) {
-    const communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
-
-    service.getCommunityInfo(communityLocator)
-      .pipe(
-        switchMap(result=> {
-          this.communityInfo = result;
-          return service.getFeedForCommunity(this.communityInfo.communityId);
-        }),
-        switchMap(result=>{
-          this.posts = result;
-          return service.getMembership(this.communityInfo!.communityId)
-        })
-      ).subscribe({
+  constructor(service: MessageBoardClientService,
+              public currentCommunity: CurrentCommunityService) {
+    service.getFeedForCommunity(this.currentCommunity.id)
+      .subscribe({
       next: (res:any) =>{
-        this.membershipInfo = res;
+        this.posts = res;
       }
     })
   }
@@ -40,6 +27,6 @@ export class CommunityFeedComponent {
   }
 
   votingEnabled(): boolean {
-    return this.membershipInfo!.exists||this.membershipInfo!.userId===this.communityInfo!.ownerId
+    return this.currentCommunity.isCommunityOwner||this.currentCommunity.isCommunityMember
   }
 }

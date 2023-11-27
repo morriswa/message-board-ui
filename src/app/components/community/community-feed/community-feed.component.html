@@ -1,4 +1,4 @@
-<div class="post-feed" *ngIf="posts && membershipInfo && communityInfo; else loadingScreen">
+<div class="post-feed" *ngIf="currentCommunity.initialized && posts; else loadingScreen">
 
   <div *ngIf="posts.length > 0; else noPosts"><div *ngFor="let post of posts; let i = index">
 
