@@ -1,16 +1,17 @@
 
-<div *ngIf="!this.loading">
+<div style="padding: 10px;" *ngIf="communityInfo; else loadingScreen">
 
-  <h1>Community Owner: {{ communityInfo.ownerId }}</h1>
+  <div class="edit-community-field">
+    <span>Enter new community locator! <br>Used in URLs and to locate your community...</span>
+    <input
+      type="text"
+      class="form-control"
+      [formControl]="communityRefForm"
+      placeholder="Enter new Locator"
+    >
+  </div>
 
-  <input
-    type="text"
-    class="form-control"
-    [formControl]="communityRefForm"
-    placeholder="Enter new Community Ref (used in URLs and to search your community)"
-  >
-
-  <div id="edit-ref-warnings">
+  <div class="warnings" id="edit-ref-warnings">
     <div
       *ngIf="communityRefForm.hasError('pattern')"
       class="alert alert-danger"
@@ -24,31 +25,37 @@
     </div>
 
     <div
-      *ngIf="communityRefForm.getRawValue()!.length < 3 &&
-            communityRefForm.getRawValue()!.length != 0"
+      *ngIf="communityRefForm.dirty && (
+            communityRefForm.getRawValue()!.length < 3 &&
+            communityRefForm.getRawValue()!.length != 0)"
       class="alert alert-danger"
       role="alert">
       Community Locator must be longer than 2 characters!
     </div>
 
     <div
-      *ngIf="communityRefForm.getRawValue()!.length > 30"
+      *ngIf="communityRefForm.value && communityRefForm.getRawValue()!.length > 30"
       class="alert alert-danger"
       role="alert">
       Community Locator must be no longer than than 30 characters!
     </div>
   </div>
 
-  <input
-    type="text"
-    class="form-control"
-    [formControl]="communityDisplayNameForm"
-    placeholder="Enter new Community Display Name"
-  >
+  <div class="edit-community-field">
+    <span>Enter new community display name! <br>Used to search for your community...</span>
+    <input
+      type="text"
+      class="form-control"
+      [formControl]="communityDisplayNameForm"
+      placeholder="Enter new Display Name"
+    >
+  </div>
 
-  <div id="edit-display-name-warnings">
+
+  <div class="warnings" id="edit-display-name-warnings">
     <div
-      *ngIf="communityDisplayNameForm.getRawValue()!.length < 3 &&
+      *ngIf="communityDisplayNameForm.dirty &&
+            communityDisplayNameForm.getRawValue()!.length < 3 &&
             communityDisplayNameForm.getRawValue()!.length != 0"
       class="alert alert-danger"
       role="alert">
@@ -56,34 +63,57 @@
     </div>
 
     <div
-      *ngIf="communityDisplayNameForm.getRawValue()!.length > 100"
+      *ngIf="communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > 100"
       class="alert alert-danger"
       role="alert">
       Community Display Name must be no longer than than 100 characters!
     </div>
   </div>
 
-  <h2>Community Icon:</h2>
-  <app-image-upload-and-crop
-    [MAINTAIN_ASPECT_RATIO]="true"
-    [ASPECT_RATIO]="1"
-    [resetImageComponent]="this.resetEventEmitter"
-    (imageCroppedAndReadyEvent)="uploadCommunityResource('icon',$event)">
-  </app-image-upload-and-crop>
+  <div class="edit-community-field">
+    <app-image-upload-and-crop
+      userDialog="Update community icon: "
+      [MAINTAIN_ASPECT_RATIO]="true"
+      [ASPECT_RATIO]="1"
+      [resetImageComponent]="this.resetEventEmitter"
+      (imageCroppedAndReadyEvent)="uploadCommunityResource('icon',$event)">
+    </app-image-upload-and-crop>
+  </div>
 
-  <h2>Community Banner:</h2>
-  <app-image-upload-and-crop
-    [MAINTAIN_ASPECT_RATIO]="true"
-    [ASPECT_RATIO]="16 / 9"
-    [resetImageComponent]="this.resetEventEmitter"
-    (imageCroppedAndReadyEvent)="uploadCommunityResource('banner',$event)">
-  </app-image-upload-and-crop>
+  <div class="edit-community-field">
+    <app-image-upload-and-crop
+      userDialog="Update community banner: "
+      [MAINTAIN_ASPECT_RATIO]="true"
+      [ASPECT_RATIO]="16 / 9"
+      [resetImageComponent]="this.resetEventEmitter"
+      (imageCroppedAndReadyEvent)="uploadCommunityResource('banner',$event)">
+    </app-image-upload-and-crop>
+  </div>
 
   <button
-    class="btn btn-primary"
+    *ngIf="!PROCESSING; else loadingScreen"
+    class="btn btn-primary edit-community-field"
     [disabled]="this.communityRefForm.invalid||this.communityDisplayNameForm.invalid"
     (click)="updateCommunity()"
   >
     Update!
   </button>
+
+  <div
+    *ngIf="SHOW_ERROR"
+    id="away"
+    class="alert alert-danger alert-dismissible"
+    role="alert">
+    {{ ERROR_TEXT }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="resetError()"></button>
+  </div>
+
 </div>
+
+<ng-template #loadingScreen>
+  <div style="margin: 50px">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

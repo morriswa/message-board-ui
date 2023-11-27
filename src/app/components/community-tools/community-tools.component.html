@@ -1,0 +1,50 @@
+
+
+<div id="community-navigation-wrapper" *ngIf="communities; else loadingScreen">
+
+  <div id="create-community-wrapper" class="community-tool">
+
+
+    <div class="text-tooltip-hover">
+      <h2><a routerLink="/communityTools/create">Create a new community!</a></h2>
+    </div>
+
+    <p class="text-tooltip">Click to create...</p>
+
+
+  </div>
+
+  <div class="community-tool">
+    <h2>Search existing communities!</h2>
+    <app-search-community></app-search-community>
+  </div>
+
+  <div class="community-tool">
+    <h2>View your communities!</h2>
+
+
+    <p *ngIf="communities.length === 0">No communities to show..</p>
+  <!--  <h3 style="margin: 20px 0 0 0 " *ngIf="communities.length !== 0">Your communities: </h3>-->
+
+    <div id="community-blurb-wrapper">
+      <div class="community-blurb" *ngFor="let community of communities">
+
+
+        <br>
+        <h3><a [routerLink]="['/community', community.communityLocator]">{{ community.displayName }}</a></h3>
+        <img [src]="community.resourceUrls.icon"><br>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+<ng-template #loadingScreen>
+  <div style="margin: 50px">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

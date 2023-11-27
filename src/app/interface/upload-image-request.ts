@@ -1,4 +1,4 @@
 export interface UploadImageRequest {
-  baseEncodedImage:string,
+  baseEncodedImage:any,
   imageFormat:string
 }

@@ -1,0 +1,10 @@
+@import "../community-tools.component";
+
+#community-search-wrapper {
+  margin: 10px 20px;
+  border-style: solid;
+  display: flex;
+  flex-direction: row;
+  border-radius: 20px;
+  border-color: var(--bs-secondary);
+}

@@ -1,26 +1,34 @@
-<div class="form-control-container">
-  <input
-    class="form-control"
-    (change)="newImageUploaded($event)"
-    [formControl]="this.fileInput"
-    type="file"
-    required="false"
-  >
 
-  <button
-    class="btn btn-primary"
-    (click)="confirmCropAndReturnImageObj()"
-  >
-    Save!
-  </button>
+<div>
+
+  <span>{{ userDialog }}</span>
+
+  <div class="form-control-container">
+    <input
+      class="form-control"
+      (change)="newImageUploaded($event)"
+      [formControl]="this.fileInput"
+      type="file"
+      required="false">
+  </div>
+
+  <div id="crop-wrapper" *ngIf="fileInput.value && croppingInProgress && imageChangedEvent">
+
+    <button
+      class="btn btn-secondary"
+      (click)="confirmCropAndReturnImageObj()">
+      Save!
+    </button>
+
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="MAINTAIN_ASPECT_RATIO"
+      [aspectRatio]="ASPECT_RATIO"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+    >
+  </image-cropper>
+
+  </div>
+
 </div>
-
-<image-cropper
-  *ngIf="croppingInProgress"
-  [imageChangedEvent]="imageChangedEvent"
-  [maintainAspectRatio]="MAINTAIN_ASPECT_RATIO"
-  [aspectRatio]="ASPECT_RATIO"
-  format="png"
-  (imageCropped)="imageCropped($event)"
->
-</image-cropper>

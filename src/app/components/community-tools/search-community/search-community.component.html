@@ -1,0 +1,21 @@
+
+<input
+  type="text"
+  class="form-control"
+  [formControl]="communityDisplayNameForm"
+  required
+  placeholder="Search for new communities!"
+  (keyup)="searchForCommunity($event)"
+>
+
+<div id="community-search-wrapper" *ngIf="communities && communities.length > 0">
+  <div class="community-blurb" *ngFor="let community of communities">
+    <br>
+    <h2><a [routerLink]="['/community', community.communityLocator]">{{ community.displayName }}</a></h2>
+    <img [src]="community.resourceUrls.icon"><br>
+  </div>
+</div>
+
+<div *ngIf="communities && communities.length === 0">
+  <h3>No communities found</h3>
+</div>

@@ -1,50 +1,83 @@
-<div *ngIf="!loading">
+<div id="create-post-wrapper" *ngIf="communityInfo; else loadingScreen">
 
-  <app-image-upload-and-crop
-    [resetImageComponent]="clearImageUploadEmitter"
-   (imageCroppedAndReadyEvent)="uploadPostImage($event)">
-  </app-image-upload-and-crop>
-
-  <input
-    type="text"
-    class="form-control"
-    [formControl]="postCaptionForm"
-    placeholder="Enter a Caption..."
-  >
-
-  <div id="caption-warnings">
+  <div *ngIf="this.currentDraft">
     <div
-      *ngIf="postCaptionForm.getRawValue()!.length < 10"
-      class="alert alert-danger"
-      role="alert">
-      Caption is required, and must be at least 10 characters.
-    </div>
-
-    <div
-      *ngIf="postCaptionForm.getRawValue()!.length > 200"
-      class="alert alert-danger"
-      role="alert">
-      Caption must be no longer than than 200 characters!
+      class="create-post-element"
+      *ngFor="let content of this.currentDraft.resources">
+      <img
+        class="post-content-preview-img"
+        [src]="content">
     </div>
   </div>
 
-  <input
-    type="text"
-    class="form-control"
-    [formControl]="postDescriptionForm"
-    placeholder="...and description for your Post!"
-  >
+  <div class="create-post-element" *ngIf="!PROCESSING">
+    <app-image-upload-and-crop
+      userDialog="Add content to post: "
+      [resetImageComponent]="clearImageUploadEmitter"
+     (imageCroppedAndReadyEvent)="uploadPostImage($event)">
+    </app-image-upload-and-crop>
 
-  <div id="description-warnings">
-    <div
-      *ngIf="postDescriptionForm.getRawValue()!.length > 1000"
-      class="alert alert-danger"
-      role="alert">
-      Post description must be no longer than than 1000 characters!
+    <button
+      style="margin-top: 20px"
+      *ngIf="!this.PROCESSING; else loadingScreen"
+      class="btn btn-primary"
+      [disabled]="!this.pendingImageUpload"
+      (click)="saveDraftAndResetImageUploader()"
+    >
+      Add another Image!
+    </button>
+  </div>
+
+  <div class="create-post-element">
+    <span>Caption your post!</span>
+    <input
+      type="text"
+      class="form-control"
+      [formControl]="postCaptionForm"
+      required
+      placeholder="Enter a Caption..."
+    >
+
+    <div class="warnings" id="caption-warnings">
+      <div
+        *ngIf="postCaptionForm.getRawValue()!.length < 10"
+        class="alert alert-danger"
+        role="alert">
+        Caption is required, and must be at least 10 characters.
+      </div>
+
+      <div
+        *ngIf="postCaptionForm.getRawValue()!.length > 200"
+        class="alert alert-danger"
+        role="alert">
+        Caption must be no longer than than 200 characters!
+      </div>
+    </div>
+  </div>
+
+  <div class="create-post-element">
+
+    <span>Add an optional description to your post!</span>
+    <input
+      type="text"
+      class="form-control"
+      [formControl]="postDescriptionForm"
+      placeholder="...and description for your Post!"
+    >
+
+    <div class="warnings" id="description-warnings">
+      <div
+        *ngIf="postDescriptionForm.getRawValue()!.length > 1000"
+        class="alert alert-danger"
+        role="alert">
+        Post description must be no longer than than 1000 characters!
+      </div>
     </div>
   </div>
 
   <button
+    style="margin-top: 20px"
+    *ngIf="!this.PROCESSING; else loadingScreen"
     class="btn btn-primary"
     [disabled]="this.postCaptionForm.invalid
     ||this.postDescriptionForm.invalid"
@@ -53,5 +86,20 @@
     Save and Post!
   </button>
 
-
+  <div
+    *ngIf="SHOW_ERROR"
+    id="away"
+    class="alert alert-danger alert-dismissible"
+    role="alert">
+    {{ ERROR_TEXT }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="resetError()"></button>
+  </div>
 </div>
+
+<ng-template #loadingScreen>
+  <div style="margin: 50px">
+    <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>

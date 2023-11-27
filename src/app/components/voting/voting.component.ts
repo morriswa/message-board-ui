@@ -8,8 +8,13 @@ import {MessageBoardClientService} from "../../service/message-board-client.serv
 })
 export class VotingComponent {
 
-  type: 'POST'|'COMMENT' = 'POST';
-  @Input() id!: number;
+  get id() {
+    return `${this.postId!}---${this.commentId!}`;
+  }
+
+  @Input() type: 'POST'|'COMMENT' = 'POST';
+  @Input() postId!: number;
+  @Input() commentId?: number;
   @Output() voteUpdated: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private service: MessageBoardClientService) {
@@ -22,11 +27,18 @@ export class VotingComponent {
     downvote.classList.remove('clicked-icon');
 
 
-    this.service.voteOnPost(this.id, "UPVOTE")
-      .subscribe({
-        next: (res:number)=>this.voteUpdated.emit(res),
-        error: err=>console.error(err)
-      })
+    if (this.type === 'COMMENT')
+      this.service.voteOnComment(this.postId, this.commentId!,"UPVOTE")
+        .subscribe({
+          next: (res:number)=>this.voteUpdated.emit(res),
+          error: err=>console.error(err)
+        });
+    else
+      this.service.voteOnPost(this.postId, "UPVOTE")
+        .subscribe({
+          next: (res:number)=>this.voteUpdated.emit(res),
+          error: err=>console.error(err)
+        });
   }
 
   vote_down() {
@@ -35,14 +47,18 @@ export class VotingComponent {
     let downvote = document.getElementById(`downvote-${this.id}`)!;
     downvote.classList.add('clicked-icon');
 
-    this.service.voteOnPost(this.id, "DOWNVOTE")
-      .subscribe({
-        next: (res:any)=>{
-          if(res < 0)
-            res = 0;
-          this.voteUpdated.emit(res)
-        },
-        error: err=>console.error(err)
-      })
+
+    if (this.type === 'COMMENT')
+      this.service.voteOnComment(this.postId, this.commentId!,"DOWNVOTE")
+        .subscribe({
+          next: (res:number)=>this.voteUpdated.emit(res),
+          error: err=>console.error(err)
+        });
+    else
+      this.service.voteOnPost(this.postId, "DOWNVOTE")
+        .subscribe({
+          next: (res:number)=>this.voteUpdated.emit(res),
+          error: err=>console.error(err)
+        });
   }
 }

@@ -14,17 +14,23 @@ import { CommunityComponent } from './components/community/community.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { UserMenuComponent } from './components/user-menu/user-menu.component';
 import { RegisterUserComponent } from './components/register-user/register-user.component';
-import {NgOptimizedImage} from "@angular/common";
+import {APP_BASE_HREF, NgOptimizedImage} from "@angular/common";
 import {ImageCropperModule} from "ngx-image-cropper";
-import { CreateCommunityComponent } from './components/create-community/create-community.component';
+import { CreateCommunityComponent } from './components/community-tools/create-community/create-community.component';
 import { EditCommunityComponent } from './components/community/edit-community/edit-community.component';
 import { CreatePostComponent } from './components/community/create-post/create-post.component';
 import { ImageUploadAndCropComponent } from './components/image-upload-and-crop/image-upload-and-crop.component';
-import { CommunityNavigationComponent } from './components/community-navigation/community-navigation.component';
+import { CommunityToolsComponent } from './components/community-tools/community-tools.component';
 import { CommunityHeaderComponent } from './components/community/community-header/community-header.component';
 import { CommunityFeedComponent } from './components/community/community-feed/community-feed.component';
 import {ThemeService} from "./service/theme.service";
 import { VotingComponent } from './components/voting/voting.component';
+import { SearchCommunityComponent } from './components/community-tools/search-community/search-community.component';
+import {ValidatorFactory} from "./service/validator.factory";
+import {MessageBoardClientService} from "./service/message-board-client.service";
+import {PreferencesService} from "./service/preferences.service";
+import { PostDetailsComponent } from './components/community/post-details/post-details.component';
+import { CommentsComponent } from './components/community/comments/comments.component';
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -37,7 +43,7 @@ const AUTH0_CONFIG = {
   // Specify configuration for the interceptor
   httpInterceptor: {
     allowedList: [
-      { uri: environment.api + '/*' },
+      { uri: `${environment.api.scheme}://${environment.api.path}/${environment.api.routes.secure}/*` },
     ]
   },
   cacheLocation: "localstorage" as const
@@ -56,10 +62,13 @@ const AUTH0_CONFIG = {
     EditCommunityComponent,
     CreatePostComponent,
     ImageUploadAndCropComponent,
-    CommunityNavigationComponent,
+    CommunityToolsComponent,
     CommunityHeaderComponent,
     CommunityFeedComponent,
     VotingComponent,
+    SearchCommunityComponent,
+    PostDetailsComponent,
+    CommentsComponent,
   ],
     imports: [
         BrowserModule,
@@ -75,7 +84,10 @@ const AUTH0_CONFIG = {
     {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
     // {provide: APP_BASE_HREF, useValue: '/messageboard'},
     AuthService,
-    ThemeService
+    ThemeService,
+    MessageBoardClientService,
+    PreferencesService,
+    ValidatorFactory
   ],
   bootstrap: [AppComponent]
 })

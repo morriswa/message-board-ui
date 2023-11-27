@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
-import {FormControl, Validators} from "@angular/forms";
-import {map, mergeAll, mergeMap, Observable, of, switchMap} from "rxjs";
+import {switchMap, tap} from "rxjs";
+import {CommunityMembership, CommunityResponse} from "../../interface/community";
 
 @Component({
   selector: 'app-community',
@@ -10,61 +10,47 @@ import {map, mergeAll, mergeMap, Observable, of, switchMap} from "rxjs";
   styleUrls: ['./community.component.scss']
 })
 export class CommunityComponent {
-
-  // loading = true;
-  communityInfo:any;
-  community$:Observable<any> = of ({});
-  userInfo:any;
-
+  community?:CommunityResponse;
+  userInfo?:CommunityMembership;
 
   userIsCommunityMember = false;
   isCommunityOwner = false;
 
-  constructor(private activeRoute: ActivatedRoute,
+  constructor(activeRoute: ActivatedRoute,
               private router: Router,
               private messageBoardService: MessageBoardClientService) {
     try {
       const communityName = activeRoute.snapshot.params['communityId'];
 
-      this.community$ = this.messageBoardService.getCommunityInfo(communityName)
+      this.messageBoardService.getCommunityInfo(communityName)
         .pipe(
-          map((result:any) => {
-            this.communityInfo = result;
-            return result
-          }));
-
-      this.community$.pipe(
-        switchMap(()=> {
-          return this.messageBoardService.getMembership(this.communityInfo.communityId);
-        }))
-        .subscribe({
+          switchMap((result:CommunityResponse) =>{
+           this.community = result;
+           return this.messageBoardService.getMembership(this.community.communityId)
+          })
+        ).subscribe({
           next:result=>{
             this.userInfo = result;
-            this.isCommunityOwner = this.userInfo.userId === this.communityInfo.ownerId;
-            this.userIsCommunityMember = result.exists
+            this.isCommunityOwner = this.userInfo.userId === this.community!.ownerId;
+            this.userIsCommunityMember = this.userInfo.exists;
           },
-          error: ()=>this.router.navigate(['/'])
+          error: ()=>this.router.navigate(['/registerUser'])
         });
     } catch {}
   }
 
   joinCommunity() {
-    this.messageBoardService.joinCommunity(this.communityInfo.communityId)
-      .subscribe(()=>this.reloadCommunityStatus());
+    this.messageBoardService.joinCommunity(this.community!.communityId)
+      .subscribe(()=>
+        this.router.navigate(['/'], {skipLocationChange: true})
+          .then(()=>this.router.navigate(['/community', this.community!.communityLocator])));
   }
 
   leaveCommunity() {
-    this.messageBoardService.leaveCommunity(this.communityInfo.communityId)
-      .subscribe(()=>this.reloadCommunityStatus());
+    this.messageBoardService.leaveCommunity(this.community!.communityId)
+      .subscribe(()=>
+        this.router.navigate(['/'], {skipLocationChange: true})
+          .then(()=>this.router.navigate(['/community', this.community!.communityLocator])));
   }
 
-  reloadCommunityStatus() {
-    this.messageBoardService.getMembership(this.communityInfo.communityId).subscribe({
-      next:result=>{
-        this.userIsCommunityMember = result.exists
-        this.userInfo = result;
-        this.isCommunityOwner = this.userInfo.userId === this.communityInfo.ownerId;
-      }
-    })
-  }
 }

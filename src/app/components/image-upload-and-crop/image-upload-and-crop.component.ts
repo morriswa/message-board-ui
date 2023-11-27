@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ImageCroppedEvent} from "ngx-image-cropper";
-import {Utils} from "../../Utils";
 import {FormControl} from "@angular/forms";
-import {UploadImageRequest} from "../../interface/upload-image-request";
 import heic2any from "heic2any";
 
 
@@ -13,19 +11,19 @@ import heic2any from "heic2any";
   styleUrls: ['./image-upload-and-crop.component.scss']
 })
 export class ImageUploadAndCropComponent implements OnInit{
-  loading = true
   croppingInProgress= false;
 
   fileInput = new FormControl();
 
   stagedProfilePhotoForUpload?:Blob;
 
-  imageChangedEvent: any;
+  imageChangedEvent?: any;
 
   @Input() resetImageComponent: EventEmitter<any> = new EventEmitter<any>();
   @Input() ASPECT_RATIO: number = 1;
   @Input() MAINTAIN_ASPECT_RATIO: boolean = false;
   @Output() imageCroppedAndReadyEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Input() userDialog?: string;
 
   ngOnInit(): void {
     this.resetImageComponent.subscribe(()=>this.reset())
@@ -39,13 +37,16 @@ export class ImageUploadAndCropComponent implements OnInit{
   }
 
   public newImageUploaded($event: any) {
+    this.stagedProfilePhotoForUpload = undefined;
+
     // extract file object from event
     let file:File = $event.target.files[0];
 
     switch (file.type) {
       case "image/gif":
         this.stagedProfilePhotoForUpload = file;
-        break;
+        this.confirmCropAndReturnImageObj();
+        return;
       case "image/heic":
         file.arrayBuffer()
           // retrieve array buffer of file
@@ -91,24 +92,23 @@ export class ImageUploadAndCropComponent implements OnInit{
   }
 
   public confirmCropAndReturnImageObj() {
-    // this.PROCESSING_REQUEST = true;
 
     if (this.stagedProfilePhotoForUpload) {
-
       this.croppingInProgress = false;
-
+      this.imageChangedEvent = undefined;
       this.imageCroppedAndReadyEvent.emit(this.stagedProfilePhotoForUpload)
-
-      // Utils.file2Base64(this.stagedProfilePhotoForUpload).then(b64Repr => {
-      //   let concatb64Repr = b64Repr.slice(b64Repr.indexOf(",") + 1)
-      //   let imageFormat = b64Repr.slice(b64Repr.indexOf("/") + 1, b64Repr.indexOf(";"))
-      //
-      //   if (imageFormat === "heic") imageFormat = "jpeg";
-      //
-      //   this.imageCroppedAndReadyEvent.emit({baseEncodedImage: concatb64Repr,imageFormat: imageFormat});
-      // });
     }
   }
 
+  getBackgroundColor() {
 
+    // let color = document.body.parentElement.
+    //
+    // // @ts-ignore
+    // // let color = heresBackground.style.backgroundColor
+    //
+    // console.log(`color found ${color}`)
+    //
+    // return 'var(--bs-body-bg)';
+  }
 }

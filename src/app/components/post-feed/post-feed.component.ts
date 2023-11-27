@@ -1,6 +1,7 @@
-import {Component, Input} from '@angular/core';
-import {Router} from "@angular/router";
-import {CommunityComponent} from "../community/community.component";
+import {Component} from '@angular/core';
+import {MessageBoardClientService} from "../../service/message-board-client.service";
+import {PostCommunityResponse} from "../../interface/posts";
+
 
 @Component({
   selector: 'app-post-feed',
@@ -8,10 +9,16 @@ import {CommunityComponent} from "../community/community.component";
   styleUrls: ['./post-feed.component.scss']
 })
 export class PostFeedComponent {
-  @Input() posts!:any[];
 
+  posts?: PostCommunityResponse[];
 
-  postVoteUpdated($event: number, i: number) {
-    this.posts[i].vote = $event
+  constructor(service: MessageBoardClientService) {
+
+    service.getRecentPosts()
+      .subscribe({
+        next: res =>{
+          this.posts = res;
+        }
+      });
   }
 }

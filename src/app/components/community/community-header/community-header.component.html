@@ -1,10 +1,16 @@
+<div [ngClass]="{
+  'header-wrapper':communityInfo.resourceUrls.banner,
+  'header-wrapper-no-picture':!communityInfo.resourceUrls.banner
+}">
 
-<img id="community-banner" [src]="communityInfo.resourceUrls.banner">
+  <img *ngIf="communityInfo.resourceUrls.banner" id="community-banner" [src]="communityInfo.resourceUrls.banner">
 
-<div id="community-header">
+  <div id="community-header">
 
-  <img id="community-icon" [src]="communityInfo.resourceUrls.icon">
+    <img id="community-icon" [src]="communityInfo.resourceUrls.icon">
 
-  <h3>community/{{ communityInfo.communityLocator }}</h3>
+    <h3>community/{{ communityInfo.communityLocator }}</h3>
+
+  </div>
 
 </div>

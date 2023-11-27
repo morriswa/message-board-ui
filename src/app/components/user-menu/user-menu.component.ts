@@ -1,12 +1,10 @@
 import {Component} from '@angular/core';
-import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
-import {Observable, of} from "rxjs";
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
-import {UploadImageRequest} from "../../interface/upload-image-request";
 import {ThemeService} from "../../service/theme.service";
-import {Utils} from "../../Utils";
+import {ValidatorFactory} from "../../service/validator.factory";
+import {UserProfile} from "../../interface/user-profile";
 
 @Component({
   selector: 'app-user-menu',
@@ -16,30 +14,29 @@ import {Utils} from "../../Utils";
 export class UserMenuComponent {
 
   PROCESSING_REQUEST = false
-  showChangeDisplayNameForm = false;
-  userProfile$: Observable<any> = of ( {});
-  fileInput = new FormControl();
-  displayNameForm = Utils.displayNameForm;
-  newThemeBuffer = false;
+  change_display_name_form_toggle = false;
+  dark_mode_switch_toggle = false;
 
-  constructor(private auth: AuthService,
-              private messageBoardService: MessageBoardClientService,
+  fileInput:FormControl<File> = new FormControl();
+
+  displayNameForm:FormControl;
+
+  user?: UserProfile;
+
+  constructor(private messageBoardService: MessageBoardClientService,
               private router: Router,
-              private themeService: ThemeService) {
+              private themeService: ThemeService,
+              validatorFactory: ValidatorFactory) {
     this.refreshUserProfile();
-    this.userProfile$
-      .subscribe({
-        // next: user=>this.loading = false,
-        error: err=>{
-          console.error(err)
-          this.router.navigate(['/registerUser'])
-        }
-      });
-    this.newThemeBuffer = !(themeService.current === "default")
+    this.dark_mode_switch_toggle = !(themeService.current === "default");
+    this.displayNameForm = validatorFactory.getDisplayNameForm();
   }
 
   refreshUserProfile() {
-    this.userProfile$ = this.messageBoardService.getUserProfile();
+    this.messageBoardService.getUserProfile().subscribe({
+      next: result => this.user = result,
+      error: () => this.router.navigateByUrl("/registerUser")
+    })
   }
 
   updateUserProfileImage($event:any) {
@@ -60,19 +57,19 @@ export class UserMenuComponent {
   }
 
   toggleChangeDisplayNameForm() {
-    this.showChangeDisplayNameForm = !this.showChangeDisplayNameForm;
+    this.change_display_name_form_toggle = !this.change_display_name_form_toggle;
   }
 
   changeDisplayName() {
     this.messageBoardService.updateDisplayName(this.displayNameForm.getRawValue()!)
       .subscribe({
         next: ()=>{
-          this.showChangeDisplayNameForm = false;
+          this.change_display_name_form_toggle = false;
           this.displayNameForm.reset();
           this.refreshUserProfile();
         },
         error: err => {
-          this.showChangeDisplayNameForm = false;
+          this.change_display_name_form_toggle = false;
           this.displayNameForm.reset();
           console.error(err);
         }
@@ -80,10 +77,10 @@ export class UserMenuComponent {
   }
 
   darkModeUpdated($event: any) {
-    this.newThemeBuffer = $event.target.checked
+    this.dark_mode_switch_toggle = $event.target.checked
 
     let newTheme: string
-    if (this.newThemeBuffer) newTheme = "dark-mode";
+    if (this.dark_mode_switch_toggle) newTheme = "dark-mode";
     else newTheme = "default"
 
     this.themeService.current = newTheme;

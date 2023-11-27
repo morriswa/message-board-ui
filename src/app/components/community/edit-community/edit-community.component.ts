@@ -2,9 +2,10 @@ import {Component, EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {UploadImageRequest} from "../../../interface/upload-image-request";
-import {CommunityComponent} from "../community.component";
 import {map, of, switchMap} from "rxjs";
-import {Utils} from "../../../Utils";
+import {ValidatorFactory} from "../../../service/validator.factory";
+import {FormControl} from "@angular/forms";
+import {CommunityResponse} from "../../../interface/community";
 
 @Component({
   selector: 'app-edit-community',
@@ -13,14 +14,17 @@ import {Utils} from "../../../Utils";
 })
 export class EditCommunityComponent {
 
-  communityRefForm = Utils.communityRefForm;
-  communityDisplayNameForm = Utils.communityDisplayNameForm
+  PROCESSING= false;
+  SHOW_ERROR: boolean = false;
+  ERROR_TEXT?: string;
+
+  communityRefForm: FormControl;
+  communityDisplayNameForm: FormControl;
 
 
-  loading=true;
 
   // communityLocator;
-  communityInfo:any;
+  communityInfo?:CommunityResponse;
 
   stagedContentForUpload: {
    icon?: UploadImageRequest
@@ -31,52 +35,54 @@ export class EditCommunityComponent {
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
-              private messageBoardService: MessageBoardClientService) {
-    let communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId']
+              private messageBoardService: MessageBoardClientService,
+              validatorFactory: ValidatorFactory) {
+    let communityLocator = activeRoute.pathFromRoot[1].snapshot.params['communityId'];
+
+    this.communityRefForm = validatorFactory.getCommunityRefForm();
+    this.communityDisplayNameForm = validatorFactory.getCommunityDisplayNameForm();
 
     this.messageBoardService.getCommunityInfo(communityLocator)
       .subscribe({
         next: result => {
           this.communityInfo = result;
-          this.loading = false;
         }, error: err => console.error(err)
-      })
+      });
   }
 
   updateCommunity() {
 
+    this.PROCESSING = true;
 
     const newRef = this.communityRefForm.getRawValue()!
 
     this.messageBoardService.editCommunityAttributes(
-      this.communityInfo.communityId,
+      this.communityInfo!.communityId,
       newRef!,
       this.communityDisplayNameForm.getRawValue()!)
       .pipe(
         switchMap(()=>this.updateCommunityBanner()),
-        switchMap(()=>this.updateCommunityIcon())
-        // mergeAll()
+        switchMap(()=>this.updateCommunityIcon()),
       )
       .subscribe({
       next: ()=>{
-        let nav = newRef? newRef : this.communityInfo.communityLocator
+        let nav = newRef? newRef : this.communityInfo!.communityLocator
         this.communityRefForm.reset()
         this.communityDisplayNameForm.reset()
         this.router.navigateByUrl('/',{ skipLocationChange: true})
           .then(()=>this.router.navigate(['/community',nav]));
-      }, error: () =>{
-
+      }, error: (response:any) =>{
+        this.PROCESSING = false;
+        this.reportError(response.error.description);
       }
     })
   }
 
   public updateCommunityBanner() {
-    // this.PROCESSING_REQUEST = true;
-
     if (this.stagedContentForUpload.banner) {
 
       return this.messageBoardService.updateCommunityBanner(
-          this.communityInfo.communityId!,
+          this.communityInfo!.communityId,
           this.stagedContentForUpload.banner!)
         .pipe(map(()=> {
             this.resetEventEmitter.emit();
@@ -87,12 +93,11 @@ export class EditCommunityComponent {
     return of('did not update banner')
   }
   public updateCommunityIcon() {
-    // this.PROCESSING_REQUEST = true;
 
     if (this.stagedContentForUpload.icon) {
 
       return this.messageBoardService.updateCommunityIcon(
-          this.communityInfo.communityId!,
+          this.communityInfo!.communityId,
           this.stagedContentForUpload.icon!)
         .pipe(map(()=> {
           this.resetEventEmitter.emit();
@@ -109,5 +114,14 @@ export class EditCommunityComponent {
       this.stagedContentForUpload.banner = $event;
     else
       this.stagedContentForUpload.icon = $event
+  }
+
+  public resetError() {
+    this.ERROR_TEXT = undefined;
+    this.SHOW_ERROR = false;
+  }
+  public reportError(response: string) {
+    this.ERROR_TEXT = response;
+    this.SHOW_ERROR = true;
   }
 }

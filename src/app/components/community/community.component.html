@@ -1,10 +1,21 @@
-<div *ngIf="community$|async as community">
+<div *ngIf="userInfo && community">
 
   <app-community-header [userId]="userInfo.userId" [communityInfo]="community"></app-community-header>
 
+  <div
+    [ngClass]="{
+      'header-buffer-no-picture': !community.resourceUrls.banner,
+      'header-buffer-picture': community.resourceUrls.banner,
+    }"></div>
+
   <br>
 
-  <div id="community-content-wrapper">
+  <div
+    id="community-content-wrapper"
+    [ngClass]="{
+    'community-content-wrapper':  community.resourceUrls.banner,
+    'community-content-wrapper-no-banner-image':  !community.resourceUrls.banner
+  }">
 
     <div id="community-info-slide">
       <p>now viewing community/{{ community.communityLocator }}</p>
@@ -15,12 +26,13 @@
       <div id="community-buttons">
         <button
           class="btn btn-outline-secondary"
-          [routerLink]="['/community',communityInfo.communityLocator]"
+          [routerLink]="['/community',community.communityLocator]"
         >Feed</button>
 
         <button
+          *ngIf="userIsCommunityMember||isCommunityOwner"
           class="btn btn-outline-primary"
-          [routerLink]="['/community',communityInfo.communityLocator,'post']"
+          [routerLink]="['/community',community.communityLocator,'post']"
         >Post</button>
 
         <button

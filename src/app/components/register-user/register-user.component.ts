@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
-import {map, max, switchMap} from "rxjs";
+import {map, switchMap} from "rxjs";
 import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
-import {Utils} from "../../Utils";
+import {ValidatorFactory} from "../../service/validator.factory";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-register-user',
@@ -17,26 +17,24 @@ export class RegisterUserComponent implements OnInit{
   email?:string;
 
 
-  public displayNameForm = Utils.displayNameForm;
+  displayNameForm: FormControl;
 
   constructor(private auth: AuthService,
               private router: Router,
-              private messageBoardService: MessageBoardClientService) { }
+              private messageBoardService: MessageBoardClientService,
+              validatorFactory: ValidatorFactory) {
+    this.displayNameForm = validatorFactory.getDisplayNameForm()
+  }
 
   ngOnInit(): void {
     this.auth.user$.pipe(
       map(user=>{
-        if (!user) {
-          console.log('Please authenticate with Auth0 before registering a user');
-          this.router.navigate(['/']);
-        } else {
+        if (!user)
+          this.auth.loginWithRedirect({ appState: { target: '/' }})
+        else
           this.email = user.email;
-          console.log('retrieved user email from auth0: ' + this.email);
-        }
 
         return user!;
-
-        // this.loading = false;
       }),
       switchMap(()=>{
         return this.messageBoardService.getUserProfile()
