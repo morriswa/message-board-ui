@@ -1,0 +1,50 @@
+.header {
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px;
+    background-color: #0a0a23;
+    color: skyblue;
+    border-bottom: 4px solid silver;
+  }
+
+#landing-page-card {
+    color: black;
+    border-color: grey;
+    height: 100px;
+    width:200px;
+    text-align: center;
+}
+
+#landing-page-layout {
+    display: flex;
+    flex-direction: row;
+    // width: 100vw;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+#righthand-card {
+    border-radius: 10px;
+    background: white;
+    border-color: black;
+    justify-content: space-around;
+    flex-grow: 1;
+}
+
+#lefthand-card{
+    border-radius: 10px;
+    background: white;
+    border-color: black;
+    justify-content: space-around;
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+#center-card {
+    border-radius: 10px;
+    background: white;
+    border-color: black;
+    justify-content: space-around;
+    flex-grow: 1;
+    margin-right: 20px;
+}
