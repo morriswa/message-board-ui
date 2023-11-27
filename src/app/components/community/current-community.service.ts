@@ -35,19 +35,19 @@ export class CurrentCommunityService {
   }
 
   get id() {
-    return this.community!.communityId
+    return this.community.communityId
   }
 
   get locator() {
-    return this.community!.communityLocator
+    return this.community.communityLocator
   }
 
   get isCommunityOwner(): boolean {
-    return this.membership!.userId === this.community!.ownerId;
+    return this.membership.userId === this.community.ownerId;
   }
 
   get isCommunityMember(): boolean {
-    return this.membership!.exists;
+    return this.membership.exists;
   }
 
 }
