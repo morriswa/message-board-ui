@@ -26,18 +26,18 @@
 
     <div
       *ngIf="communityLocatorForm.dirty && (
-            communityLocatorForm.getRawValue()!.length < 3 &&
+            communityLocatorForm.getRawValue()!.length < preferences.COMMUNITY_REF_MIN &&
             communityLocatorForm.getRawValue()!.length != 0)"
       class="alert alert-danger"
       role="alert">
-      Community Locator must be longer than 2 characters!
+      Community Locator must be at least {{ preferences.COMMUNITY_REF_MIN }} characters!
     </div>
 
     <div
-      *ngIf="communityLocatorForm.value && communityLocatorForm.getRawValue()!.length > 30"
+      *ngIf="communityLocatorForm.value && communityLocatorForm.getRawValue()!.length > preferences.COMMUNITY_REF_MAX"
       class="alert alert-danger"
       role="alert">
-      Community Locator must be no longer than than 30 characters!
+      Community Locator must be no longer than than {{ preferences.COMMUNITY_REF_MAX }} characters!
     </div>
   </div>
 
@@ -55,18 +55,18 @@
   <div class="warnings" id="edit-display-name-warnings">
     <div
       *ngIf="communityDisplayNameForm.dirty &&
-            communityDisplayNameForm.getRawValue()!.length < 3 &&
+            communityDisplayNameForm.getRawValue()!.length < preferences.COMMUNITY_NAME_MIN &&
             communityDisplayNameForm.getRawValue()!.length != 0"
       class="alert alert-danger"
       role="alert">
-      Community Display Name must be longer than 2 characters!
+      Community Display Name must be longer than {{ preferences.COMMUNITY_NAME_MIN - 1 }} characters!
     </div>
 
     <div
-      *ngIf="communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > 100"
+      *ngIf="communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > preferences.COMMUNITY_NAME_MAX"
       class="alert alert-danger"
       role="alert">
-      Community Display Name must be no longer than than 100 characters!
+      Community Display Name must be no longer than than {{ preferences.COMMUNITY_NAME_MAX }} characters!
     </div>
   </div>
 
