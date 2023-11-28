@@ -15,7 +15,16 @@ export class CommunityToolsComponent {
     service.getUsersCommunities().subscribe({
       next: res=>this.communities = res,
       error: (err: any) => {
-        if (err.error.error === "NoRegisteredUserException") router.navigateByUrl("/registerUser");
+        console.log(err);
+
+        if (err.error.error === "NoRegisteredUserException") {
+          router.navigate(["/registerUser"]);
+          return;
+        }
+
+        router.navigate(["/"]);
+        // router.navigate(["/registerUser"]);
+
       }
     });
   }

@@ -4,6 +4,7 @@ import {MessageBoardClientService} from "../../service/message-board-client.serv
 import {switchMap} from "rxjs";
 import {CommunityResponse} from "../../interface/community";
 import {CurrentCommunityService} from "./current-community.service";
+import {AuthService} from "@auth0/auth0-angular";
 
 @Component({
   selector: 'app-community',
@@ -13,6 +14,7 @@ import {CurrentCommunityService} from "./current-community.service";
 export class CommunityComponent {
 
   constructor(activeRoute: ActivatedRoute,
+              auth: AuthService,
               private router: Router,
               private messageBoardService: MessageBoardClientService,
               public currentCommunity: CurrentCommunityService) {
@@ -21,8 +23,12 @@ export class CommunityComponent {
 
     currentCommunity.reset();
 
-    this.messageBoardService.getCommunityInfo(communityName)
-      .pipe(
+    auth.isAuthenticated$.pipe(
+        switchMap((result:boolean) => {
+          // if user has not authenticated, route them to registration page
+          if (!result) this.router.navigate(['/registerUser']);
+          return this.messageBoardService.getCommunityInfo(communityName);
+        }),
         switchMap((result:CommunityResponse) =>{
          this.currentCommunity.init({community: result});
          return this.messageBoardService.getMembership(result.communityId)
