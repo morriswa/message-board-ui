@@ -21,28 +21,20 @@
         [placeholder]="user.displayName"
       >
 
-      <div id="username-warnings">
-        <div
-          *ngIf="displayNameForm.hasError('pattern')"
-          class="alert alert-danger"
-          role="alert">
-          Username must contain only letters (upper and lower case, A-Z, a-z) , numbers (0-9) , hyphens (-) , and underscores (_) .
-        </div>
-
-        <div
-          *ngIf="displayNameForm.getRawValue()!.length < 3&&displayNameForm.getRawValue()!.length!=0"
-          class="alert alert-danger"
-          role="alert">
-          New username must be longer than 2 characters.
-        </div>
-
-        <div
-          *ngIf="displayNameForm.getRawValue()!.length > 30"
-          class="alert alert-danger"
-          role="alert">
-          Username must be no longer than than 30 characters!
-        </div>
-      </div>
+      <app-static-errors [WARNINGS]="[
+        {
+          show:displayNameForm.hasError('pattern') ,
+          message:'Usernames must contain only letters (upper and lower case, A-Z, a-z) , numbers (0-9) , hyphens (-) , and underscores (_) .' 
+        },
+        {
+          show:displayNameForm.value && displayNameForm.getRawValue()!.length < 3,
+          message:'New username must be longer than 2 characters.' 
+        },
+        {
+          show:displayNameForm.getRawValue()!.length > 30,
+          message:'Username must be no longer than than 30 characters!' 
+        },
+      ]"></app-static-errors>
 
       <button
         class="btn btn-secondary"

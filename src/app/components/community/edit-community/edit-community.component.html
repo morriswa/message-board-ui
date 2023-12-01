@@ -11,35 +11,27 @@
     >
   </div>
 
-  <div class="warnings" id="edit-ref-warnings">
-    <div
-      *ngIf="communityLocatorForm.hasError('pattern')"
-      class="alert alert-danger"
-      role="alert">
-      Community Locator must... <br>
-      <ul>
-        <li>only contain lowercase letters (a-z) , numbers (0-9) , and hyphens (-) .</li>
-        <li>Locator must not begin or end with a hyphen (-)</li>
-        <li>Locator must not begin with a number (0-9)</li>
-      </ul>
-    </div>
-
-    <div
-      *ngIf="communityLocatorForm.dirty && (
-            communityLocatorForm.getRawValue()!.length < preferences.COMMUNITY_REF_MIN &&
-            communityLocatorForm.getRawValue()!.length != 0)"
-      class="alert alert-danger"
-      role="alert">
-      Community Locator must be at least {{ preferences.COMMUNITY_REF_MIN }} characters!
-    </div>
-
-    <div
-      *ngIf="communityLocatorForm.value && communityLocatorForm.getRawValue()!.length > preferences.COMMUNITY_REF_MAX"
-      class="alert alert-danger"
-      role="alert">
-      Community Locator must be no longer than than {{ preferences.COMMUNITY_REF_MAX }} characters!
-    </div>
-  </div>
+  <app-static-errors [WARNINGS]="[
+    {
+      show: communityLocatorForm.hasError('pattern'),
+      message: '
+        Community Locator must... <br>
+        <ul>
+          <li>only contain lowercase letters (a-z) , numbers (0-9) , and hyphens (-) .</li>
+          <li>Locator must not begin or end with a hyphen (-)</li>
+          <li>Locator must not begin with a number (0-9)</li>
+        </ul>
+      ' 
+    },
+    {
+      show: communityLocatorForm.dirty &&  communityLocatorForm.value &&  communityLocatorForm.getRawValue()!.length < preferences.COMMUNITY_REF_MIN,
+      message: 'Community Locator must be at least ' + preferences.COMMUNITY_REF_MIN + ' characters!'
+    },
+    {
+      show: communityLocatorForm.value && communityLocatorForm.getRawValue()!.length > preferences.COMMUNITY_REF_MAX,
+      message: 'Community Locator must be no longer than than ' + preferences.COMMUNITY_REF_MAX + ' characters!' 
+    },
+  ]"></app-static-errors>
 
   <div class="edit-community-field">
     <span>Enter new community display name! <br>Used to search for your community...</span>
@@ -51,24 +43,17 @@
     >
   </div>
 
-
-  <div class="warnings" id="edit-display-name-warnings">
-    <div
-      *ngIf="communityDisplayNameForm.dirty &&
-            communityDisplayNameForm.getRawValue()!.length < preferences.COMMUNITY_NAME_MIN &&
-            communityDisplayNameForm.getRawValue()!.length != 0"
-      class="alert alert-danger"
-      role="alert">
-      Community Display Name must be longer than {{ preferences.COMMUNITY_NAME_MIN - 1 }} characters!
-    </div>
-
-    <div
-      *ngIf="communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > preferences.COMMUNITY_NAME_MAX"
-      class="alert alert-danger"
-      role="alert">
-      Community Display Name must be no longer than than {{ preferences.COMMUNITY_NAME_MAX }} characters!
-    </div>
-  </div>
+  <app-static-errors [WARNINGS]="[
+    {
+      show: communityDisplayNameForm.dirty && communityDisplayNameForm.value &&
+            communityDisplayNameForm.getRawValue()!.length < preferences.COMMUNITY_NAME_MIN,
+      message: 'Community Display Name must be longer than ' + (preferences.COMMUNITY_NAME_MIN - 1) + ' characters!'
+    },
+    {
+      show: communityLocatorForm.value && communityLocatorForm.getRawValue()!.length > preferences.COMMUNITY_REF_MAX,
+      message: 'Community Display Name must be no longer than than ' + preferences.COMMUNITY_NAME_MAX + ' characters!' 
+    },
+  ]"></app-static-errors>
 
   <div class="edit-community-field">
     <app-image-upload-and-crop
