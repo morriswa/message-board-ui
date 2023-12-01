@@ -50,19 +50,8 @@
         Change!
       </button>
 
-      @for (error of ERROR_MESSAGES; track error; let i = $index) {
-        <div 
-        style="margin-top: 10px">
-          <div
-            *ngIf="error.show"
-            id="away"
-            class="alert alert-danger alert-dismissible"
-            role="alert">
-            {{ error.message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="hideError(i)"></button>
-          </div>
-        </div>
-      }
+      <app-server-errors [serverErrorHandler]="this.serverErrorHandler"></app-server-errors>
+     
       
     </div>
     } @else {

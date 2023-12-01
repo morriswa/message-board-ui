@@ -80,14 +80,8 @@
     Save and Post!
   </button>
 
-  <div
-    *ngIf="SHOW_ERROR"
-    id="away"
-    class="alert alert-danger alert-dismissible"
-    role="alert">
-    {{ ERROR_TEXT }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="resetError()"></button>
-  </div>
+  <app-server-errors [serverErrorHandler]="serverErrorEmitter"></app-server-errors>
+
 </div>
 } @else {
   <div style="margin: 50px">

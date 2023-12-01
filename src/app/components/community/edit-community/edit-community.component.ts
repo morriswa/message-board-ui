@@ -16,7 +16,6 @@ import {PreferencesService} from "../../../service/preferences.service";
 export class EditCommunityComponent {
 
   PROCESSING= false;
-  ERROR_MESSAGES: { message: string, show: boolean }[] = [];
 
   communityLocatorForm: FormControl;
   communityDisplayNameForm: FormControl;
@@ -27,6 +26,7 @@ export class EditCommunityComponent {
   } = {};
 
   resetEventEmitter: EventEmitter<any> = new EventEmitter<any>();
+  serverErrorEmitter: EventEmitter<any> = new EventEmitter();
   preferences: any;
 
   constructor(validatorFactory: ValidatorFactory,
@@ -65,9 +65,9 @@ export class EditCommunityComponent {
 
         if (response.error.error === "ValidationException")
           for (let error of response.error.stack) {
-            this.reportError(error.message);
+            this.serverErrorEmitter.emit(error.message);
           }
-        else this.reportError(response.error.description);
+        else this.serverErrorEmitter.emit(response.error.description);
       }
     })
   }
@@ -118,11 +118,4 @@ export class EditCommunityComponent {
       this.stagedContentForUpload.icon = $event
   }
 
-  reportError(response: string) {
-    this.ERROR_MESSAGES.push({ message: response, show: true });
-  }
-
-  hideError(i: number) {
-    this.ERROR_MESSAGES[i].show = false;
-  }
 }

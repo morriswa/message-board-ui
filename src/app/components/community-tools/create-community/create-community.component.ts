@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {Router} from "@angular/router";
 import {ValidatorFactory} from "../../../service/validator.factory";
@@ -13,7 +13,8 @@ export class CreateCommunityComponent implements OnInit {
 
   communityRefForm: FormControl;
   communityDisplayNameForm: FormControl;
-  ERROR_MESSAGES: { message: string, show: boolean }[] = [];
+
+  serverErrorHandler: EventEmitter<any> = new EventEmitter();
 
   constructor(private router: Router, private service: MessageBoardClientService, validatorFactory: ValidatorFactory) {
     this.communityRefForm = validatorFactory.getCommunityRefForm();
@@ -34,9 +35,9 @@ export class CreateCommunityComponent implements OnInit {
         error:(response:any)=>{
           if (response.error.error === "ValidationException")
             for (let error of response.error.stack) {
-              this.reportError(error.message);
+              this.serverErrorHandler.emit(error.message);
             }
-          else this.reportError(response.error.description);
+          else this.serverErrorHandler.emit(response.error.description);
         }
       }
     )
@@ -46,13 +47,4 @@ export class CreateCommunityComponent implements OnInit {
     this.communityRefForm.reset();
     this.communityDisplayNameForm.reset();
   }
-
-  reportError(response: string) {
-    this.ERROR_MESSAGES.push({ message: response, show: true });
-  }
-
-  hideError(i: number) {
-    this.ERROR_MESSAGES[i].show = false;
-  }
-
 }

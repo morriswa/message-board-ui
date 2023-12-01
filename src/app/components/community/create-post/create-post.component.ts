@@ -23,6 +23,7 @@ export class CreatePostComponent {
   pendingImageUpload?: UploadImageRequest;
 
   clearImageUploadEmitter: EventEmitter<any> = new EventEmitter<any>();
+  serverErrorEmitter: EventEmitter<any> = new EventEmitter();
 
   postCaptionForm: FormControl;
   postDescriptionForm: FormControl;
@@ -78,20 +79,10 @@ export class CreatePostComponent {
             },
             error: (err:any)=>{
               this.clearImageUploadEmitter.emit();
-              this.reportError(err.error.description)
+              this.serverErrorEmitter.emit(err.error.description);
               this.PROCESSING = false
             }
     });
-  }
-
-  resetError() {
-    this.SHOW_ERROR = false;
-    this.ERROR_TEXT = undefined;
-  }
-
-  reportError(description:string) {
-    this.ERROR_TEXT = description;
-    this.SHOW_ERROR = true;
   }
 
   saveDraftAndResetImageUploader() {
@@ -128,7 +119,7 @@ export class CreatePostComponent {
         },
         error: (err: any) => {
           this.clearImageUploadEmitter.emit();
-          this.reportError(err.error.description)
+          this.serverErrorEmitter.emit(err.error.description)
           this.PROCESSING = false
         }
       });

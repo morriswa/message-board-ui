@@ -34,14 +34,5 @@
     Get Started!
   </button>
 
-  <div *ngFor="let error of ERROR_MESSAGES; index as i" style="margin-top: 10px">
-    <div
-      *ngIf="error.show"
-      id="away"
-      class="alert alert-danger alert-dismissible"
-      role="alert">
-      {{ error.message }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="hideError(i)"></button>
-    </div>
-  </div>
+  <app-server-errors [serverErrorHandler]="serverErrorHandler"></app-server-errors>
 </div>

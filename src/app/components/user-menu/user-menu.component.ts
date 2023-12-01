@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
@@ -24,6 +24,8 @@ export class UserMenuComponent {
   displayNameForm:FormControl;
 
   user?: UserProfile;
+  
+  serverErrorHandler: EventEmitter<any> = new EventEmitter();
 
   constructor(private messageBoardService: MessageBoardClientService,
               private router: Router,
@@ -73,9 +75,9 @@ export class UserMenuComponent {
         error: (response:any) => {
           if (response.error.error === "ValidationException")
             for (let error of response.error.stack) {
-              this.reportError(error.message);
+              this.serverErrorHandler.emit(error.message);
             }
-          else this.reportError(response.error.description);
+          else this.serverErrorHandler.emit(response.error.description);
         }
       });
   }
@@ -92,13 +94,4 @@ export class UserMenuComponent {
       error:err=>console.error(err)
     });
   }
-
-  reportError(response: string) {
-    this.ERROR_MESSAGES.push({ message: response, show: true });
-  }
-
-  hideError(i: number) {
-    this.ERROR_MESSAGES[i].show = false;
-  }
-
 }

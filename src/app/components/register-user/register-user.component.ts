@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {map, switchMap} from "rxjs";
 import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
@@ -18,7 +18,8 @@ export class RegisterUserComponent implements OnInit{
 
 
   displayNameForm: FormControl;
-  ERROR_MESSAGES: { message:string, show:boolean }[] = [];
+
+  serverErrorHandler: EventEmitter<any> = new EventEmitter();
 
   constructor(private auth: AuthService,
               private router: Router,
@@ -54,18 +55,11 @@ export class RegisterUserComponent implements OnInit{
         error: (response:any)=>{
           if (response.error.error === "ValidationException")
             for (let error of response.error.stack) {
-              this.reportError(error.message);
+              this.serverErrorHandler.emit(error.message);
             }
-          else this.reportError(response.error.description);
+          else this.serverErrorHandler.emit(response.error.description);
         }
       })
   }
 
-  reportError(response: string) {
-    this.ERROR_MESSAGES.push({ message: response, show: true });
-  }
-
-  hideError(i: number) {
-    this.ERROR_MESSAGES[i].show = false;
-  }
 }
