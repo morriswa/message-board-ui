@@ -10,33 +10,29 @@
       placeholder="Enter Community Ref"
       >
 
-      <div class="warnings" id="ref-warnings">
-        <div
-          *ngIf="communityRefForm.hasError('pattern')"
-          class="alert alert-danger"
-          role="alert">
-          Community Locator must... <br>
-          <ul>
-            <li>only contain lowercase letters (a-z) , numbers (0-9) , and hyphens (-) .</li>
-            <li>Locator must not begin or end with a hyphen (-)</li>
-            <li>Locator must not begin with a number (0-9)</li>
-          </ul>
-        </div>
+      <app-static-errors [WARNINGS]="[
+        {
+          show: communityRefForm.hasError('pattern'),
+          message: '
+            Community Locator must... <br>
+            <ul>
+              <li>only contain lowercase letters (a-z) , numbers (0-9) , and hyphens (-) .</li>
+              <li>Locator must not begin or end with a hyphen (-)</li>
+              <li>Locator must not begin with a number (0-9)</li>
+            </ul>
+          '
+        },
+        {
+          show: !communityRefForm.value || communityRefForm.getRawValue()!.length < 3,
+          message: 'Community Locator is required and must be longer than 2 characters.'
+        },
+        {
+          show: communityRefForm.value && communityRefForm.getRawValue()!.length > 30,
+          message: 'Community Locator must be no longer than than 30 characters!'
+        },
+      ]">
 
-        <div
-          *ngIf="!communityRefForm.value || communityRefForm.getRawValue()!.length < 3"
-          class="alert alert-danger"
-          role="alert">
-          Community Locator is required and must be longer than 2 characters.
-        </div>
-
-        <div
-          *ngIf="communityRefForm.value && communityRefForm.getRawValue()!.length > 30"
-          class="alert alert-danger"
-          role="alert">
-          Community Locator must be no longer than than 30 characters!
-        </div>
-      </div>
+      </app-static-errors>
   </div>
 
   <div class="create-community-field">
@@ -49,23 +45,17 @@
     placeholder="Enter Community Display Name"
     >
 
-    <div class="warnings" id="display-name-warnings">
-    <div
-      *ngIf="!communityDisplayNameForm.value || (
-              communityDisplayNameForm.getRawValue()!.length < 3 &&
-              communityDisplayNameForm.getRawValue()!.length != 0)"
-      class="alert alert-danger"
-      role="alert">
-      Community Display Name is required and must be longer than 2 characters!
-    </div>
-
-    <div
-      *ngIf="communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > 100"
-      class="alert alert-danger"
-      role="alert">
-      Community Display Name must be no longer than than 100 characters!
-    </div>
-  </div>
+    <app-static-errors [WARNINGS]="[
+      {
+        show: !communityDisplayNameForm.value || communityDisplayNameForm.getRawValue()!.length < 3,
+        message: 'Community Display Name is required and must be longer than 2 characters!'
+      },
+      {
+        show: communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > 100,
+        message: 'Community Display Name must be no longer than than 100 characters!'
+      },
+      ]">
+    </app-static-errors>
   </div>
 
   <button

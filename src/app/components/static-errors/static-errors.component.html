@@ -1,0 +1,11 @@
+<div class="warnings">
+    @for (warning of this.WARNINGS; track idx; let idx = $index;) {
+        <div
+            *ngIf="warning.show"
+            class="alert alert-danger"
+            role="alert"
+            [innerHtml]="warning.message"
+            >
+      </div>
+    }
+</div>

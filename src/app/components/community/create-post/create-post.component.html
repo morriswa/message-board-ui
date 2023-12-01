@@ -38,21 +38,17 @@
       placeholder="Enter a Caption..."
     >
 
-    <div class="warnings" id="caption-warnings">
-      <div
-        *ngIf="postCaptionForm.getRawValue()!.length < 10"
-        class="alert alert-danger"
-        role="alert">
-        Caption is required, and must be at least 10 characters.
-      </div>
-
-      <div
-        *ngIf="postCaptionForm.getRawValue()!.length > 200"
-        class="alert alert-danger"
-        role="alert">
-        Caption must be no longer than than 200 characters!
-      </div>
-    </div>
+    <app-static-errors [WARNINGS]="[
+    {
+      show: postCaptionForm.getRawValue()!.length < 10,
+      message: 'Caption is required, and must be at least 10 characters.'
+    },
+    {
+      show: postCaptionForm.getRawValue()!.length > 200,
+      message: 'Caption must be no longer than than 200 characters!'
+    },
+    ]">
+    </app-static-errors> 
   </div>
 
   <div class="create-post-element">
@@ -65,14 +61,13 @@
       placeholder="...and description for your Post!"
     >
 
-    <div class="warnings" id="description-warnings">
-      <div
-        *ngIf="postDescriptionForm.getRawValue()!.length > 1000"
-        class="alert alert-danger"
-        role="alert">
-        Post description must be no longer than than 1000 characters!
-      </div>
-    </div>
+    <app-static-errors [WARNINGS]="[
+    {
+      show: postDescriptionForm.getRawValue()!.length > 1000,
+      message: 'Post description must be no longer than than 1000 characters!'
+    },
+    ]">
+    </app-static-errors> 
   </div>
 
   <button

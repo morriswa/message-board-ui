@@ -31,6 +31,7 @@ import {MessageBoardClientService} from "./service/message-board-client.service"
 import {PreferencesService} from "./service/preferences.service";
 import { PostDetailsComponent } from './components/community/post-details/post-details.component';
 import { CommentsComponent } from './components/community/comments/comments.component';
+import { StaticErrorsComponent } from './components/static-errors/static-errors.component';
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -69,6 +70,7 @@ const AUTH0_CONFIG = {
     SearchCommunityComponent,
     PostDetailsComponent,
     CommentsComponent,
+    StaticErrorsComponent
   ],
     imports: [
         BrowserModule,
