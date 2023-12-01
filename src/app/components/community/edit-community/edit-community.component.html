@@ -14,22 +14,15 @@
   <app-static-errors [WARNINGS]="[
     {
       show: communityLocatorForm.hasError('pattern'),
-      message: '
-        Community Locator must... <br>
-        <ul>
-          <li>only contain lowercase letters (a-z) , numbers (0-9) , and hyphens (-) .</li>
-          <li>Locator must not begin or end with a hyphen (-)</li>
-          <li>Locator must not begin with a number (0-9)</li>
-        </ul>
-      ' 
+      message: communityLocatorFormWarnings.pattern 
     },
     {
       show: communityLocatorForm.dirty &&  communityLocatorForm.value &&  communityLocatorForm.getRawValue()!.length < preferences.COMMUNITY_REF_MIN,
-      message: 'Community Locator must be at least ' + preferences.COMMUNITY_REF_MIN + ' characters!'
+      message: communityLocatorFormWarnings.min
     },
     {
       show: communityLocatorForm.value && communityLocatorForm.getRawValue()!.length > preferences.COMMUNITY_REF_MAX,
-      message: 'Community Locator must be no longer than than ' + preferences.COMMUNITY_REF_MAX + ' characters!' 
+      message: communityLocatorFormWarnings.max
     },
   ]"></app-static-errors>
 
@@ -47,11 +40,11 @@
     {
       show: communityDisplayNameForm.dirty && communityDisplayNameForm.value &&
             communityDisplayNameForm.getRawValue()!.length < preferences.COMMUNITY_NAME_MIN,
-      message: 'Community Display Name must be longer than ' + (preferences.COMMUNITY_NAME_MIN - 1) + ' characters!'
+      message: communityDisplayNameFormWarnings.min
     },
     {
       show: communityLocatorForm.value && communityLocatorForm.getRawValue()!.length > preferences.COMMUNITY_REF_MAX,
-      message: 'Community Display Name must be no longer than than ' + preferences.COMMUNITY_NAME_MAX + ' characters!' 
+      message: communityDisplayNameFormWarnings.max
     },
   ]"></app-static-errors>
 

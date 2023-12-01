@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
 import {ThemeService} from "../../service/theme.service";
-import {ValidatorFactory} from "../../service/validator.factory";
+import {StaticWarning, ValidatorFactory} from "../../service/validator.factory";
 import {UserProfile} from "../../interface/user-profile";
 
 @Component({
@@ -22,10 +22,13 @@ export class UserMenuComponent {
   fileInput:FormControl<File> = new FormControl();
 
   displayNameForm:FormControl;
+  displayNameFormWarnings: StaticWarning;
+
 
   user?: UserProfile;
   
   serverErrorHandler: EventEmitter<any> = new EventEmitter();
+  preferences: any;
 
   constructor(private messageBoardService: MessageBoardClientService,
               private router: Router,
@@ -34,6 +37,8 @@ export class UserMenuComponent {
     this.refreshUserProfile();
     this.dark_mode_switch_toggle = !(themeService.current === "default");
     this.displayNameForm = validatorFactory.getDisplayNameForm();
+    this.displayNameFormWarnings = validatorFactory.getDisplayNameFormWarnings();
+    this.preferences = validatorFactory.getAllPreferences();
   }
 
   refreshUserProfile() {

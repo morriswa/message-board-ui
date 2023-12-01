@@ -13,22 +13,15 @@
       <app-static-errors [WARNINGS]="[
         {
           show: communityRefForm.hasError('pattern'),
-          message: '
-            Community Locator must... <br>
-            <ul>
-              <li>only contain lowercase letters (a-z) , numbers (0-9) , and hyphens (-) .</li>
-              <li>Locator must not begin or end with a hyphen (-)</li>
-              <li>Locator must not begin with a number (0-9)</li>
-            </ul>
-          '
+          message: communityRefFormWarnings.pattern
         },
         {
-          show: !communityRefForm.value || communityRefForm.getRawValue()!.length < 3,
-          message: 'Community Locator is required and must be longer than 2 characters.'
+          show: !communityRefForm.value || communityRefForm.getRawValue()!.length < preferences.COMMUNITY_REF_MIN,
+          message: communityRefFormWarnings.min
         },
         {
-          show: communityRefForm.value && communityRefForm.getRawValue()!.length > 30,
-          message: 'Community Locator must be no longer than than 30 characters!'
+          show: communityRefForm.value && communityRefForm.getRawValue()!.length > preferences.COMMUNITY_REF_MAX,
+          message: communityRefFormWarnings.max
         },
       ]">
 
@@ -47,12 +40,12 @@
 
     <app-static-errors [WARNINGS]="[
       {
-        show: !communityDisplayNameForm.value || communityDisplayNameForm.getRawValue()!.length < 3,
-        message: 'Community Display Name is required and must be longer than 2 characters!'
+        show: !communityDisplayNameForm.value || communityDisplayNameForm.getRawValue()!.length < preferences.COMMUNITY_NAME_MIN,
+        message: communityDisplayNameFormWarnings.min
       },
       {
-        show: communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > 100,
-        message: 'Community Display Name must be no longer than than 100 characters!'
+        show: communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > preferences.COMMUNITY_NAME_MAX,
+        message: communityDisplayNameFormWarnings.max
       },
       ]">
     </app-static-errors>

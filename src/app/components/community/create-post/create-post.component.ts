@@ -7,6 +7,7 @@ import {of, switchMap, tap} from "rxjs";
 import {ValidatorFactory} from "../../../service/validator.factory";
 import {PostDraftResponse} from "../../../interface/posts";
 import {CurrentCommunityService} from "../current-community.service";
+import { PreferencesService } from 'src/app/service/preferences.service';
 
 @Component({
   selector: 'app-create-post',
@@ -27,13 +28,21 @@ export class CreatePostComponent {
 
   postCaptionForm: FormControl;
   postDescriptionForm: FormControl;
+  postCaptionFormWarnings: any;
+  postDescriptionFormWarnings: any;
+  preferences: any;
 
   constructor(validators: ValidatorFactory,
+              preferences: PreferencesService,
               private router: Router,
               private messageBoardService: MessageBoardClientService,
               public communityInfo: CurrentCommunityService) {
     this.postCaptionForm = validators.getPostCaptionForm();
+    this.postCaptionFormWarnings = validators.getPostCaptionFormWarnings();
     this.postDescriptionForm = validators.getPostDescriptionForm();
+    this.postDescriptionFormWarnings = validators.getPostDescriptionFormWarnings();
+    this.preferences = preferences.preferences;
+
   }
 
   public uploadPostImage($event:any) {

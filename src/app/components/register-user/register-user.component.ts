@@ -3,7 +3,7 @@ import {map, switchMap} from "rxjs";
 import {AuthService} from "@auth0/auth0-angular";
 import {Router} from "@angular/router";
 import {MessageBoardClientService} from "../../service/message-board-client.service";
-import {ValidatorFactory} from "../../service/validator.factory";
+import {StaticWarning, ValidatorFactory} from "../../service/validator.factory";
 import {FormControl} from "@angular/forms";
 
 @Component({
@@ -18,14 +18,18 @@ export class RegisterUserComponent implements OnInit{
 
 
   displayNameForm: FormControl;
+  displayNameFormWarnings: StaticWarning;
 
   serverErrorHandler: EventEmitter<any> = new EventEmitter();
+  preferences: any;
 
-  constructor(private auth: AuthService,
+  constructor(validatorFactory: ValidatorFactory,
+              private auth: AuthService,
               private router: Router,
-              private messageBoardService: MessageBoardClientService,
-              validatorFactory: ValidatorFactory) {
-    this.displayNameForm = validatorFactory.getDisplayNameForm()
+              private messageBoardService: MessageBoardClientService) {
+    this.displayNameForm = validatorFactory.getDisplayNameForm();
+    this.displayNameFormWarnings = validatorFactory.getDisplayNameFormWarnings();
+    this.preferences = validatorFactory.getAllPreferences();
   }
 
   ngOnInit(): void {

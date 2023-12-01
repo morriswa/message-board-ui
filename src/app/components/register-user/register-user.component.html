@@ -14,15 +14,15 @@
   <app-static-errors [WARNINGS]="[
     {
       show: displayNameForm.hasError('pattern'),
-      message: 'Username must contain only letters (upper and lower case, A-Z, a-z) , numbers (0-9) , hyphens (-) , and underscores (_) .',
+      message: displayNameFormWarnings.pattern
     },
     {
-      show: displayNameForm.getRawValue()!.length < 3,
-      message: 'Username is required and must be longer than 2 characters.',
+      show: displayNameForm.getRawValue()!.length < preferences.DISPLAY_NAME_MIN,
+      message: displayNameFormWarnings.min,
     },
     {
-      show: displayNameForm.getRawValue()!.length > 30,
-      message: 'Username must be no longer than than 30 characters!',
+      show: displayNameForm.getRawValue()!.length > preferences.DISPLAY_NAME_MAX,
+      message: displayNameFormWarnings.max
     },
   ]"></app-static-errors>
 

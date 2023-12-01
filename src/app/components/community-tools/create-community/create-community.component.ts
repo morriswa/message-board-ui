@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {Router} from "@angular/router";
-import {ValidatorFactory} from "../../../service/validator.factory";
+import {StaticWarning, ValidatorFactory} from "../../../service/validator.factory";
 import {FormControl} from "@angular/forms";
 
 @Component({
@@ -13,12 +13,24 @@ export class CreateCommunityComponent implements OnInit {
 
   communityRefForm: FormControl;
   communityDisplayNameForm: FormControl;
+  communityRefFormWarnings: StaticWarning;
+  communityDisplayNameFormWarnings: StaticWarning;
 
   serverErrorHandler: EventEmitter<any> = new EventEmitter();
 
-  constructor(private router: Router, private service: MessageBoardClientService, validatorFactory: ValidatorFactory) {
+  preferences: any;
+
+  constructor(
+    validatorFactory: ValidatorFactory,
+    private router: Router, 
+    private service: MessageBoardClientService) {
     this.communityRefForm = validatorFactory.getCommunityRefForm();
+    this.communityRefFormWarnings = validatorFactory.getCommunityRefFormWarnings();
+
     this.communityDisplayNameForm = validatorFactory.getCommunityDisplayNameForm();
+    this.communityDisplayNameFormWarnings = validatorFactory.getCommunityDisplayNameFormWarnings();
+
+    this.preferences = validatorFactory.getAllPreferences()
   }
 
   createCommunity() {
