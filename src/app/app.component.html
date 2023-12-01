@@ -1,13 +1,16 @@
-<app-header *ngIf="HEALTHY"></app-header>
-
-<div
-  *ngIf="!HEALTHY"
+@if (HEALTHY) {
+  <app-header></app-header>
+} @else {
+  <div
   class="alert alert-danger"
   role="alert"
   style="margin: 20px">
   Server refused to respond!
-</div>
+  </div>
+}
 
-<div *ngIf="READY" id="app-content">
-  <router-outlet></router-outlet>
-</div>
+@if (READY) {
+  <div id="app-content">
+    <router-outlet></router-outlet>
+  </div>
+}

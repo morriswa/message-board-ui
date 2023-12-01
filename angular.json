@@ -97,10 +97,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "message-board-ui:build:production"
+              "buildTarget": "message-board-ui:build:production"
             },
             "local": {
-              "browserTarget": "message-board-ui:build:local"
+              "buildTarget": "message-board-ui:build:local"
             }
           },
           "defaultConfiguration": "local"
@@ -108,7 +108,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "message-board-ui:build"
+            "buildTarget": "message-board-ui:build"
           }
         },
         "test": {

@@ -17,45 +17,47 @@
       [disabled]="this.commentForm.invalid"
       (click)="postComment()">Leave Comment!</button>
 
-    <a *ngIf="!comments" (click)="refreshComments()">{{ parentId? "Load subcomments..." : "Load more comments..." }} </a>
-
+    @if (!comments) { 
+      <a (click)="refreshComments()">{{ parentId? "Load subcomments..." : "Load more comments..." }} </a>
+    }
   </div>
 
-  <div id="comment-card-wrapper">
-    <p *ngIf="comments && comments.length === 0">No comments to display</p>
-    <div *ngFor="let comment of this.comments; index as i">
-      <div class="comment-card" >
+  @if (comments) {
+    <div id="comment-card-wrapper">
+      @for (comment of comments; track comment.commentId; let i = $index) {
+        <div class="comment-card" >
 
-        <div *ngIf="votingEnabled ;else altCommentVoteCard">
           <div class="vote-card">
-            <app-voting
-              [type]="'COMMENT'"
-              [postId]="this.postId"
-              [commentId]="comment.commentId"
-              (voteUpdated)="commentVoteUpdated($event, i)"
-            ></app-voting>
-            <h1 class="vote-count">{{ comment.vote }}</h1>
+
+            @if (votingEnabled) {
+              <app-voting
+                [type]="'COMMENT'"
+                [postId]="this.postId"
+                [commentId]="comment.commentId"
+                (voteUpdated)="commentVoteUpdated($event, i)"
+                ></app-voting>
+              <h1 class="vote-count">{{ comment.vote }}</h1>
+            } @else {
+              <div class="icon-tooltip-hover">
+                <i class="bi bi-arrows-expand"></i>
+              </div>
+              <p class="icon-tooltip">Please join community to interact with posts and comments!</p>
+              <h1 class="vote-count">{{ comment.vote }}</h1>
+            }
+          </div>
+    
+
+          <div class="comment-text">
+            <h4>:{{comment.displayName}}</h4>
+
+            <p>{{comment.body}}</p>
           </div>
         </div>
-        <ng-template #altCommentVoteCard>
-          <div class="vote-card">
-            <div class="icon-tooltip-hover">
-              <i class="bi bi-arrows-expand"></i>
-            </div>
-            <p class="icon-tooltip">Please join community to interact with posts and comments!</p>
-            <h1 class="vote-count">{{ comment.vote }}</h1>
-          </div>
-        </ng-template>
 
-        <div class="comment-text">
-          <h4>:{{comment.displayName}}</h4>
-
-          <p>{{comment.body}}</p>
-        </div>
-      </div>
-
-      <app-comments [postId]="postId" [parentId]="comment.commentId" [votingEnabled]="votingEnabled"></app-comments>
-
+        <app-comments [postId]="postId" [parentId]="comment.commentId" [votingEnabled]="votingEnabled"></app-comments>
+      } @empty {
+        <p>No comments to display</p>
+      }
     </div>
-  </div>
+  }
 </div>

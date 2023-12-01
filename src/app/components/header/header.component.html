@@ -1,9 +1,11 @@
 <div id="app-header">
-  <button class="btn btn-primary" *ngIf="authenticated$|async" routerLink="/">Home</button>
-  <button class="btn btn-primary" *ngIf="authenticated$|async" routerLink="/communityTools">Communities</button>
-  <button class="btn btn-primary" *ngIf="authenticated$|async" routerLink="/user">Menu</button>
-
-  <button class="btn btn-primary" *ngIf="!(authenticated$|async)" (click)="login()">Login</button>
-  <button class="btn btn-primary" *ngIf="!(authenticated$|async)" (click)="register()">Register</button>
-  <button class="btn btn-outline-primary" *ngIf="authenticated$|async" (click)="logout()">Logout</button>
+  @if (authenticated$|async) {
+    <button class="btn btn-primary" routerLink="/">Home</button>
+    <button class="btn btn-primary" routerLink="/communityTools">Communities</button>
+    <button class="btn btn-primary" routerLink="/user">Menu</button>
+    <button class="btn btn-outline-primary" (click)="logout()">Logout</button>
+  } @else {
+    <button class="btn btn-primary" (click)="login()">Login</button>
+    <button class="btn btn-primary" (click)="register()">Register</button>
+  }
 </div>

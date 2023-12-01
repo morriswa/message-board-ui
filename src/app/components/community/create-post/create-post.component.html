@@ -1,4 +1,5 @@
-<div id="create-post-wrapper" *ngIf="communityInfo.initialized; else loadingScreen">
+@if (communityInfo.initialized && !this.PROCESSING) {
+<div id="create-post-wrapper">
 
   <div *ngIf="this.currentDraft">
     <div
@@ -10,7 +11,7 @@
     </div>
   </div>
 
-  <div class="create-post-element" *ngIf="!PROCESSING">
+  <div class="create-post-element">
     <app-image-upload-and-crop
       userDialog="Add content to post: "
       [resetImageComponent]="clearImageUploadEmitter"
@@ -19,7 +20,6 @@
 
     <button
       style="margin-top: 20px"
-      *ngIf="!this.PROCESSING; else loadingScreen"
       class="btn btn-primary"
       [disabled]="!this.pendingImageUpload"
       (click)="saveDraftAndResetImageUploader()"
@@ -77,7 +77,6 @@
 
   <button
     style="margin-top: 20px"
-    *ngIf="!this.PROCESSING; else loadingScreen"
     class="btn btn-primary"
     [disabled]="this.postCaptionForm.invalid
     ||this.postDescriptionForm.invalid"
@@ -95,11 +94,10 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="resetError()"></button>
   </div>
 </div>
-
-<ng-template #loadingScreen>
+} @else {
   <div style="margin: 50px">
     <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
-</ng-template>
+}

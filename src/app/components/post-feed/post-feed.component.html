@@ -1,41 +1,36 @@
-<div class="post-feed" *ngIf="posts; else loadingScreen">
 
-  <div *ngIf="posts.length > 0; else noPosts">
-  <div *ngFor="let post of posts;">
+@if (posts) {
+  <div class="post-feed">
+    @for (post of posts; track post.postId) {
 
-    <div class="post-card">
-
-      <div class="vote-card">
-        <div class="icon-tooltip-hover">
-          <i class="bi bi-arrows-expand"></i>
+      <div class="post-card">
+  
+        <div class="vote-card">
+          <div class="icon-tooltip-hover">
+            <i class="bi bi-arrows-expand"></i>
+          </div>
+          <p class="icon-tooltip">Please go to community page to vote on posts!</p>
+          <h1 class="vote-count">{{ post.vote }}</h1>
         </div>
-        <p class="icon-tooltip">Please go to community page to vote on posts!</p>
-        <h1 class="vote-count">{{ post.vote }}</h1>
+  
+        <h2>{{ post.caption }} <br>from <a [routerLink]="['/community', post.communityInfo.communityLocator]">{{ post.communityInfo.displayName }}</a></h2>
+        <p>{{ post.description }}</p>
+  
+        <div class="image-element-wrapper">
+          <img class="image-element" [src]="post.resources[0]">
+        </div>
       </div>
-
-      <h2>{{ post.caption }} <br>from <a [routerLink]="['/community', post.communityInfo.communityLocator]">{{ post.communityInfo.displayName }}</a></h2>
-      <p>{{ post.description }}</p>
-
-      <div class="image-element-wrapper">
-        <img class="image-element" [src]="post.resources[0]">
+  
+    } @empty {
+      <div class="post-card">
+        <h1>Join a community to start posting content!</h1>
       </div>
-    </div>
-
+    } 
   </div>
-  </div>
-</div>
-
-<ng-template #noPosts>
-  <div class="post-card">
-    <h1>Join a community to start posting content!</h1>
-  </div>
-</ng-template>
-
-
-<ng-template #loadingScreen>
+} @else {
   <div style="margin: 50px">
     <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
-</ng-template>
+}

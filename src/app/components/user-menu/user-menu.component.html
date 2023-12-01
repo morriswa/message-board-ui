@@ -1,5 +1,7 @@
 
-<div class="user-menu-card" *ngIf="user">
+@if (user) {
+
+<div class="user-menu-card">
 
   <div>
     <img
@@ -8,7 +10,8 @@
       [src]="user.userProfileImage"
       >
 
-    <div *ngIf="change_display_name_form_toggle; else showDisplayName">
+    @if (change_display_name_form_toggle) {
+    <div>
 
       <input
         class="form-control"
@@ -55,20 +58,24 @@
         Change!
       </button>
 
-      <div *ngFor="let error of ERROR_MESSAGES; index as i" style="margin-top: 10px">
-        <div
-          *ngIf="error.show"
-          id="away"
-          class="alert alert-danger alert-dismissible"
-          role="alert">
-          {{ error.message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="hideError(i)"></button>
+      @for (error of ERROR_MESSAGES; track error; let i = $index) {
+        <div 
+        style="margin-top: 10px">
+          <div
+            *ngIf="error.show"
+            id="away"
+            class="alert alert-danger alert-dismissible"
+            role="alert">
+            {{ error.message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="hideError(i)"></button>
+          </div>
         </div>
-      </div>
+      }
+      
     </div>
-    <ng-template  #showDisplayName>
+    } @else {
       <h1>{{ user.displayName }}<i class="bi bi-pencil" (click)="toggleChangeDisplayNameForm()"></i></h1>
-    </ng-template>
+    }
 
     <h3>{{ user.email }}</h3>
   </div>
@@ -104,3 +111,5 @@
       >
   </div>
 </div>
+
+}

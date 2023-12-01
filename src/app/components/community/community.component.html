@@ -1,4 +1,5 @@
-<div *ngIf="currentCommunity.initialized">
+
+@if (currentCommunity.initialized) {
 
   <app-community-header [userId]="currentCommunity.membership.userId" [communityInfo]="currentCommunity.community"></app-community-header>
 
@@ -60,4 +61,5 @@
     </div>
 
   </div>
-</div>
+<!-- </div> -->
+}
