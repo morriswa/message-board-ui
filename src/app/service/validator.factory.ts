@@ -1,6 +1,7 @@
 import {FormControl, Validators} from "@angular/forms";
 import {Injectable} from "@angular/core";
 import {of} from "rxjs";
+import { c_str } from "../Functions";
 
 export interface StaticWarning {
   min?: string,
@@ -45,8 +46,8 @@ export class ValidatorFactory {
 
   getDisplayNameFormWarnings(): StaticWarning {
     return {
-      min: `Username is required and must be longer than ${this.preferences.DISPLAY_NAME_MIN - 1} characters.`,
-      max: `Username must be no longer than than ${this.preferences.DISPLAY_NAME_MAX} characters!`,
+      min: c_str('Username is required and must be longer than {} characters.',this.preferences.DISPLAY_NAME_MIN - 1),
+      max: c_str('Username must be no longer than than {} characters!',this.preferences.DISPLAY_NAME_MAX),
       pattern: 'Username must contain only letters (upper and lower case, A-Z, a-z) , numbers (0-9) , hyphens (-) , and underscores (_)'
     }
   }
@@ -69,8 +70,8 @@ export class ValidatorFactory {
           <li>Locator must not begin with a number (0-9)</li>
         </ul>
       `,
-      min:`Community Locator must be at least ${this.preferences.COMMUNITY_REF_MIN} characters!`,
-      max:`Community Locator must be no longer than than ${this.preferences.COMMUNITY_REF_MAX} characters!`,
+      min: c_str("Community Locator must be at least {} characters!", this.preferences.COMMUNITY_REF_MIN),
+      max: c_str("Community Locator must be no longer than than {} characters!", this.preferences.COMMUNITY_REF_MAX),
     }
   }
 
@@ -84,8 +85,8 @@ export class ValidatorFactory {
 
   getCommunityDisplayNameFormWarnings():StaticWarning {
     return {
-      min:`Community Display Name must be longer than ${this.preferences.COMMUNITY_NAME_MIN - 1} characters!`,
-      max:`Community Display Name must be no longer than than ${this.preferences.COMMUNITY_NAME_MAX} characters!`
+      min:c_str("Community Display Name must be longer than {} characters!", this.preferences.COMMUNITY_NAME_MIN - 1),
+      max:c_str("Community Display Name must be no longer than than {} characters!", this.preferences.COMMUNITY_NAME_MAX)
     }
   }
 
@@ -99,8 +100,8 @@ export class ValidatorFactory {
 
   getPostCaptionFormWarnings(): StaticWarning {
     return {
-      min: `Caption is required, and must be at least ${this.preferences.POST_CAPTION_MIN} characters.`,
-      max: `Caption must be no longer than than ${this.preferences.POST_CAPTION_MAX} characters!`
+      min: c_str("Caption is required, and must be at least {} characters.", this.preferences.POST_CAPTION_MIN),
+      max: c_str("Caption must be no longer than than {} characters!", this.preferences.POST_CAPTION_MAX)
     }
   }
 
@@ -113,7 +114,7 @@ export class ValidatorFactory {
 
   getPostDescriptionFormWarnings(): StaticWarning {
     return {
-      max: `Post description must be no longer than than ${this.preferences.POST_DESCRIPTION_MAX} characters!`
+      max: c_str("Post description must be no longer than than {} characters!", this.preferences.POST_DESCRIPTION_MAX)
     }
   }
 }
