@@ -1,5 +1,5 @@
 #stage 1
-FROM --platform=x86-64 node:18 as node
+FROM --platform=x86-64 node:20 as node
 WORKDIR /app
 COPY ./src /app/src/
 COPY *.json /app/
