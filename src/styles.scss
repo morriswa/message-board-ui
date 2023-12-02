@@ -73,12 +73,15 @@ $post-size-max: 400px;
 }
 
 .image-element-wrapper {
+  display: block;
+  height: 400px;
+  object-fit: cover;
   overflow: scroll;
 }
 
 .image-element {
-  max-width: $post-size-max;
-  max-height: $post-size-max;
+  width: $post-size-max;
+  height: $post-size-max;
   object-fit: cover;
 }
 

@@ -8,6 +8,7 @@ import {APP_BASE_HREF, NgOptimizedImage} from "@angular/common";
 // DEPS
 import {AuthHttpInterceptor, AuthModule, AuthService} from "@auth0/auth0-angular";
 import {ImageCropperModule} from "ngx-image-cropper";
+import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap'
 
 // APP
 import { AppComponent } from './app.component';
@@ -97,6 +98,7 @@ const AUTH0_CONFIG = {
         AuthModule.forRoot(AUTH0_CONFIG),
         AppRoutingModule,
         ImageCropperModule,
+        NgbCarouselModule,
         NgOptimizedImage,
 
     ],
