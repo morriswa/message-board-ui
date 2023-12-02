@@ -1,15 +1,13 @@
 @if (communityInfo.initialized && !this.PROCESSING) {
   <div id="create-post-wrapper">
 
-    <div *ngIf="this.currentDraft">
-      <div
-        class="create-post-element"
-        *ngFor="let content of this.currentDraft.resources">
+    @if (this.currentDraft) {
+      @for (resource of this.currentDraft.resources; track idx; let idx = $index) {
         <img
-          class="post-content-preview-img"
-          [src]="content">
-      </div>
-    </div>
+        class="create-post-element post-content-preview-img"
+        [src]="resource">
+      }
+    }
 
     <div class="create-post-element">
       <app-image-upload-and-crop
@@ -39,10 +37,10 @@
       >
 
       <app-static-errors [WARNINGS]="[{
-          show: postCaptionForm.getRawValue()!.length < preferences.POST_CAPTION_MIN,
+          show: postCaptionForm.value.length < preferences.POST_CAPTION_MIN,
           message: postCaptionFormWarnings.min
         },{
-          show: postCaptionForm.getRawValue()!.length > preferences.POST_CAPTION_MAX,
+          show: postCaptionForm.value.length > preferences.POST_CAPTION_MAX,
           message: postCaptionFormWarnings.max
         },]"></app-static-errors> 
     </div>
@@ -58,7 +56,7 @@
       >
 
       <app-static-errors [WARNINGS]="[{
-          show: postDescriptionForm.getRawValue()!.length > preferences.POST_DESCRIPTION_MAX,
+          show: postDescriptionForm.value.length > preferences.POST_DESCRIPTION_MAX,
           message: postDescriptionFormWarnings.max
         },]"></app-static-errors> 
     </div>

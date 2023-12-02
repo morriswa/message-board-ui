@@ -24,10 +24,10 @@
             show:displayNameForm.hasError('pattern') ,
             message:displayNameFormWarnings.pattern
           },{
-            show:displayNameForm.value && displayNameForm.getRawValue()!.length < preferences.DISPLAY_NAME_MIN,
+            show:displayNameForm.value && displayNameForm.value.length < preferences.DISPLAY_NAME_MIN,
             message:displayNameFormWarnings.min
           },{
-            show:displayNameForm.getRawValue()!.length > preferences.DISPLAY_NAME_MAX,
+            show:displayNameForm.value.length > preferences.DISPLAY_NAME_MAX,
             message:displayNameFormWarnings.max
           },]"></app-static-errors>
 

@@ -14,10 +14,10 @@
           show: communityRefForm.hasError('pattern'),
           message: communityRefFormWarnings.pattern
         },{
-          show: !communityRefForm.value || communityRefForm.getRawValue()!.length < preferences.COMMUNITY_REF_MIN,
+          show: !communityRefForm.value || communityRefForm.value.length < preferences.COMMUNITY_REF_MIN,
           message: communityRefFormWarnings.min
         },{
-          show: communityRefForm.value && communityRefForm.getRawValue()!.length > preferences.COMMUNITY_REF_MAX,
+          show: communityRefForm.value && communityRefForm.value.length > preferences.COMMUNITY_REF_MAX,
           message: communityRefFormWarnings.max
         },]"></app-static-errors>
   </div>
@@ -33,10 +33,10 @@
     >
 
     <app-static-errors [WARNINGS]="[{
-        show: !communityDisplayNameForm.value || communityDisplayNameForm.getRawValue()!.length < preferences.COMMUNITY_NAME_MIN,
+        show: !communityDisplayNameForm.value || communityDisplayNameForm.value.length < preferences.COMMUNITY_NAME_MIN,
         message: communityDisplayNameFormWarnings.min
       },{
-        show: communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > preferences.COMMUNITY_NAME_MAX,
+        show: communityDisplayNameForm.value && communityDisplayNameForm.value.length > preferences.COMMUNITY_NAME_MAX,
         message: communityDisplayNameFormWarnings.max
       },]"></app-static-errors>
   </div>

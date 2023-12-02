@@ -39,11 +39,11 @@
     <app-static-errors [WARNINGS]="[
       {
         show: communityDisplayNameForm.dirty && communityDisplayNameForm.value &&
-              communityDisplayNameForm.getRawValue()!.length < preferences.COMMUNITY_NAME_MIN,
+              communityDisplayNameForm.value.length < preferences.COMMUNITY_NAME_MIN,
         message: communityDisplayNameFormWarnings.min
       },
       {
-        show: communityLocatorForm.value && communityLocatorForm.getRawValue()!.length > preferences.COMMUNITY_REF_MAX,
+        show: communityLocatorForm.value && communityLocatorForm.value.length > preferences.COMMUNITY_REF_MAX,
         message: communityDisplayNameFormWarnings.max
       },
     ]"></app-static-errors>
