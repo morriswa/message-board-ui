@@ -34,7 +34,7 @@
 
   height: 55vh;
   max-height: fit-content;
-width: 30vw;
+  max-width: 40vw;
 
   background-color: var(--wma-card-color);
 
@@ -53,4 +53,9 @@ width: 30vw;
 
   display: flex;
   flex-direction: column;
+}
+
+.community-router-child-wrapper {
+  min-width: 60vw;
+  margin: 10px;
 }

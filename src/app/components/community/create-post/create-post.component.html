@@ -1,5 +1,5 @@
 @if (communityInfo.initialized && !this.PROCESSING) {
-  <div id="create-post-wrapper">
+  <div class="community-router-child-wrapper">
 
     @if (this.currentDraft) {
       @for (resource of this.currentDraft.resources; track idx; let idx = $index) {
