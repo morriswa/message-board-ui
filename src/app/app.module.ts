@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
-import {APP_BASE_HREF, NgOptimizedImage} from "@angular/common";
 
 // DEPS
 import {AuthHttpInterceptor, AuthModule, AuthService} from "@auth0/auth0-angular";
@@ -99,12 +98,9 @@ const AUTH0_CONFIG = {
         AppRoutingModule,
         ImageCropperModule,
         NgbCarouselModule,
-        NgOptimizedImage,
-
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
-    // {provide: APP_BASE_HREF, useValue: '/messageboard'},
     AuthService,
     ThemeService,
     MessageBoardClientService,

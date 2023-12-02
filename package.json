@@ -8,6 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:qa": "ng build -c qa",
+    "clean:mock": "rm -rf ./mock",
+    "mock:deploy": "npm run clean:mock && ng build --base-href=/messageboard/ && mkdir ./mock && mkdir ./mock/messageboard && cp ./dist/message-board-ui/* ./mock/messageboard/ && php -S 127.0.0.1:4200 -t ./mock",
     "php:local": "npm run build && php -S 127.0.0.1:4200 -t ./dist/message-board-ui/"
   },
   "private": true,

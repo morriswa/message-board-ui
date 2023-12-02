@@ -2,6 +2,7 @@
 
 # Compiled output
 /dist
+/mock
 /tmp
 /out-tsc
 /bazel-out
