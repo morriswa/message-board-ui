@@ -55,7 +55,11 @@
   flex-direction: column;
 }
 
+#community-router-wrapper {
+  overflow: scroll;
+}
+
 .community-router-child-wrapper {
   min-width: 60vw;
-  margin: 10px;
+  margin: 20px 10px;
 }
