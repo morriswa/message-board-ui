@@ -2,24 +2,21 @@
 <div *ngIf="post">
 
   <div class="post-card">
-    <div *ngIf="votingEnabled() ;else altVoteCard">
-      <div class="vote-card">
+
+    <div class="vote-card">
+      @if (votingEnabled()) {
         <app-voting
           [postId]="post.postId"
           (voteUpdated)="postVoteUpdated($event)"
-        ></app-voting>
-        <h1 class="vote-count">{{ post.vote }}</h1>
-      </div>
-    </div>
-    <ng-template #altVoteCard>
-      <div class="vote-card">
+          ></app-voting>
+      } @else {
         <div class="icon-tooltip-hover">
           <i class="bi bi-arrows-expand"></i>
         </div>
         <p class="icon-tooltip">Please join community to vote on posts!</p>
-        <h1 class="vote-count">{{ post.vote }}</h1>
-      </div>
-    </ng-template>
+      }
+      <h1 class="vote-count">{{ post.vote }}</h1>
+    </div>
 
     <h2>{{ post.caption }} <br>:{{ post.displayName }}</h2>
     <p>{{ post.description }}</p>
@@ -33,4 +30,5 @@
   <div id="comment-card-wrapper">
     <app-comments [postId]="post.postId" [votingEnabled]="votingEnabled()"></app-comments>
   </div>
+  
 </div>

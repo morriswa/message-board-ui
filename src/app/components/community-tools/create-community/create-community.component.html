@@ -10,22 +10,16 @@
       placeholder="Enter Community Ref"
       >
 
-      <app-static-errors [WARNINGS]="[
-        {
+      <app-static-errors [WARNINGS]="[{
           show: communityRefForm.hasError('pattern'),
           message: communityRefFormWarnings.pattern
-        },
-        {
+        },{
           show: !communityRefForm.value || communityRefForm.getRawValue()!.length < preferences.COMMUNITY_REF_MIN,
           message: communityRefFormWarnings.min
-        },
-        {
+        },{
           show: communityRefForm.value && communityRefForm.getRawValue()!.length > preferences.COMMUNITY_REF_MAX,
           message: communityRefFormWarnings.max
-        },
-      ]">
-
-      </app-static-errors>
+        },]"></app-static-errors>
   </div>
 
   <div class="create-community-field">
@@ -38,17 +32,13 @@
     placeholder="Enter Community Display Name"
     >
 
-    <app-static-errors [WARNINGS]="[
-      {
+    <app-static-errors [WARNINGS]="[{
         show: !communityDisplayNameForm.value || communityDisplayNameForm.getRawValue()!.length < preferences.COMMUNITY_NAME_MIN,
         message: communityDisplayNameFormWarnings.min
-      },
-      {
+      },{
         show: communityDisplayNameForm.value && communityDisplayNameForm.getRawValue()!.length > preferences.COMMUNITY_NAME_MAX,
         message: communityDisplayNameFormWarnings.max
-      },
-      ]">
-    </app-static-errors>
+      },]"></app-static-errors>
   </div>
 
   <button

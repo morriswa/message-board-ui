@@ -1,4 +1,4 @@
-@for (error of ERROR_MESSAGES; track error; let i = $index) {
+@for (error of ERROR_MESSAGES; track i; let i = $index) {
     <div style="margin-top: 10px">
         <div
             *ngIf="error.show"

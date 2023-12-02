@@ -12,23 +12,24 @@
       required="false">
   </div>
 
-  <div id="crop-wrapper" *ngIf="fileInput.value && croppingInProgress && imageChangedEvent">
+  @if (fileInput.value && croppingInProgress && imageChangedEvent) {
+    <div id="crop-wrapper">
 
-    <button
-      class="btn btn-secondary"
-      (click)="confirmCropAndReturnImageObj()">
-      Save!
-    </button>
-
-    <image-cropper
-      [imageChangedEvent]="imageChangedEvent"
-      [maintainAspectRatio]="MAINTAIN_ASPECT_RATIO"
-      [aspectRatio]="ASPECT_RATIO"
-      format="png"
-      (imageCropped)="imageCropped($event)"
-    >
-  </image-cropper>
-
-  </div>
-
+      <button
+        class="btn btn-secondary"
+        (click)="confirmCropAndReturnImageObj()">
+        Save!
+      </button>
+  
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="MAINTAIN_ASPECT_RATIO"
+        [aspectRatio]="ASPECT_RATIO"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        ></image-cropper>
+  
+    </div>
+  }
+ 
 </div>

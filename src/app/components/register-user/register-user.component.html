@@ -11,20 +11,16 @@
     placeholder="Enter Display Name"
     >
 
-  <app-static-errors [WARNINGS]="[
-    {
+  <app-static-errors [WARNINGS]="[{
       show: displayNameForm.hasError('pattern'),
       message: displayNameFormWarnings.pattern
-    },
-    {
+    },{
       show: displayNameForm.getRawValue()!.length < preferences.DISPLAY_NAME_MIN,
       message: displayNameFormWarnings.min,
-    },
-    {
+    },{
       show: displayNameForm.getRawValue()!.length > preferences.DISPLAY_NAME_MAX,
       message: displayNameFormWarnings.max
-    },
-  ]"></app-static-errors>
+    },]"></app-static-errors>
 
   <button
     class="btn btn-primary"

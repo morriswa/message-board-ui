@@ -1,87 +1,81 @@
 @if (communityInfo.initialized && !this.PROCESSING) {
-<div id="create-post-wrapper">
+  <div id="create-post-wrapper">
 
-  <div *ngIf="this.currentDraft">
-    <div
-      class="create-post-element"
-      *ngFor="let content of this.currentDraft.resources">
-      <img
-        class="post-content-preview-img"
-        [src]="content">
+    <div *ngIf="this.currentDraft">
+      <div
+        class="create-post-element"
+        *ngFor="let content of this.currentDraft.resources">
+        <img
+          class="post-content-preview-img"
+          [src]="content">
+      </div>
     </div>
-  </div>
 
-  <div class="create-post-element">
-    <app-image-upload-and-crop
-      userDialog="Add content to post: "
-      [resetImageComponent]="clearImageUploadEmitter"
-     (imageCroppedAndReadyEvent)="uploadPostImage($event)">
-    </app-image-upload-and-crop>
+    <div class="create-post-element">
+      <app-image-upload-and-crop
+        userDialog="Add content to post: "
+        [resetImageComponent]="clearImageUploadEmitter"
+        (imageCroppedAndReadyEvent)="uploadPostImage($event)"
+        ></app-image-upload-and-crop>
+
+      <button
+        style="margin-top: 20px"
+        class="btn btn-primary"
+        [disabled]="!this.pendingImageUpload"
+        (click)="saveDraftAndResetImageUploader()"
+      >
+        Add another Image!
+      </button>
+    </div>
+
+    <div class="create-post-element">
+      <span>Caption your post!</span>
+      <input
+        type="text"
+        class="form-control"
+        [formControl]="postCaptionForm"
+        required
+        placeholder="Enter a Caption..."
+      >
+
+      <app-static-errors [WARNINGS]="[{
+          show: postCaptionForm.getRawValue()!.length < preferences.POST_CAPTION_MIN,
+          message: postCaptionFormWarnings.min
+        },{
+          show: postCaptionForm.getRawValue()!.length > preferences.POST_CAPTION_MAX,
+          message: postCaptionFormWarnings.max
+        },]"></app-static-errors> 
+    </div>
+
+    <div class="create-post-element">
+
+      <span>Add an optional description to your post!</span>
+      <input
+        type="text"
+        class="form-control"
+        [formControl]="postDescriptionForm"
+        placeholder="...and description for your Post!"
+      >
+
+      <app-static-errors [WARNINGS]="[{
+          show: postDescriptionForm.getRawValue()!.length > preferences.POST_DESCRIPTION_MAX,
+          message: postDescriptionFormWarnings.max
+        },]"></app-static-errors> 
+    </div>
 
     <button
       style="margin-top: 20px"
       class="btn btn-primary"
-      [disabled]="!this.pendingImageUpload"
-      (click)="saveDraftAndResetImageUploader()"
+      [disabled]="this.postCaptionForm.invalid
+                ||this.postDescriptionForm.invalid"
+      (click)="savePostAndUpload()"
     >
-      Add another Image!
+      Save and Post!
     </button>
+
+    <app-server-errors [serverErrorHandler]="serverErrorEmitter"></app-server-errors>
+
   </div>
-
-  <div class="create-post-element">
-    <span>Caption your post!</span>
-    <input
-      type="text"
-      class="form-control"
-      [formControl]="postCaptionForm"
-      required
-      placeholder="Enter a Caption..."
-    >
-
-    <app-static-errors [WARNINGS]="[
-      {
-        show: postCaptionForm.getRawValue()!.length < preferences.POST_CAPTION_MIN,
-        message: postCaptionFormWarnings.min
-      },
-      {
-        show: postCaptionForm.getRawValue()!.length > preferences.POST_CAPTION_MAX,
-        message: postCaptionFormWarnings.max
-      },]">
-    </app-static-errors> 
-  </div>
-
-  <div class="create-post-element">
-
-    <span>Add an optional description to your post!</span>
-    <input
-      type="text"
-      class="form-control"
-      [formControl]="postDescriptionForm"
-      placeholder="...and description for your Post!"
-    >
-
-    <app-static-errors [WARNINGS]="[
-    {
-      show: postDescriptionForm.getRawValue()!.length > preferences.POST_DESCRIPTION_MAX,
-      message: postDescriptionFormWarnings.max
-    },
-    ]">
-    </app-static-errors> 
-  </div>
-
-  <button
-    style="margin-top: 20px"
-    class="btn btn-primary"
-    [disabled]="this.postCaptionForm.invalid
-    ||this.postDescriptionForm.invalid"
-    (click)="savePostAndUpload()"
-  >
-    Save and Post!
-  </button>
-
-  <app-server-errors [serverErrorHandler]="serverErrorEmitter"></app-server-errors>
-
-</div>
 } @else {
   <div style="margin: 50px">
     <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
