@@ -51,8 +51,6 @@
   padding: 1px 10px;
 }
 
-$post-size-max: 400px;
-
 .post-card {
   background-color: var(--wma-card-color);
   padding: 20px;
@@ -74,14 +72,13 @@ $post-size-max: 400px;
 
 .image-element-wrapper {
   display: block;
-  height: 400px;
   object-fit: cover;
   overflow: scroll;
 }
 
 .image-element {
-  width: $post-size-max;
-  height: $post-size-max;
+  width: 60vw; 
+  height: 60vh;
   object-fit: cover;
 }
 
