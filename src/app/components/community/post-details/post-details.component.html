@@ -1,7 +1,6 @@
+@if (post) {
 
-<div *ngIf="post">
-
-  <div class="post-card">
+  <div class="post-card post-feed">
 
     <div class="vote-card">
       @if (votingEnabled()) {
@@ -26,7 +25,7 @@
     
         <ng-template ngbSlide *ngFor="let image of post.resources">
           <div class="picsum-img-wrapper image-element-wrapper">
-            <img class="image-element" [src]="image">
+            <img class="image-element details-image" [src]="image">
           </div>
         </ng-template>
         
@@ -44,4 +43,4 @@
     <app-comments [postId]="post.postId" [votingEnabled]="votingEnabled()"></app-comments>
   </div>
   
-</div>
+}

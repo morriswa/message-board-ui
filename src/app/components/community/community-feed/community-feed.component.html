@@ -1,6 +1,6 @@
 
 @if (currentCommunity.initialized && posts) {
-  <div id="feed-wrapper" class="post-feed">
+  <div class="post-feed">
     @for (post of posts; track post.postId; let i = $index) {
       <div class="post-card">
 

@@ -51,6 +51,10 @@
   padding: 1px 10px;
 }
 
+.post-feed {
+  width: fit-content;
+}
+
 .post-card {
   background-color: var(--wma-card-color);
   padding: 20px;
@@ -72,12 +76,12 @@
 
 .image-element-wrapper {
   display: block;
-  object-fit: cover;
+  // object-fit: cover;
   overflow: scroll;
 }
 
 .image-element {
-  width: 60vw; 
+  width: 60vw;
   height: 60vh;
   object-fit: cover;
 }
