@@ -1,46 +1,48 @@
 @if (post) {
 
-  <div class="post-card post-feed">
+  <div class="post-feed">
+    <div class="post-card">
 
-    <div class="vote-card">
-      @if (votingEnabled()) {
-        <app-voting
-          [postId]="post.postId"
-          (voteUpdated)="postVoteUpdated($event)"
-          ></app-voting>
-      } @else {
-        <div class="icon-tooltip-hover">
-          <i class="bi bi-arrows-expand"></i>
+      <div class="vote-card">
+        @if (votingEnabled()) {
+          <app-voting
+            [postId]="post.postId"
+            (voteUpdated)="postVoteUpdated($event)"
+            ></app-voting>
+        } @else {
+          <div class="icon-tooltip-hover">
+            <i class="bi bi-arrows-expand"></i>
+          </div>
+          <p class="icon-tooltip">Please join community to vote on posts!</p>
+        }
+        <h1 class="vote-count">{{ post.vote }}</h1>
+      </div>
+
+      <h2>{{ post.caption }} <br>:{{ post.displayName }}</h2>
+      <p>{{ post.description }}</p>
+
+      @if (post.resources.length > 1) {
+        <ngb-carousel style="width: min-content;" [interval]="5000">
+      
+          <ng-template ngbSlide *ngFor="let image of post.resources">
+            <div class="picsum-img-wrapper image-element-wrapper">
+              <img class="image-element details-image" [src]="image">
+            </div>
+          </ng-template>
+          
+        </ngb-carousel>
+      } @else if (post.resources.length === 1) {
+        <div class="image-element-wrapper">
+          <img class="image-element" [src]="post.resources[0]">
+
         </div>
-        <p class="icon-tooltip">Please join community to vote on posts!</p>
       }
-      <h1 class="vote-count">{{ post.vote }}</h1>
+
     </div>
 
-    <h2>{{ post.caption }} <br>:{{ post.displayName }}</h2>
-    <p>{{ post.description }}</p>
-
-    @if (post.resources.length > 1) {
-      <ngb-carousel style="width: min-content;" [interval]="5000">
+    <div id="comment-card-wrapper">
+      <app-comments [postId]="post.postId" [votingEnabled]="votingEnabled()"></app-comments>
+    </div>
     
-        <ng-template ngbSlide *ngFor="let image of post.resources">
-          <div class="picsum-img-wrapper image-element-wrapper">
-            <img class="image-element details-image" [src]="image">
-          </div>
-        </ng-template>
-        
-      </ngb-carousel>
-    } @else if (post.resources.length === 1) {
-      <div class="image-element-wrapper">
-        <img class="image-element" [src]="post.resources[0]">
-
-      </div>
-    }
-
   </div>
-
-  <div id="comment-card-wrapper">
-    <app-comments [postId]="post.postId" [votingEnabled]="votingEnabled()"></app-comments>
-  </div>
-  
 }
