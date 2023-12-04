@@ -11,16 +11,6 @@
   height: calc(var(--wma-community-header-height) - 25px);
 }
 
-#community-content-wrapper {
-  position: static;
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin: 0;
-  padding: 0 10px;
-}
-
 .community-content-wrapper {
   max-height: var(--wma-community-content-height);
 }
@@ -29,19 +19,27 @@
   max-height: var(--wma-community-content-height-no-banner-image);
 }
 
+#community-content-wrapper {
+  position: static;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0 10px;
+}
+
 #community-info-slide {
   line-break: anywhere;
 
   height: 55vh;
   max-height: fit-content;
-  max-width: 40vw;
+  width: 30vw;
 
   background-color: var(--wma-card-color);
 
   margin: 20px 10px 0 10px;
   padding: 20px;
   border-radius: 20px;
-  flex-grow: 1;
 }
 
 #community-buttons {
@@ -57,9 +55,7 @@
 
 #community-router-wrapper {
   overflow: scroll;
-}
-
-.community-router-child-wrapper {
-  min-width: 60vw;
-  margin: 20px 10px;
+  width: 60vw; 
+  margin-top: 20px;
+  padding: 0 10px 100px 10px;
 }

@@ -1,11 +1,11 @@
 
 @if (currentCommunity.initialized && posts) {
-  <div class="post-feed">
+
     @for (post of posts; track post.postId; let i = $index) {
       <div class="post-card">
 
         <div class="vote-card">
-          @if (votingEnabled()) {
+          @if (currentCommunity.isCommunityMember) {
             <app-voting
               [postId]="post.postId"
               (voteUpdated)="postVoteUpdated($event, i)"
@@ -19,34 +19,43 @@
             <p class="icon-tooltip">Please join community to vote on posts!</p>
             <h1 class="vote-count">{{ post.vote }}</h1>
           }
+
+          <button 
+            class="btn btn-outline-primary"
+            *ngIf="currentCommunity.isCommunityMember"
+            (click)="reportPost(post.postId)">Report</button>
+          <button 
+            class="btn btn-primary" 
+            *ngIf="currentCommunity.isContentMod"
+            (click)="removePost(post.postId)">Remove</button>
         </div>
         
         <h2><a [routerLink]="['post',post.postId]">{{ post.caption }}</a> <br>:{{ post.displayName }}</h2>
         <p>{{ post.description }}</p>
 
+        <div class="image-element-wrapper">
         @if (post.resources.length > 1) {
           <ngb-carousel style="width:min-content" [interval]="5000">
         
             <ng-template ngbSlide *ngFor="let image of post.resources">
-              <div class="picsum-img-wrapper image-element-wrapper">
+              <div class="picsum-img-wrapper ">
                 <img class="image-element" [src]="image">
               </div>
             </ng-template>
             
           </ngb-carousel>
         } @else if (post.resources.length === 1) {
-          <div class="image-element-wrapper">
+          <!-- <div class="image-element-wrapper"> -->
             <img class="image-element" [src]="post.resources[0]">
-          </div>
+          <!-- </div> -->
         }
-
+      </div>
       </div>
     } @empty {
       <div class="post-card">
         <h1>No posts to display!</h1>   
       </div>
     }
-  </div>
 } @else {
   <div style="margin: 50px">
     <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">

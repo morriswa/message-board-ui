@@ -19,5 +19,5 @@ export interface CommunityMembership {
   exists:boolean;
   userId:string;
   communityId:number;
-  standing?:string;
+  standing?:{code:string,weight:number};
 }

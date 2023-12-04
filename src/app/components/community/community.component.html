@@ -1,4 +1,3 @@
-
 @if (currentCommunity.initialized) {
 
   <app-community-header [userId]="currentCommunity.membership.userId" [communityInfo]="currentCommunity.community"></app-community-header>
@@ -31,19 +30,19 @@
         >Feed</button>
 
         <button
-          *ngIf="currentCommunity.isCommunityOwner||currentCommunity.isCommunityMember"
+          *ngIf="currentCommunity.isCommunityMember"
           class="btn btn-outline-primary"
           [routerLink]="['/community',currentCommunity.community.communityLocator,'post']"
         >Post</button>
 
         <button
-          *ngIf="currentCommunity.isCommunityOwner"
+          *ngIf="currentCommunity.isEditMod"
           class="btn btn-secondary"
           [routerLink]="['/community',currentCommunity.community.communityLocator,'edit']"
         >Edit</button>
 
         <button
-          *ngIf="!currentCommunity.isCommunityMember && !currentCommunity.isCommunityOwner"
+          *ngIf="!currentCommunity.isCommunityMember"
           class="btn btn-outline-secondary"
           (click)="joinCommunity()"
         >Join</button>
@@ -57,7 +56,7 @@
     </div>
 
     <div id="community-router-wrapper">
-      <router-outlet></router-outlet>
+      <router-outlet id="community-router-child-wrapper"></router-outlet>
     </div>
   </div>
 }

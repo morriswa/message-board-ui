@@ -47,7 +47,23 @@ export class CurrentCommunityService {
   }
 
   get isCommunityMember(): boolean {
-    return this.membership.exists;
+    return this.isCommunityOwner || this.membership.exists;
+  }
+  
+  get isEditMod(): boolean {
+    return this.isCommunityOwner || (
+      this.membership.standing?
+        this.membership.standing!.weight > 15 
+      :
+        false);
+  }
+
+  get isContentMod(): boolean {
+    return this.isCommunityOwner || (
+      this.membership.standing?
+        this.membership.standing!.weight > 10
+      :
+        false);
   }
 
 }

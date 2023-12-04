@@ -1,5 +1,4 @@
 @if (communityInfo.initialized && !this.PROCESSING) {
-  <div class="community-router-child-wrapper">
 
     @if (this.currentDraft) {
       @for (resource of this.currentDraft.resources; track idx; let idx = $index) {
@@ -73,7 +72,6 @@
 
     <app-server-errors [serverErrorHandler]="serverErrorEmitter"></app-server-errors>
 
-  </div>
 } @else {
   <div style="margin: 50px">
     <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">

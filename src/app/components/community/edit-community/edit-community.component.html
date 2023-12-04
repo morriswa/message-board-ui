@@ -1,7 +1,5 @@
 
 @if (currentCommunity.initialized&&!PROCESSING) {
-  <div class="community-router-child-wrapper">
-
     <div class="edit-community-field">
       <span>Enter new community locator! <br>Used in URLs and to locate your community...</span>
       <input
@@ -85,7 +83,6 @@
   
     <app-server-errors [serverErrorHandler]="serverErrorEmitter"></app-server-errors> 
   
-  </div>
 } @else {
   <div style="margin: 50px">
     <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">

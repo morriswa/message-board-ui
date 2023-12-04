@@ -12,7 +12,7 @@ export class CommunityFeedComponent {
 
   posts?: PostResponse[];
 
-  constructor(service: MessageBoardClientService,
+  constructor(private service: MessageBoardClientService,
               public currentCommunity: CurrentCommunityService) {
     service.getFeedForCommunity(this.currentCommunity.id)
       .subscribe({
@@ -26,7 +26,17 @@ export class CommunityFeedComponent {
     this.posts![i].vote = $event
   }
 
-  votingEnabled(): boolean {
-    return this.currentCommunity.isCommunityOwner||this.currentCommunity.isCommunityMember
+  removePost(postId:number) {
+    this.service.removePost(postId)
+    .subscribe({
+      next: ()=>this.posts = this.posts?.filter((post:any)=>postId!==post.postId)
+    });
   }
+
+  reportPost(postId: number) {
+    this.service.reportPost(postId)
+    .subscribe();
+  }
+    
+    
 }

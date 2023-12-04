@@ -17,6 +17,7 @@ import {CommunityMembership, CommunityResponse} from "../interface/community";
   providedIn: 'root'
 })
 export class MessageBoardClientService {
+ 
   public SERVICE_PATH= `${environment.api.scheme}://${environment.api.path}`;
   public SECURE_SERVICE_PATH= `${this.SERVICE_PATH}/${environment.api.routes.secure}`;
 
@@ -268,4 +269,26 @@ export class MessageBoardClientService {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/post/${postId}/comment/${parentId}`)
       .pipe(map((res:any)=>res.payload));
   }
+
+
+
+
+
+
+
+
+
+
+
+  // NEW
+
+  removePost(postId: number): Observable<any> {
+    return this.http.delete(`${this.SECURE_SERVICE_PATH}/post/${postId}`)
+      .pipe(map((res:any)=>res.payload));
+  }
+
+  reportPost(postId: number): Observable<any> {
+    throw new Error('Method not implemented.');
+  }
+
 }
