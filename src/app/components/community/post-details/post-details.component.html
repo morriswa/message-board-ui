@@ -21,22 +21,21 @@
       <h2>{{ post.caption }} <br>:{{ post.displayName }}</h2>
       <p>{{ post.description }}</p>
 
-      @if (post.resources.length > 1) {
-        <ngb-carousel style="width: min-content;" [interval]="5000">
-      
-          <ng-template ngbSlide *ngFor="let image of post.resources">
-            <div class="picsum-img-wrapper image-element-wrapper">
-              <img class="image-element details-image" [src]="image">
-            </div>
-          </ng-template>
-          
-        </ngb-carousel>
-      } @else if (post.resources.length === 1) {
-        <div class="image-element-wrapper">
+      <div class="image-element-wrapper">
+        @if (post.resources.length > 1) {
+          <ngb-carousel style="width: min-content;" [interval]="5000">
+        
+            <ng-template ngbSlide *ngFor="let image of post.resources">
+              <div class="picsum-img-wrapper">
+                <img class="image-element" [src]="image">
+              </div>
+            </ng-template>
+            
+          </ngb-carousel>
+        } @else if (post.resources.length === 1) {
           <img class="image-element" [src]="post.resources[0]">
-
-        </div>
-      }
+        }
+      </div>
 
     </div>
 
