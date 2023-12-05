@@ -3,6 +3,7 @@ import {MessageBoardClientService} from "../../../service/message-board-client.s
 import {Comment} from "../../../interface/posts";
 import {FormControl} from "@angular/forms";
 import {ValidatorFactory} from "../../../service/validator.factory";
+import { CurrentCommunityService } from '../current-community.service';
 
 @Component({
   selector: 'app-comments',
@@ -10,16 +11,18 @@ import {ValidatorFactory} from "../../../service/validator.factory";
   styleUrls: ['./comments.component.scss']
 })
 export class CommentsComponent implements OnInit {
+
   @Input() postId!: number;
   @Input() parentId?: number;
-  @Input() votingEnabled!: boolean;
-
 
   commentForm:FormControl;
 
   protected comments?: Comment[];
 
-  constructor(private client: MessageBoardClientService, validators: ValidatorFactory) {
+  constructor(
+      validators: ValidatorFactory,
+      private client: MessageBoardClientService, 
+      public currentCommunity: CurrentCommunityService) {
     this.commentForm = validators.getPostDescriptionForm();
   }
 
@@ -40,10 +43,6 @@ export class CommentsComponent implements OnInit {
           next: (value:Comment[]) => this.comments = value
         });
   }
-
-  // votingEnabled(): boolean {
-  //   return this.membershipInfo!.exists||this.membershipInfo!.userId===this.communityInfo!.ownerId
-  // }
 
   postComment() {
     if (this.parentId)
@@ -69,5 +68,17 @@ export class CommentsComponent implements OnInit {
 
   commentVoteUpdated($event: number, i: number) {
     this.comments![i].vote = $event;
+  }
+
+  removeComment(commentId: number) {
+    this.client.removeComment(commentId, this.postId)
+    .subscribe({
+      next: ()=>this.comments = this.comments?.filter((comment:any)=>commentId!==comment.commentId)
+    }); 
+  }
+
+  reportComment(commentId: number) {
+    this.client.reportComment(commentId)
+    .subscribe();
   }
 }

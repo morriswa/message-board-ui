@@ -49,11 +49,11 @@ export class CurrentCommunityService {
   get isCommunityMember(): boolean {
     return this.isCommunityOwner || this.membership.exists;
   }
-  
-  get isEditMod(): boolean {
+ 
+  get isCommentMod(): boolean {
     return this.isCommunityOwner || (
       this.membership.standing?
-        this.membership.standing!.weight > 15 
+        this.membership.standing.weight >= 5
       :
         false);
   }
@@ -61,7 +61,23 @@ export class CurrentCommunityService {
   get isContentMod(): boolean {
     return this.isCommunityOwner || (
       this.membership.standing?
-        this.membership.standing!.weight > 10
+        this.membership.standing.weight >= 10
+      :
+        false);
+  }
+
+  get isEditMod(): boolean {
+    return this.isCommunityOwner || (
+      this.membership.standing?
+        this.membership.standing.weight >= 15 
+      :
+        false);
+  }
+
+  get isPromoterMod(): boolean {
+    return this.isCommunityOwner || (
+      this.membership.standing?
+        this.membership.standing.weight >= 20
       :
         false);
   }

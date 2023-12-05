@@ -29,7 +29,7 @@
 
           <div class="vote-card">
 
-            @if (votingEnabled) {
+            @if (currentCommunity.isCommunityMember) {
               <app-voting
                 [type]="'COMMENT'"
                 [postId]="this.postId"
@@ -44,6 +44,15 @@
               <p class="icon-tooltip">Please join community to interact with posts and comments!</p>
               <h1 class="vote-count">{{ comment.vote }}</h1>
             }
+
+            <button 
+              class="btn btn-outline-primary"
+              *ngIf="currentCommunity.isCommunityMember"
+              (click)="reportComment(comment.commentId)">Report</button>
+            <button 
+              class="btn btn-primary" 
+              *ngIf="currentCommunity.isCommentMod"
+              (click)="removeComment(comment.commentId)">Remove</button>
           </div>
     
 
@@ -54,7 +63,7 @@
           </div>
         </div>
 
-        <app-comments [postId]="postId" [parentId]="comment.commentId" [votingEnabled]="votingEnabled"></app-comments>
+        <app-comments [postId]="postId" [parentId]="comment.commentId"></app-comments>
       } @empty {
         <p>No comments to display</p>
       }
