@@ -20,4 +20,13 @@ export interface CommunityMembership {
   userId:string;
   communityId:number;
   standing?:{code:string,weight:number};
+  moderationLevel?:{code:string,weight:number};
+}
+
+export interface CommunityMod {
+  userId:string;
+  displayName:string;
+  profileImage:URL;
+  standing?:{code:string,weight:number};
+  moderationLevel?:{code:string,weight:number};
 }

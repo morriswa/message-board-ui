@@ -10,7 +10,7 @@ import {
   PostDraftResponse,
   PostResponse
 } from "../interface/posts";
-import {CommunityMembership, CommunityResponse} from "../interface/community";
+import {CommunityMembership, CommunityMod, CommunityResponse} from "../interface/community";
 
 
 @Injectable({
@@ -299,5 +299,10 @@ export class MessageBoardClientService {
   reportComment(commentId: number): Observable<any> {
     throw new Error('Method not implemented.');
   }
-  
+
+  getMods(communityId: number): Observable<CommunityMod> {
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/mod`)      
+    .pipe(map((res:any)=>res.payload));
+  }
+
 }

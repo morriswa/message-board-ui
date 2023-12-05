@@ -52,32 +52,32 @@ export class CurrentCommunityService {
  
   get isCommentMod(): boolean {
     return this.isCommunityOwner || (
-      this.membership.standing?
-        this.membership.standing.weight >= 5
+      this.membership.moderationLevel?
+        this.membership.moderationLevel.weight >= 5
       :
         false);
   }
 
   get isContentMod(): boolean {
     return this.isCommunityOwner || (
-      this.membership.standing?
-        this.membership.standing.weight >= 10
+      this.membership.moderationLevel?
+        this.membership.moderationLevel.weight >= 10
       :
         false);
   }
 
   get isEditMod(): boolean {
     return this.isCommunityOwner || (
-      this.membership.standing?
-        this.membership.standing.weight >= 15 
+      this.membership.moderationLevel?
+        this.membership.moderationLevel.weight >= 15 
       :
         false);
   }
 
   get isPromoterMod(): boolean {
     return this.isCommunityOwner || (
-      this.membership.standing?
-        this.membership.standing.weight >= 20
+      this.membership.moderationLevel?
+        this.membership.moderationLevel.weight >= 20
       :
         false);
   }

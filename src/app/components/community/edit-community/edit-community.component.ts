@@ -42,6 +42,8 @@ export class EditCommunityComponent {
     this.communityDisplayNameForm = validatorFactory.getCommunityDisplayNameForm();
     this.communityDisplayNameFormWarnings = validatorFactory.getCommunityDisplayNameFormWarnings();
     this.preferences = validatorFactory.getAllPreferences();
+    
+    messageBoardService.getMods(this.currentCommunity.id).subscribe(next=>console.log(next));
   }
 
   updateCommunity() {
