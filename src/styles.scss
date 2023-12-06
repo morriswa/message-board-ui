@@ -63,6 +63,10 @@
   flex-direction: row;
   align-items: center;
   position: relative;
+
+  >button {
+    margin-right: 20px;
+  }
 }
 
 .vote-count {

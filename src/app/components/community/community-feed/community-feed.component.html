@@ -10,15 +10,14 @@
               [postId]="post.postId"
               (voteUpdated)="postVoteUpdated($event, i)"
               ></app-voting>
-            <h1 class="vote-count">{{ post.vote }}</h1>
-          
           } @else {
             <div class="icon-tooltip-hover">
               <i class="bi bi-arrows-expand"></i>
             </div>
             <p class="icon-tooltip">Please join community to vote on posts!</p>
-            <h1 class="vote-count">{{ post.vote }}</h1>
           }
+
+          <h1 class="vote-count">{{ post.vote }}</h1>
 
           <button 
             class="btn btn-outline-primary"

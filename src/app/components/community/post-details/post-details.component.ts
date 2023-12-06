@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PostCommentResponse} from "../../../interface/posts";
 import {CurrentCommunityService} from "../current-community.service";
 
@@ -11,11 +11,13 @@ import {CurrentCommunityService} from "../current-community.service";
 })
 export class PostDetailsComponent {
 
+
   post?:PostCommentResponse;
 
   constructor(active: ActivatedRoute,
-              client: MessageBoardClientService,
-              private currentCommunity: CurrentCommunityService) {
+              private router: Router,
+              private client: MessageBoardClientService,
+              public currentCommunity: CurrentCommunityService) {
 
     const postId = active.snapshot.params['postId'];
 
@@ -35,4 +37,15 @@ export class PostDetailsComponent {
     return this.currentCommunity.isCommunityOwner||this.currentCommunity.isCommunityMember;
   }
 
+  removePost(postId: number) {
+    this.client.removePost(postId).subscribe({
+      next: ()=>this.router.navigate(['/community',this.currentCommunity.locator])
+    });
+  }
+
+  reportPost(postId: number) {
+    this.client.reportPost(postId).subscribe({
+      next: ()=>this.router.navigate(['/community',this.currentCommunity.locator])
+    });
+  }
 }

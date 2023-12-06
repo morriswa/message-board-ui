@@ -16,6 +16,15 @@
           <p class="icon-tooltip">Please join community to vote on posts!</p>
         }
         <h1 class="vote-count">{{ post.vote }}</h1>
+
+        <button 
+            class="btn btn-outline-primary"
+            *ngIf="currentCommunity.isCommunityMember"
+            (click)="reportPost(post.postId)">Report</button>
+          <button 
+            class="btn btn-primary" 
+            *ngIf="currentCommunity.isContentMod"
+            (click)="removePost(post.postId)">Remove</button>
       </div>
 
       <h2>{{ post.caption }} <br>:{{ post.displayName }}</h2>
