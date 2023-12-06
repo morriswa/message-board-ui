@@ -1,6 +1,6 @@
 @if (currentCommunity.initialized) {
 
-  <app-community-header [userId]="currentCommunity.membership.userId" [communityInfo]="currentCommunity.community"></app-community-header>
+  <app-community-header [userId]="currentCommunity.watcher.userId" [communityInfo]="currentCommunity.community"></app-community-header>
 
   <div
     [ngClass]="{

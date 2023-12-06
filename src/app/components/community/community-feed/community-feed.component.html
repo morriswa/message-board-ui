@@ -30,8 +30,14 @@
             (click)="removePost(post.postId)">Remove</button>
         </div>
         
-        <h2><a [routerLink]="['post',post.postId]">{{ post.caption }}</a> <br>:{{ post.displayName }}</h2>
+        <h2>
+          {{ post.caption }}
+          <br>
+          :<a [routerLink]="['member',post.userId]">{{ post.displayName }}</a>
+        </h2>
         <p>{{ post.description }}</p>
+        
+        <a [routerLink]="['post',post.postId]">see more...</a>
 
         <div class="image-element-wrapper">
         @if (post.resources.length > 1) {
@@ -45,9 +51,7 @@
             
           </ngb-carousel>
         } @else if (post.resources.length === 1) {
-          <!-- <div class="image-element-wrapper"> -->
-            <img class="image-element" [src]="post.resources[0]">
-          <!-- </div> -->
+          <img class="image-element" [src]="post.resources[0]">
         }
       </div>
       </div>

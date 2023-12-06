@@ -10,14 +10,14 @@ import {
   PostDraftResponse,
   PostResponse
 } from "../interface/posts";
-import {CommunityMembership, CommunityMod, CommunityResponse} from "../interface/community";
+import {CommunityWatcherStatus, CommunityMember, CommunityResponse} from "../interface/community";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageBoardClientService {
-
+ 
   public SERVICE_PATH= `${environment.api.scheme}://${environment.api.path}`;
   public SECURE_SERVICE_PATH= `${this.SERVICE_PATH}/${environment.api.routes.secure}`;
 
@@ -166,18 +166,18 @@ export class MessageBoardClientService {
     .pipe(map((response:any)=>response.payload));
   }
 
-  getMembership(communityId:number): Observable<CommunityMembership> {
-    return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
+  getCommunityWatcherStatus(communityId:number): Observable<CommunityWatcherStatus> {
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/status`,{})
       .pipe(map((response:any)=>response.payload));
   }
 
   joinCommunity(communityId:number): Observable<void> {
-    return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/member`,{})
     .pipe(map((response:any)=>response.payload));
   }
 
   leaveCommunity(communityId:number): Observable<void> {
-    return this.http.delete(`${this.SECURE_SERVICE_PATH}/community/${communityId}/membership`,{})
+    return this.http.delete(`${this.SECURE_SERVICE_PATH}/community/${communityId}/member`,{})
     .pipe(map((response:any)=>response.payload));
   }
 
@@ -300,8 +300,13 @@ export class MessageBoardClientService {
     throw new Error('Method not implemented.');
   }
 
-  getMods(communityId: number): Observable<CommunityMod> {
+  getMods(communityId: number): Observable<CommunityMember[]> {
     return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/mod`)      
+    .pipe(map((res:any)=>res.payload));
+  }
+
+  getMember(communityId:number, userId: string): Observable<CommunityMember> {
+    return this.http.get(`${this.SECURE_SERVICE_PATH}/community/${communityId}/member/${userId}`)      
     .pipe(map((res:any)=>res.payload));
   }
 

@@ -31,11 +31,11 @@ export class CommunityComponent {
         }),
         switchMap((result:CommunityResponse) =>{
          this.currentCommunity.init({community: result});
-         return this.messageBoardService.getMembership(result.communityId)
+         return this.messageBoardService.getCommunityWatcherStatus(result.communityId)
         })
       ).subscribe({
         next:result=>{
-          this.currentCommunity.init({membership: result});
+          this.currentCommunity.init({watcher: result});
         },
         error: ()=>this.router.navigate(['/'])
       });

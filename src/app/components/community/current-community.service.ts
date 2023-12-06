@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {CommunityMembership, CommunityResponse} from "../../interface/community";
+import {CommunityWatcherStatus, CommunityResponse} from "../../interface/community";
 
 
 @Injectable({
@@ -8,20 +8,20 @@ import {CommunityMembership, CommunityResponse} from "../../interface/community"
 export class CurrentCommunityService {
 
   private _community?: CommunityResponse;
-  private _membership?: CommunityMembership;
+  private _watcher?: CommunityWatcherStatus;
 
-  init(config:{community?: CommunityResponse, membership?: CommunityMembership}) {
+  init(config:{community?: CommunityResponse, watcher?: CommunityWatcherStatus}) {
     if (config.community) this._community = config.community;
-    if (config.membership) this._membership = config.membership;
+    if (config.watcher) this._watcher = config.watcher;
   }
 
   reset() {
-    this._membership = undefined;
+    this._watcher = undefined;
     this._community = undefined;
   }
 
   get initialized(): boolean {
-    return !!(this._community && this._membership);
+    return !!(this._community && this._watcher);
   }
 
   get community() {
@@ -29,9 +29,9 @@ export class CurrentCommunityService {
     return this._community!
   }
 
-  get membership() {
+  get watcher() {
     if (!this.initialized) throw new Error("No community currently cached!");
-    return this._membership!
+    return this._watcher!
   }
 
   get id() {
@@ -43,41 +43,41 @@ export class CurrentCommunityService {
   }
 
   get isCommunityOwner(): boolean {
-    return this.membership.userId === this.community.ownerId;
+    return this.watcher.userId === this.community.ownerId;
   }
 
   get isCommunityMember(): boolean {
-    return this.isCommunityOwner || this.membership.exists;
+    return this.isCommunityOwner || this.watcher.exists;
   }
  
   get isCommentMod(): boolean {
     return this.isCommunityOwner || (
-      this.membership.moderationLevel?
-        this.membership.moderationLevel.weight >= 5
+      this.watcher.moderationLevel?
+        this.watcher.moderationLevel.weight >= 5
       :
         false);
   }
 
   get isContentMod(): boolean {
     return this.isCommunityOwner || (
-      this.membership.moderationLevel?
-        this.membership.moderationLevel.weight >= 10
+      this.watcher.moderationLevel?
+        this.watcher.moderationLevel.weight >= 10
       :
         false);
   }
 
   get isEditMod(): boolean {
     return this.isCommunityOwner || (
-      this.membership.moderationLevel?
-        this.membership.moderationLevel.weight >= 15 
+      this.watcher.moderationLevel?
+        this.watcher.moderationLevel.weight >= 15 
       :
         false);
   }
 
   get isPromoterMod(): boolean {
     return this.isCommunityOwner || (
-      this.membership.moderationLevel?
-        this.membership.moderationLevel.weight >= 20
+      this.watcher.moderationLevel?
+        this.watcher.moderationLevel.weight >= 20
       :
         false);
   }

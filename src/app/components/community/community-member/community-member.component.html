@@ -1,0 +1,7 @@
+
+@if (member) {
+    <img height="400" width="400" [src]="member.profileImage">
+    <h1>{{ member.displayName }}</h1>
+
+    <h1>{{ searchIsOwner? 'OWNER' : this.member.moderationLevel?.code }}</h1>
+}

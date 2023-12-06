@@ -15,7 +15,7 @@ export interface CommunityResponse extends Community {
   }
 }
 
-export interface CommunityMembership {
+export interface CommunityWatcherStatus {
   exists:boolean;
   userId:string;
   communityId:number;
@@ -23,7 +23,7 @@ export interface CommunityMembership {
   moderationLevel?:{code:string,weight:number};
 }
 
-export interface CommunityMod {
+export interface CommunityMember {
   userId:string;
   displayName:string;
   profileImage:URL;

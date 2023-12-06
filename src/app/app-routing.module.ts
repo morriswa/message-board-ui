@@ -10,6 +10,7 @@ import {CreatePostComponent} from "./components/community/create-post/create-pos
 import {CommunityToolsComponent} from "./components/community-tools/community-tools.component";
 import {CommunityFeedComponent} from "./components/community/community-feed/community-feed.component";
 import {PostDetailsComponent} from "./components/community/post-details/post-details.component";
+import { CommunityMemberComponent } from './components/community/community-member/community-member.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'edit', component: EditCommunityComponent,  },
       { path: 'post/:postId', component: PostDetailsComponent, },
       { path: 'post', component: CreatePostComponent, },
+      { path: 'member/:userId', component: CommunityMemberComponent},
       { path: '', component: CommunityFeedComponent, pathMatch: "full" }
     ]
   },

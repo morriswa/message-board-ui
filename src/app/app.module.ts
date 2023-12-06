@@ -46,9 +46,9 @@ import { ServerErrorsComponent } from './components/server-errors/server-errors.
   import { CreatePostComponent } from './components/community/create-post/create-post.component';
   import { CommunityHeaderComponent } from './components/community/community-header/community-header.component';
   import { CommunityFeedComponent } from './components/community/community-feed/community-feed.component';
+  import { CommunityMemberComponent } from './components/community/community-member/community-member.component';
 
-
-
+  
 
 const AUTH0_CONFIG = {
   domain: environment.auth.domain,
@@ -83,6 +83,7 @@ const AUTH0_CONFIG = {
     CommunityToolsComponent,
     CommunityHeaderComponent,
     CommunityFeedComponent,
+    CommunityMemberComponent,
     VotingComponent,
     SearchCommunityComponent,
     PostDetailsComponent,
