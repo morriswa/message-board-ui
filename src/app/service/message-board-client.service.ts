@@ -310,4 +310,14 @@ export class MessageBoardClientService {
     .pipe(map((res:any)=>res.payload));
   }
 
+  updateModStatus(communityId: number, userId: string, promoteTo: string) {
+    return this.http.patch(`${this.SECURE_SERVICE_PATH}/community/${communityId}/mod`,{},{
+      params: {
+        userId : userId,
+        promote: promoteTo
+      }
+    })
+    .pipe(map((res:any)=>res.payload));
+  }
+ 
 }

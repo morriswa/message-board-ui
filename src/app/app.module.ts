@@ -7,7 +7,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 // DEPS
 import {AuthHttpInterceptor, AuthModule, AuthService} from "@auth0/auth0-angular";
 import {ImageCropperModule} from "ngx-image-cropper";
-import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap'
+import {NgbCarouselModule, NgbDropdownModule} from '@ng-bootstrap/ng-bootstrap'
 
 // APP
 import { AppComponent } from './app.component';
@@ -99,6 +99,7 @@ const AUTH0_CONFIG = {
         AppRoutingModule,
         ImageCropperModule,
         NgbCarouselModule,
+        NgbDropdownModule
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },

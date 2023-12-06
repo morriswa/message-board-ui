@@ -4,4 +4,18 @@
     <h1>{{ member.displayName }}</h1>
 
     <h1>{{ searchIsOwner? 'OWNER' : this.member.moderationLevel?.code }}</h1>
+
+    @if (this.current.isPromoterMod) {   
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                {{ SELECTED_MOD?? "Change" }}
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" >
+                @for (level of MODS; track idx; let idx = $index) {
+                    <button ngbDropdownItem [value]="level" (click)="onChange($event)">{{ level }}</button>
+                }
+            </div>
+        </div>
+        @if (SELECTED_MOD) { <button class="btn btn-outline-primary" (click)="updatePermissions()">Change</button> }
+    }
 }
