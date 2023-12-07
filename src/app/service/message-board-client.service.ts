@@ -93,7 +93,7 @@ export class MessageBoardClientService {
 
 
   // post endpoints
-  createPostDraft(communityId:number, caption?:string|null, description?:string|null): Observable<string> {
+  createPostDraft(communityId:number, caption:string|null=null, description:string|null=null): Observable<string> {
 
     let params:any = {};
 
@@ -102,8 +102,7 @@ export class MessageBoardClientService {
 
     return this.http
       .post(`${this.SECURE_SERVICE_PATH}/community/${communityId}/draft`,
-      {},
-      {params : params})
+      params)
     .pipe(map((response:any)=>response.payload));
   }
 
@@ -126,7 +125,7 @@ export class MessageBoardClientService {
     if (caption != null) params.caption = caption;
     if (description != null) params.description = description;
 
-    return this.http.patch(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`, {}, {params : params})
+    return this.http.patch(`${this.SECURE_SERVICE_PATH}/draft/${draftId}`, params)
       .pipe(map((response:any)=>response.payload));
   }
 
