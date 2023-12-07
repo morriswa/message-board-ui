@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {MessageBoardClientService} from "../../../service/message-board-client.service";
 import {PostResponse} from "../../../interface/posts";
 import {CurrentCommunityService} from "../current-community.service";
+import {date} from 'src/app/Functions';
 
 @Component({
   selector: 'app-community-feed',
@@ -9,6 +10,7 @@ import {CurrentCommunityService} from "../current-community.service";
   styleUrls: ['./community-feed.component.scss']
 })
 export class CommunityFeedComponent {
+  date=date;
 
   posts?: PostResponse[];
 

@@ -4,6 +4,7 @@ import {Comment} from "../../../interface/posts";
 import {FormControl} from "@angular/forms";
 import {ValidatorFactory} from "../../../service/validator.factory";
 import { CurrentCommunityService } from '../current-community.service';
+import { date } from 'src/app/Functions';
 
 @Component({
   selector: 'app-comments',
@@ -11,6 +12,8 @@ import { CurrentCommunityService } from '../current-community.service';
   styleUrls: ['./comments.component.scss']
 })
 export class CommentsComponent implements OnInit {
+
+date=date;
 
   @Input() postId!: number;
   @Input() parentId?: number;

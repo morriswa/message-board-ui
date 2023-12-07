@@ -27,23 +27,25 @@
       @for (comment of comments; track comment.commentId; let i = $index) {
         <div class="comment-card" >
 
-          <div class="vote-card">
+          <div class="comment-headerxyz">
+            <div class="vote-card">
+              <h3 class="vote-count">{{ comment.vote }}</h3>
 
-            @if (currentCommunity.isCommunityMember) {
-              <app-voting
-                [type]="'COMMENT'"
-                [postId]="this.postId"
-                [commentId]="comment.commentId"
-                (voteUpdated)="commentVoteUpdated($event, i)"
-                ></app-voting>
-              <h1 class="vote-count">{{ comment.vote }}</h1>
-            } @else {
-              <div class="icon-tooltip-hover">
-                <i class="bi bi-arrows-expand"></i>
-              </div>
-              <p class="icon-tooltip">Please join community to interact with posts and comments!</p>
-              <h1 class="vote-count">{{ comment.vote }}</h1>
-            }
+              @if (currentCommunity.isCommunityMember) {
+                <app-voting
+                  [type]="'COMMENT'"
+                  [postId]="this.postId"
+                  [commentId]="comment.commentId"
+                  (voteUpdated)="commentVoteUpdated($event, i)"
+                  ></app-voting>
+              } @else {
+                <div class="icon-tooltip-hover">
+                  <i class="bi bi-arrows-expand"></i>
+                </div>
+                <p class="icon-tooltip">Please join community to interact with posts and comments!</p>
+              }
+
+            </div>
 
             <button 
               class="btn btn-outline-primary"
@@ -53,12 +55,12 @@
               class="btn btn-primary" 
               *ngIf="currentCommunity.isCommentMod"
               (click)="removeComment(comment.commentId)">Remove</button>
-          </div>
+        </div>
     
 
           <div class="comment-text">
             <h4>:{{comment.displayName}}</h4>
-
+            <p>{{ date(comment.dateCreated).toLocaleString() }}</p>
             <p>{{comment.body}}</p>
           </div>
         </div>

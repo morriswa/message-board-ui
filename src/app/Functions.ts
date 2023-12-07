@@ -11,3 +11,7 @@ export function c_str(f_str:any, ...inject: any) {
     
     return newerThing
 }
+
+export function date(f:any) {
+    return new Date(f);
+}

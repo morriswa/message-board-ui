@@ -34,6 +34,7 @@
           <br>
           :<a [routerLink]="['member',post.userId]">{{ post.displayName }}</a>
         </h2>
+        <p>Posted on {{ date(post.dateCreated).toLocaleString() }}</p>
         <p>{{ post.description }}</p>
         
         <a [routerLink]="['post',post.postId]">see more...</a>

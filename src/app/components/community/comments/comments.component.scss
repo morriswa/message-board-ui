@@ -12,9 +12,9 @@
 
 .comment-card {
   background-color: var(--wma-card-color);
-  padding: 20px 0 20px 20px;
-  margin: 10px 0 10px 10px;
-  border-radius: 20px;
+  padding: 10px 0 10px 10px;
+  margin: 5px 0 5px 5px;
+  border-radius: 5px;
   display: flex;
   flex-direction: row;
 
@@ -34,6 +34,20 @@
 }
 
 .vote-card {
-  margin: 0;
-  padding: 0;
+  scale: 0.90;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.vote-count {
+  margin-right: 10px;
+}
+
+.comment-headerxyz {
+  display: flex;
+  flex-direction: column;
+
+  > button {
+    scale: 0.75;
+  }
 }
