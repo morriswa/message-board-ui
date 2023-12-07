@@ -6,6 +6,9 @@ import {MessageBoardClientService} from "../../service/message-board-client.serv
 import {StaticWarning, ValidatorFactory} from "../../service/validator.factory";
 import {FormControl} from "@angular/forms";
 
+
+
+
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
@@ -22,6 +25,12 @@ export class RegisterUserComponent implements OnInit{
 
   serverErrorHandler: EventEmitter<any> = new EventEmitter();
   preferences: any;
+
+
+
+
+  birthdateForm: FormControl<any> = new FormControl;
+
 
   constructor(validatorFactory: ValidatorFactory,
               private auth: AuthService,
@@ -53,7 +62,8 @@ export class RegisterUserComponent implements OnInit{
   }
 
   registerUser() {
-    this.messageBoardService.registerUser(this.displayNameForm.getRawValue()!)
+    const birthday: string = `${this.birthdateForm.value.year}-${this.birthdateForm.value.month}-${this.birthdateForm.value.day}`
+    this.messageBoardService.registerUser(this.displayNameForm.value, birthday)
       .subscribe({
         next: ()=>this.router.navigate(['/user']),
         error: (response:any)=>{
@@ -63,7 +73,6 @@ export class RegisterUserComponent implements OnInit{
             }
           else this.serverErrorHandler.emit(response.error.description);
         }
-      })
+      });
   }
-
 }

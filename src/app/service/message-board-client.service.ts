@@ -49,11 +49,10 @@ export class MessageBoardClientService {
 
 
   // user endpoints
-  registerUser(displayName: string): Observable<string> {
-    return this.http.post(`${this.SECURE_SERVICE_PATH}/user`,{},{
-      params: {
-        displayName: displayName
-      }
+  registerUser(displayName: string, birthdate:string): Observable<string> {
+    return this.http.post(`${this.SECURE_SERVICE_PATH}/user`,{
+        displayName: displayName,
+        birthdate: birthdate
     })
     .pipe(map((response:any)=>response.payload));
   }

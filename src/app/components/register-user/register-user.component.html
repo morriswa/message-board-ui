@@ -5,6 +5,7 @@
   <h2>Please fill out the following information so you can get started!</h2>
 
   <input
+    required
     type="text"
     class="form-control"
     [formControl]="displayNameForm"
@@ -22,9 +23,34 @@
       message: displayNameFormWarnings.max
     },]"></app-static-errors>
 
+  <form style="margin-top: 20px;" class="row row-cols-sm-auto">
+    <div class="col-12">
+      <div class="input-group">
+        <input
+          required
+          class="form-control"
+          [formControl]="birthdateForm"
+          placeholder="yyyy-mm-dd"
+          name="dp"
+          ngbDatepicker
+          [minDate]="{year:1900, month:01, day:01}"
+          [maxDate]="{year:2023, month:01, day:01}"
+          ngbDatepicker 
+          #d="ngbDatepicker"
+        />
+        <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
+      </div>
+    </div>
+  </form>
+
   <button
+    style="margin-top: 20px;"
     class="btn btn-primary"
-    [disabled]="this.displayNameForm.invalid"
+    [disabled]="
+        this.displayNameForm.invalid
+      ||this.birthdateForm.invalid
+   
+    "
     (click)="registerUser()"
     >
     Get Started!
