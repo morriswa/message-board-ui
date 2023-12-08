@@ -48,6 +48,9 @@ import { ServerErrorsComponent } from './components/server-errors/server-errors.
   import { CommunityFeedComponent } from './components/community/community-feed/community-feed.component';
   import { CommunityMemberComponent } from './components/community/community-member/community-member.component';
 
+// DEVELOPER TOOLS
+import { DeveloperToolsComponent } from './components/developer-tools/developer-tools.component';
+
   
 
 const AUTH0_CONFIG = {
@@ -90,6 +93,7 @@ const AUTH0_CONFIG = {
     CommentsComponent,
     StaticErrorsComponent,
     ServerErrorsComponent,
+    DeveloperToolsComponent,
   ],
     imports: [
         BrowserModule,

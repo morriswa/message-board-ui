@@ -11,6 +11,7 @@ import {CommunityToolsComponent} from "./components/community-tools/community-to
 import {CommunityFeedComponent} from "./components/community/community-feed/community-feed.component";
 import {PostDetailsComponent} from "./components/community/post-details/post-details.component";
 import { CommunityMemberComponent } from './components/community/community-member/community-member.component';
+import { DeveloperToolsComponent } from './components/developer-tools/developer-tools.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
   },
   { path: 'user', component: UserMenuComponent },
   { path: 'registerUser', component: RegisterUserComponent },
+  { path: 'developer', component: DeveloperToolsComponent },
   { path: '', component: LandingPageComponent },
 ];
 @NgModule({
