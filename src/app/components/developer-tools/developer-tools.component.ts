@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
-import { switchMap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
+import { MessageBoardClientService } from 'src/app/service/message-board-client.service';
 
 @Component({
   selector: 'app-developer-tools',
@@ -11,16 +12,12 @@ import { switchMap } from 'rxjs';
 export class DeveloperToolsComponent {
   accessToken?:string;
 
-  constructor(auth: AuthService, router: Router) {
-    auth.idTokenClaims$.pipe(
-      switchMap((res:any)=>{
-        if (!(res.rolly as any[]).includes("messageboard:tester"))
-        throw new Error("User missing required scope!");
-        else return auth.getAccessTokenSilently();
-      })
+  constructor(client: MessageBoardClientService, router: Router, auth: AuthService) {
+    client.developer().pipe(
+      switchMap(()=>auth.getAccessTokenSilently())
     )
     .subscribe({
-      next: (accessToken:string)=>this.accessToken=accessToken,
+      next: (response:any)=>this.accessToken=response,
       error: ()=>router.navigate(['/'])
     });
   }

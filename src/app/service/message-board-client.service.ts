@@ -19,7 +19,9 @@ import {CommunityWatcherStatus, CommunityMember, CommunityResponse} from "../int
 export class MessageBoardClientService {
  
   public SERVICE_PATH= `${environment.api.scheme}://${environment.api.path}`;
-  public SECURE_SERVICE_PATH= `${this.SERVICE_PATH}/${environment.api.routes.secure}`;
+  public SECURE_SERVICE_PATH= `${this.SERVICE_PATH}/${environment.api.routes.secured}`;
+  public DEVELOP_SERVICE_PATH= `${this.SERVICE_PATH}/${environment.api.routes.develop}`;
+
 
   constructor(private http: HttpClient) { }
 
@@ -279,6 +281,11 @@ export class MessageBoardClientService {
 
 
   // NEW
+
+  developer(): Observable<any> {
+    return this.http.get(`${this.DEVELOP_SERVICE_PATH}`)
+      .pipe(map((res:any)=>res.payload));
+  }
 
   removePost(postId: number): Observable<any> {
     return this.http.delete(`${this.SECURE_SERVICE_PATH}/post/${postId}`)

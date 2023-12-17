@@ -7,7 +7,8 @@ export const environment = {
     scheme: 'http',
     path: '127.0.0.1:8081',
     routes: {
-      secure: 'v0'
+      secured: 'secured',
+      develop: 'developer'
     }
   },
   auth : {
