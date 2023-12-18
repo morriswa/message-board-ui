@@ -82,7 +82,28 @@
   margin-right: auto;
 }
 
-.image-element {
+.post-feed-image-element {
+
+  @media (min-width: 1100px) {
+    width: 55vw;
+    height: 700px;
+  }
+
+  @media (min-width: 600px) and (max-width: 1100px) {
+    width: 52vw;
+    height: 700px;
+  }
+
+  @media (max-width: 600px) {
+    width: 45vw;
+    height: 400px;
+  }
+  
+  object-fit: cover;
+  
+}
+
+.community-post-image-element {
 
   @media (min-width: 1100px) {
     width: 55vw;

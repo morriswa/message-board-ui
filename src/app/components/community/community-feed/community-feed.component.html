@@ -45,13 +45,13 @@
         
             <ng-template ngbSlide *ngFor="let image of post.resources">
               <div class="picsum-img-wrapper ">
-                <img class="image-element" [src]="image">
+                <img class="community-post-image-element" [src]="image">
               </div>
             </ng-template>
             
           </ngb-carousel>
         } @else if (post.resources.length === 1) {
-          <img class="image-element" [src]="post.resources[0]">
+          <img class="community-post-image-element" [src]="post.resources[0]">
         }
       </div>
       </div>
