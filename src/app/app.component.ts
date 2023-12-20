@@ -23,11 +23,6 @@ export class AppComponent {
   /**
    * indicates application's health status
    */
-  HEALTHY = true;
-
-  /**
-   * indicates if app is ready for router to take over
-   */
   READY = false;
 
   constructor(authService: AuthService,
@@ -42,7 +37,7 @@ export class AppComponent {
     // ensure it is running correctly or do not load upp
     .subscribe({
       next: ()=> this.READY = true,
-      error: () => this.HEALTHY = false
+      error: () => this.READY = false
     });
 
     // listen to provided authentication observable
@@ -61,7 +56,8 @@ export class AppComponent {
           this.USER_UI_PROFILE = result;
           // and update
           themes.current = this.USER_UI_PROFILE.theme;
-        }
+        },
+        error: err=>{if (err.status===403) this.READY=false; }
       });
   }
 }

@@ -1,16 +1,14 @@
-@if (HEALTHY) {
-  <app-header></app-header>
+<app-header></app-header>
+
+@if (READY) {
+  <div id="app-content">
+    <router-outlet></router-outlet>
+  </div>
 } @else {
   <div
     class="alert alert-danger"
     role="alert"
     style="margin: 20px">
     Server refused to respond!
-  </div>
-}
-
-@if (READY) {
-  <div id="app-content">
-    <router-outlet></router-outlet>
   </div>
 }
