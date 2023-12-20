@@ -21,7 +21,7 @@ export class AppComponent {
   USER_UI_PROFILE?: UserUIProfile;
 
   /**
-   * indicates application's health status
+   * indicates if app is healthy and ready for router to take over
    */
   READY = false;
 
